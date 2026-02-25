@@ -1,0 +1,29 @@
+{
+  "test_name": "13c_verbosity",
+  "provider": "anthropic",
+  "timestamp": "2026-02-11T10:20:31.372357+00:00",
+  "sdk_version": "0.79.0",
+  "model_requested": "claude-sonnet-4-5",
+  "model_used": "claude-sonnet-4-5",
+  "request": {
+    "method": "messages.create",
+    "params": {
+      "system": "concise vs detailed"
+    }
+  },
+  "response": {
+    "raw_json": {
+      "response_len_low": 243,
+      "response_len_high": 1511,
+      "native_verbosity_param": false
+    },
+    "key_observations": {
+      "native_verbosity": "No",
+      "workaround": "System prompt (Be concise / Be detailed)"
+    }
+  },
+  "mapping_to_current_system": {
+    "openai verbosity low": "system prompt",
+    "openai verbosity high": "system prompt"
+  }
+}

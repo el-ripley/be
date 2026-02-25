@@ -1,0 +1,56 @@
+{
+    "Rules": [
+        {
+            "ID": "ephemeral-one-day",
+            "Status": "Enabled",
+            "Filter": {
+                "Prefix": "ephemeral/one_day/"
+            },
+            "Expiration": {
+                "Days": 1
+            },
+            "AbortIncompleteMultipartUpload": {
+                "DaysAfterInitiation": 1
+            }
+        },
+        {
+            "ID": "ephemeral-one-week",
+            "Status": "Enabled",
+            "Filter": {
+                "Prefix": "ephemeral/one_week/"
+            },
+            "Expiration": {
+                "Days": 7
+            },
+            "AbortIncompleteMultipartUpload": {
+                "DaysAfterInitiation": 3
+            }
+        },
+        {
+            "ID": "ephemeral-two-weeks",
+            "Status": "Enabled",
+            "Filter": {
+                "Prefix": "ephemeral/two_weeks/"
+            },
+            "Expiration": {
+                "Days": 14
+            },
+            "AbortIncompleteMultipartUpload": {
+                "DaysAfterInitiation": 5
+            }
+        },
+        {
+            "ID": "ephemeral-one-month",
+            "Status": "Enabled",
+            "Filter": {
+                "Prefix": "ephemeral/one_month/"
+            },
+            "Expiration": {
+                "Days": 30
+            },
+            "AbortIncompleteMultipartUpload": {
+                "DaysAfterInitiation": 7
+            }
+        }
+    ]
+}

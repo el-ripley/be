@@ -1,0 +1,37 @@
+{
+  "test_name": "13a_tool_choice",
+  "provider": "anthropic",
+  "timestamp": "2026-02-11T10:20:10.949067+00:00",
+  "sdk_version": "0.79.0",
+  "model_requested": "claude-sonnet-4-5",
+  "model_used": "claude-sonnet-4-5",
+  "request": {
+    "method": "messages.create",
+    "params": {
+      "tool_choice": "auto, any, tool(name)"
+    }
+  },
+  "response": {
+    "raw_json": {
+      "tool_choice_auto_used_tool": false,
+      "tool_choice_any_used_tool": true,
+      "tool_choice_specific_used_tool": true,
+      "responses_preview": {
+        "auto": "end_turn",
+        "any": "tool_use",
+        "specific": "tool_use"
+      }
+    },
+    "key_observations": {
+      "openai_auto": "tool_choice={\"type\": \"auto\"}",
+      "openai_required": "tool_choice={\"type\": \"any\"}",
+      "openai_specific": "tool_choice={\"type\": \"tool\", \"name\": \"get_weather\"}"
+    }
+  },
+  "mapping_to_current_system": {
+    "openai_auto": "type: auto",
+    "openai_required": "type: any",
+    "openai_none": "omit tools",
+    "openai_specific": "type: tool, name: xxx"
+  }
+}

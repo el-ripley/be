@@ -1,0 +1,32 @@
+{
+  "test_name": "13a_tool_choice",
+  "provider": "gemini",
+  "timestamp": "2026-02-11T10:34:58.379874+00:00",
+  "sdk_version": "1.2.0",
+  "model_requested": "gemini-2.5-pro",
+  "model_used": "gemini-2.5-pro",
+  "request": {
+    "method": "generate_content",
+    "params": {
+      "tool_config.mode": "AUTO, ANY, NONE"
+    }
+  },
+  "response": {
+    "raw_json": {
+      "mode_auto_used_tool": false,
+      "mode_any_used_tool": true,
+      "mode_none_used_tool": false
+    },
+    "key_observations": {
+      "openai_auto": "mode=AUTO",
+      "openai_required": "mode=ANY",
+      "openai_none": "mode=NONE",
+      "openai_specific": "mode=ANY + allowed_function_names"
+    }
+  },
+  "mapping_to_current_system": {
+    "openai_auto": "AUTO",
+    "openai_required": "ANY",
+    "openai_none": "NONE"
+  }
+}

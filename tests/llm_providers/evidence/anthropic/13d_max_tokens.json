@@ -1,0 +1,31 @@
+{
+  "test_name": "13d_max_tokens",
+  "provider": "anthropic",
+  "timestamp": "2026-02-11T10:20:32.744633+00:00",
+  "sdk_version": "0.79.0",
+  "model_requested": "claude-sonnet-4-5",
+  "model_used": "claude-sonnet-4-5",
+  "request": {
+    "method": "messages.create",
+    "params": {
+      "max_tokens": 8192
+    }
+  },
+  "response": {
+    "raw_json": {
+      "max_tokens_param": "max_tokens",
+      "required": true,
+      "output_tokens_used": 12
+    },
+    "key_observations": {
+      "param_name": "max_tokens",
+      "required": true,
+      "default": "Must specify"
+    }
+  },
+  "mapping_to_current_system": {
+    "openai": "optional/auto",
+    "anthropic": "max_tokens (REQUIRED)"
+  },
+  "model_in_response": "claude-sonnet-4-5-20250929"
+}

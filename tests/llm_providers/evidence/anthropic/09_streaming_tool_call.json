@@ -1,0 +1,307 @@
+{
+  "test_name": "09_streaming_tool_call",
+  "provider": "anthropic",
+  "timestamp": "2026-02-11T09:24:34.583117+00:00",
+  "sdk_version": "0.79.0",
+  "model_requested": "claude-sonnet-4-5",
+  "model_used": "claude-sonnet-4-5",
+  "request": {
+    "method": "messages.stream",
+    "params": {
+      "model": "claude-sonnet-4-5",
+      "max_tokens": 1024,
+      "system": "You are a helpful assistant.",
+      "tools": [
+        {
+          "name": "get_weather",
+          "description": "Get current weather for a city",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "city": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "city"
+            ]
+          }
+        }
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "What's the weather in Hanoi?"
+        }
+      ]
+    }
+  },
+  "response": {
+    "raw_json": {
+      "events": [
+        {
+          "type": "message_start",
+          "data": {
+            "message": {
+              "id": "msg_01RuuhMXgvCjxkjvYHskicYf",
+              "content": [],
+              "model": "claude-sonnet-4-5-20250929",
+              "role": "assistant",
+              "stop_reason": null,
+              "stop_sequence": null,
+              "type": "message",
+              "usage": {
+                "cache_creation": {
+                  "ephemeral_1h_input_tokens": 0,
+                  "ephemeral_5m_input_tokens": 0
+                },
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "inference_geo": "not_available",
+                "input_tokens": 573,
+                "output_tokens": 1,
+                "server_tool_use": null,
+                "service_tier": "standard"
+              }
+            },
+            "type": "message_start"
+          }
+        },
+        {
+          "type": "content_block_start",
+          "data": {
+            "content_block": {
+              "id": "toolu_01Ce5bTfiScLn7WNNESyX9aE",
+              "input": {},
+              "name": "get_weather",
+              "type": "tool_use"
+            },
+            "index": 0,
+            "type": "content_block_start"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "delta": {
+              "partial_json": "",
+              "type": "input_json_delta"
+            },
+            "index": 0,
+            "type": "content_block_delta"
+          }
+        },
+        {
+          "type": "input_json",
+          "data": {
+            "type": "input_json",
+            "partial_json": "",
+            "snapshot": {}
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "delta": {
+              "partial_json": "{\"city\": \"Ha",
+              "type": "input_json_delta"
+            },
+            "index": 0,
+            "type": "content_block_delta"
+          }
+        },
+        {
+          "type": "input_json",
+          "data": {
+            "type": "input_json",
+            "partial_json": "{\"city\": \"Ha",
+            "snapshot": {}
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "delta": {
+              "partial_json": "no",
+              "type": "input_json_delta"
+            },
+            "index": 0,
+            "type": "content_block_delta"
+          }
+        },
+        {
+          "type": "input_json",
+          "data": {
+            "type": "input_json",
+            "partial_json": "no",
+            "snapshot": {}
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "delta": {
+              "partial_json": "i\"}",
+              "type": "input_json_delta"
+            },
+            "index": 0,
+            "type": "content_block_delta"
+          }
+        },
+        {
+          "type": "input_json",
+          "data": {
+            "type": "input_json",
+            "partial_json": "i\"}",
+            "snapshot": {
+              "city": "Hanoi"
+            }
+          }
+        },
+        {
+          "type": "content_block_stop",
+          "data": {
+            "index": 0,
+            "type": "content_block_stop",
+            "content_block": {
+              "id": "toolu_01Ce5bTfiScLn7WNNESyX9aE",
+              "input": {
+                "city": "Hanoi"
+              },
+              "name": "get_weather",
+              "type": "tool_use"
+            }
+          }
+        },
+        {
+          "type": "message_delta",
+          "data": {
+            "delta": {
+              "stop_reason": "tool_use",
+              "stop_sequence": null
+            },
+            "type": "message_delta",
+            "usage": {
+              "cache_creation_input_tokens": 0,
+              "cache_read_input_tokens": 0,
+              "input_tokens": 573,
+              "output_tokens": 55,
+              "server_tool_use": null
+            }
+          }
+        },
+        {
+          "type": "message_stop",
+          "data": {
+            "type": "message_stop",
+            "message": {
+              "id": "msg_01RuuhMXgvCjxkjvYHskicYf",
+              "content": [
+                {
+                  "id": "toolu_01Ce5bTfiScLn7WNNESyX9aE",
+                  "input": {
+                    "city": "Hanoi"
+                  },
+                  "name": "get_weather",
+                  "type": "tool_use"
+                }
+              ],
+              "model": "claude-sonnet-4-5-20250929",
+              "role": "assistant",
+              "stop_reason": "tool_use",
+              "stop_sequence": null,
+              "type": "message",
+              "usage": {
+                "cache_creation": {
+                  "ephemeral_1h_input_tokens": 0,
+                  "ephemeral_5m_input_tokens": 0
+                },
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "inference_geo": "not_available",
+                "input_tokens": 573,
+                "output_tokens": 55,
+                "server_tool_use": null,
+                "service_tier": "standard"
+              }
+            }
+          }
+        }
+      ],
+      "event_count": 13,
+      "event_types": [
+        "message_start",
+        "content_block_start",
+        "content_block_delta",
+        "input_json",
+        "content_block_delta",
+        "input_json",
+        "content_block_delta",
+        "input_json",
+        "content_block_delta",
+        "input_json",
+        "content_block_stop",
+        "message_delta",
+        "message_stop"
+      ],
+      "final_message": {
+        "id": "msg_01RuuhMXgvCjxkjvYHskicYf",
+        "content": [
+          {
+            "id": "toolu_01Ce5bTfiScLn7WNNESyX9aE",
+            "input": {
+              "city": "Hanoi"
+            },
+            "name": "get_weather",
+            "type": "tool_use"
+          }
+        ],
+        "model": "claude-sonnet-4-5-20250929",
+        "role": "assistant",
+        "stop_reason": "tool_use",
+        "stop_sequence": null,
+        "type": "message",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 573,
+          "output_tokens": 55,
+          "server_tool_use": null,
+          "service_tier": "standard"
+        }
+      }
+    },
+    "key_observations": {
+      "event_sequence_with_tool_call": [
+        "message_start",
+        "content_block_start",
+        "content_block_delta",
+        "input_json",
+        "content_block_delta",
+        "input_json",
+        "content_block_delta",
+        "input_json",
+        "content_block_delta",
+        "input_json",
+        "content_block_stop",
+        "message_delta",
+        "message_stop"
+      ],
+      "tool_call_complete_signal": "content_block_stop (for tool_use block) or message_stop",
+      "mixed_content_streaming": "content_block_start (tool_use) then content_block_delta (input) then content_block_stop"
+    }
+  },
+  "mapping_to_current_system": {
+    "equivalent_openai_param": "stream() with tools; events include response.output_item.added (function_call)",
+    "differences": [
+      "Anthropic stream events named differently; final message same as non-stream for tool_use"
+    ],
+    "conversion_needed": "Map stream events to normalized types; on tool_use complete, same as non-stream tool execution."
+  },
+  "model_in_response": "claude-sonnet-4-5-20250929"
+}

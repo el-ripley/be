@@ -1,0 +1,121 @@
+services:
+  # PostgreSQL - Main Database
+  postgres:
+    image: postgres:16.3
+    ports:
+      - "${POSTGRES_PORT:-5434}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-databases.sql:/docker-entrypoint-initdb.d/init-databases.sql
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER:-el-ripley-user}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-crypto-gambling-pass}
+      - POSTGRES_DB=postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-el-ripley-user}"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+    networks:
+      - ai_agent_network
+
+  # One-off job to restore PostgreSQL from backup
+  postgres-restore:
+    image: postgres:16.3
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./pg_2025-08-08.sql.gz:/backup/pg.sql.gz:ro
+    environment:
+      - PGPASSWORD=${POSTGRES_PASSWORD:-crypto-gambling-pass}
+      - POSTGRES_USER=${POSTGRES_USER:-el-ripley-user}
+    command: >-
+      bash -lc "gunzip -c /backup/pg.sql.gz | sed -e 's/^ALTER ROLE \"el-ripley-user\".*/-- filtered ALTER ROLE for el-ripley-user/' | psql -h postgres -p 5432 -U ${POSTGRES_USER:-el-ripley-user} -d postgres"
+    restart: "no"
+    networks:
+      - ai_agent_network
+
+  # Qdrant - Vector Database
+  qdrant:
+    image: qdrant/qdrant:latest
+    ports:
+      - "${QDRANT_PORT_REST:-6333}:6333" # REST API
+      - "${QDRANT_PORT_GRPC:-6334}:6334" # gRPC API
+    volumes:
+      - qdrant_data:/qdrant/storage
+      - ./full-snapshot-2025-08-08-09-44-33.snapshot:/snapshots/full-snapshot.snapshot:ro
+    environment:
+      - QDRANT_ALLOW_CORS=true
+    entrypoint: ["/qdrant/qdrant", "--storage-snapshot", "/snapshots/full-snapshot.snapshot"]
+    restart: unless-stopped
+    networks:
+      - ai_agent_network
+
+  # MongoDB - Document/Index Storage
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "${MONGODB_PORT:-27017}:27017"
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGODB_USERNAME:-admin}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_PASSWORD:-password}
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+    networks:
+      - ai_agent_network
+
+  # One-off job to restore MongoDB from backup archive
+  mongo-restore:
+    image: mongo:latest
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    volumes:
+      - ./mongo_2025-08-08.archive.gz:/backup/mongo.archive.gz:ro
+    command: >-
+      bash -lc "mongorestore --host mongodb --port 27017 \
+      --username ${MONGODB_USERNAME:-admin} --password ${MONGODB_PASSWORD:-password} \
+      --authenticationDatabase admin --gzip --archive=/backup/mongo.archive.gz --drop"
+    restart: "no"
+    networks:
+      - ai_agent_network
+
+  # Mongo GUI (Mongo Express)
+  mongo-express:
+    image: mongo-express:latest
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    ports:
+      - "${MONGO_EXPRESS_PORT:-8081}:8081"
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+      - ME_CONFIG_MONGODB_ENABLE_ADMIN=true
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=${MONGODB_USERNAME:-admin}
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=${MONGODB_PASSWORD:-password}
+      - ME_CONFIG_BASICAUTH=true
+      - ME_CONFIG_BASICAUTH_USERNAME=${MONGO_EXPRESS_USERNAME:-admin}
+      - ME_CONFIG_BASICAUTH_PASSWORD=${MONGO_EXPRESS_PASSWORD:-password}
+    restart: unless-stopped
+    networks:
+      - ai_agent_network
+
+volumes:
+  postgres_data:
+  qdrant_data:
+  mongodb_data:
+
+networks:
+  ai_agent_network:
+    name: ai_agent_network
+    driver: bridge

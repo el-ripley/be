@@ -1,0 +1,81 @@
+{
+  "test_name": "01_basic_completion",
+  "provider": "gemini",
+  "timestamp": "2026-02-11T06:15:07.048765+00:00",
+  "sdk_version": "1.2.0",
+  "model_used": "gemini-2.5-pro",
+  "request": {
+    "method": "generate_content",
+    "params": {
+      "model": "gemini-2.5-pro",
+      "system_instruction": "You are a helpful assistant.",
+      "prompt": "What is 2+2? Reply in one sentence."
+    }
+  },
+  "response": {
+    "raw_json": {
+      "candidates": [
+        {
+          "content": {
+            "parts": [
+              {
+                "video_metadata": null,
+                "thought": null,
+                "code_execution_result": null,
+                "executable_code": null,
+                "file_data": null,
+                "function_call": null,
+                "function_response": null,
+                "inline_data": null,
+                "text": "The sum of 2 and 2 is 4."
+              }
+            ],
+            "role": "model"
+          },
+          "citation_metadata": null,
+          "finish_message": null,
+          "token_count": null,
+          "avg_logprobs": -1.4907684326171875,
+          "finish_reason": "STOP",
+          "grounding_metadata": null,
+          "index": null,
+          "logprobs_result": null,
+          "safety_ratings": null
+        }
+      ],
+      "model_version": "gemini-2.5-pro",
+      "prompt_feedback": null,
+      "usage_metadata": {
+        "cached_content_token_count": null,
+        "candidates_token_count": 12,
+        "prompt_token_count": 18,
+        "total_token_count": 192
+      },
+      "automatic_function_calling_history": [],
+      "parsed": null
+    },
+    "key_observations": {
+      "response_structure": "candidates, usage_metadata, prompt_feedback",
+      "content_format": "candidates[0].content.parts[].text",
+      "role_values": [
+        "user",
+        "model"
+      ],
+      "stop_reason": "FinishReason.STOP",
+      "usage_format": {
+        "input_tokens": 18,
+        "output_tokens": 12
+      },
+      "content_path": "candidates[0].content.parts[0].text"
+    }
+  },
+  "mapping_to_current_system": {
+    "equivalent_openai_param": "input= messages; system_instruction= maps to system",
+    "differences": [
+      "Gemini: candidates[].content.parts; OpenAI: output[]",
+      "Gemini: finish_reason; OpenAI: status",
+      "Gemini: usage_metadata; OpenAI: usage"
+    ],
+    "conversion_needed": "Normalize candidates[0].content.parts to output items."
+  }
+}

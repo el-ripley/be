@@ -1,0 +1,33 @@
+{
+  "test_name": "12d_rate_limit_errors",
+  "provider": "gemini",
+  "timestamp": "2026-02-11T10:26:00.936548+00:00",
+  "sdk_version": "",
+  "model_requested": "N/A",
+  "model_used": "N/A",
+  "request": {
+    "method": "N/A",
+    "params": "Documentation only; no live rate limit trigger"
+  },
+  "response": {
+    "raw_json": {
+      "error_types_found": [],
+      "note": "Rate limit / overloaded not triggered; map from SDK docs: Anthropic RateLimitError/OverloadedError, Gemini ResourceExhausted"
+    },
+    "key_observations": {
+      "error_type_mapping": {
+        "rate_limit": "anthropic.RateLimitError (429)? / google.api_core.exceptions.ResourceExhausted (429)?",
+        "auth": "anthropic.AuthenticationError? / ?",
+        "bad_request": "anthropic.BadRequestError? / ?",
+        "timeout": "anthropic.APITimeoutError? / ?",
+        "overloaded": "anthropic.OverloadedError (529)?"
+      },
+      "retry_after_header": "Check response headers for Retry-After"
+    }
+  },
+  "mapping_to_current_system": {
+    "equivalent_openai_param": "RateLimitError, APITimeoutError, etc.",
+    "differences": [],
+    "conversion_needed": "Normalize to common error types"
+  }
+}

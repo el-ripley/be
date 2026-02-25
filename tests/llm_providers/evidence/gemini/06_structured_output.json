@@ -1,0 +1,120 @@
+{
+  "test_name": "06_structured_output",
+  "provider": "gemini",
+  "timestamp": "2026-02-11T06:24:46.835893+00:00",
+  "sdk_version": "1.2.0",
+  "model_used": "gemini-2.5-pro",
+  "request": {
+    "method": "generate_content",
+    "params": {
+      "model": "gemini-2.5-pro",
+      "config": {
+        "response_mime_type": "application/json",
+        "response_schema": {
+          "type": "object",
+          "properties": {
+            "summary": {
+              "type": "string"
+            },
+            "key_points": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "sentiment": {
+              "type": "string",
+              "enum": [
+                "positive",
+                "negative",
+                "neutral"
+              ]
+            }
+          },
+          "required": [
+            "summary",
+            "key_points",
+            "sentiment"
+          ]
+        }
+      },
+      "prompt": "Analyze in one sentence: AI is transforming healthcare. Return structured analysis."
+    }
+  },
+  "response": {
+    "raw_json": {
+      "response": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "video_metadata": null,
+                  "thought": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": null,
+                  "function_response": null,
+                  "inline_data": null,
+                  "text": "{\n  \"summary\": \"The sentence posits that Artificial Intelligence is fundamentally changing the healthcare industry.\",\n  \"key_points\": [\n    \"AI is the agent of change.\",\n    \"Healthcare is the sector being impacted.\",\n    \"The impact is described as a 'transformation', implying significant change.\"\n  ],\n  \"sentiment\": \"neutral\"\n}"
+                }
+              ],
+              "role": "model"
+            },
+            "citation_metadata": null,
+            "finish_message": null,
+            "token_count": null,
+            "avg_logprobs": -1.5175123338575487,
+            "finish_reason": "STOP",
+            "grounding_metadata": null,
+            "index": null,
+            "logprobs_result": null,
+            "safety_ratings": null
+          }
+        ],
+        "model_version": "gemini-2.5-pro",
+        "prompt_feedback": null,
+        "usage_metadata": {
+          "cached_content_token_count": null,
+          "candidates_token_count": 77,
+          "prompt_token_count": 38,
+          "total_token_count": 707
+        },
+        "automatic_function_calling_history": [],
+        "parsed": {
+          "summary": "The sentence posits that Artificial Intelligence is fundamentally changing the healthcare industry.",
+          "key_points": [
+            "AI is the agent of change.",
+            "Healthcare is the sector being impacted.",
+            "The impact is described as a 'transformation', implying significant change."
+          ],
+          "sentiment": "neutral"
+        }
+      },
+      "text": "{\n  \"summary\": \"The sentence posits that Artificial Intelligence is fundamentally changing the healthcare industry.\",\n  \"key_points\": [\n    \"AI is the agent of change.\",\n    \"Healthcare is the sector being impacted.\",\n    \"The impact is described as a 'transformation', implying significant change.\"\n  ],\n  \"sentiment\": \"neutral\"\n}",
+      "output_location": "response.text as JSON (native response_schema)",
+      "parsed_structured": {
+        "summary": "The sentence posits that Artificial Intelligence is fundamentally changing the healthcare industry.",
+        "key_points": [
+          "AI is the agent of change.",
+          "Healthcare is the sector being impacted.",
+          "The impact is described as a 'transformation', implying significant change."
+        ],
+        "sentiment": "neutral"
+      }
+    },
+    "key_observations": {
+      "native_structured_output": "Yes; response_mime_type=application/json + response_schema",
+      "output_location": "response.text as JSON (native response_schema)",
+      "validation": "Schema guides model; output is JSON string in text"
+    }
+  },
+  "mapping_to_current_system": {
+    "equivalent_openai_param": "responses.parse(text_format= schema)",
+    "differences": [
+      "Gemini: native JSON mode; OpenAI: parse() returns parsed object"
+    ],
+    "conversion_needed": "Parse response.text as JSON; similar to OpenAI parse() output."
+  }
+}

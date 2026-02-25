@@ -1,0 +1,71 @@
+services:
+  ai-agent-worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # No ports exposed - worker doesn't serve HTTP
+    environment:
+      # Python path - required for module imports
+      - PYTHONPATH=/app
+      # App Configuration
+      - APP_ENV=production
+      - DEBUG=${DEBUG:-false}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+
+      # Database Configuration
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=${POSTGRES_PORT:-5432}
+      - POSTGRES_USER=${POSTGRES_USER:-el-ripley-user}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-crypto-gambling-pass}
+      - POSTGRES_SSL_MODE=${POSTGRES_SSL_MODE:-disable}
+      - POSTGRES_DB_NAME=${POSTGRES_DB_NAME:-el_ripley}
+
+      # Redis Configuration
+      - REDIS_HOST=redis
+      - REDIS_PORT=${REDIS_PORT:-6379}
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-redis-password}
+      - REDIS_DB=${REDIS_DB:-0}
+
+      # Facebook Configuration (required for sync operations)
+      - FB_GRAPH_VERSION=${FB_GRAPH_VERSION:-v23.0}
+      - FB_APP_ID=${FB_APP_ID}
+      - FB_APP_SECRET=${FB_APP_SECRET}
+
+      # AWS S3 Configuration (for media sync)
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-}
+      - AWS_REGION=${AWS_REGION:-ap-southeast-1}
+      - AWS_BUCKET_NAME=${AWS_BUCKET_NAME:-}
+
+      # JWT Configuration (required by settings.py)
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY:-}
+      - JWT_ALGORITHM=${JWT_ALGORITHM:-HS256}
+      - ACCESS_TOKEN_EXPIRE_MINUTES=${ACCESS_TOKEN_EXPIRE_MINUTES:-15}
+      - REFRESH_TOKEN_EXPIRE_DAYS=${REFRESH_TOKEN_EXPIRE_DAYS:-30}
+
+      # Encryption Configuration (required for BYOK API keys)
+      - ENCRYPTION_KEY=${ENCRYPTION_KEY:-}
+
+      # OpenAI Configuration (optional - users can provide their own)
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+
+    # Health check - check if worker process is running
+    # Using ps instead of pgrep (more widely available)
+    healthcheck:
+      test: ["CMD-SHELL", "ps aux | grep -v grep | grep sync_worker.py || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+    networks:
+      - ai_agent_network
+    # Override CMD to run sync worker instead of main app
+    # Use python directly (not poetry run) since dependencies are installed system-wide
+    command: python src/workers/sync_worker.py
+    # Note: Ensure postgres and redis are running first via docker-compose.infra.yml
+    # The worker connects to them via the external network ai_agent_network
+
+networks:
+  ai_agent_network:
+    external: true

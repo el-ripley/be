@@ -1,0 +1,41 @@
+{
+  "test_name": "13b_reasoning_config",
+  "provider": "gemini",
+  "timestamp": "2026-02-11T10:35:34.697996+00:00",
+  "sdk_version": "1.2.0",
+  "model_requested": "gemini-2.5-pro",
+  "model_used": "gemini-2.5-pro",
+  "request": {
+    "method": "generate_content",
+    "params": {
+      "thinking_config": "include_thoughts=True/False (SDK không có thinking_budget)"
+    }
+  },
+  "response": {
+    "raw_json": {
+      "usage_low": {
+        "cached_content_token_count": null,
+        "candidates_token_count": 8,
+        "prompt_token_count": 7,
+        "total_token_count": 362
+      },
+      "usage_high": {
+        "cached_content_token_count": null,
+        "candidates_token_count": 528,
+        "prompt_token_count": 5,
+        "total_token_count": 1681
+      },
+      "off_has_candidates": true
+    },
+    "key_observations": {
+      "openai_low": "ThinkingConfig(include_thoughts=True) — SDK không hỗ trợ thinking_budget",
+      "openai_high": "cùng config",
+      "openai_none": "include_thoughts=False"
+    }
+  },
+  "mapping_to_current_system": {
+    "effort_low": "include_thoughts=True",
+    "effort_high": "include_thoughts=True",
+    "none": "include_thoughts=False"
+  }
+}

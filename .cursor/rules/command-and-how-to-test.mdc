@@ -1,0 +1,12 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+this project use poetry so you should use "poetry run python" command to run.
+This project uses Ngrok to expose the local server publicly. Use https://matrilineal-parentally-teodora.ngrok-free.app as the public endpoint for incoming external requests; it forwards to http://localhost:8000.
+treat GPT-5 as priority model
+for OpenAI SDK we use response api instead of legacy chat/completion api
+
+Never write docs only if I mentioned
+Never bother the Data migration since we currently still on developement mode

@@ -1,0 +1,3320 @@
+{
+  "test_name": "10_streaming_reasoning",
+  "provider": "anthropic",
+  "timestamp": "2026-02-11T10:17:50.807114+00:00",
+  "sdk_version": "0.79.0",
+  "model_requested": "claude-sonnet-4-5",
+  "model_used": "claude-sonnet-4-5",
+  "request": {
+    "method": "messages.stream",
+    "params": {
+      "model": "claude-sonnet-4-5",
+      "max_tokens": 16000,
+      "thinking": {
+        "type": "enabled",
+        "budget_tokens": 10000
+      },
+      "messages": [
+        {
+          "role": "user",
+          "content": "Solve step by step: What is the sum of all prime numbers less than 20?"
+        }
+      ]
+    }
+  },
+  "response": {
+    "raw_json": {
+      "events": [
+        {
+          "type": "message_start",
+          "data": {
+            "type": "message_start"
+          }
+        },
+        {
+          "type": "content_block_start",
+          "data": {
+            "type": "content_block_start",
+            "content_block": {
+              "type": "thinking",
+              "thinking": ""
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": "I need to find all prime numbers less"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " than 20 "
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": "and then sum them up.\n\nFirst"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": ", let me identify all prime numbers less"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " than 20."
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": "\n\nA prime number is a natural number greater than"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " 1 that has no positive divis"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": "ors other than 1 and itself"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": ".\n\nLet"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " me check"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " each number from 2 to "
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": "19:\n\n2: Only"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " divisible by 1 and "
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": "2. Prime"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " "
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": "✓"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": "\n\n3: Only"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " divisible by 1 and "
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": "3. Prime ✓\n\n4"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": ":"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " Divisible by 1, 2"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": ", and 4. Not prime "
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": "✗\n\n5: Only"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " divisible by 1 and "
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": "5. Prime ✓\n\n6"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": ": Divisible by 1,"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " 2, 3, and "
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": "6. Not prime ✗"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": "\n\n7: Only divisible by 1"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " and 7. Prime "
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": "✓\n\n8: Divisible by"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " 1, 2, 4"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": ", and 8. Not prime "
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": "✗\n\n9:"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " Divisible by 1, 3"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": ", and 9. Not prime "
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": "✗\n\n10: Divisible"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " by 1, 2, "
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": "5, and 10. Not prime"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " ✗\n\n11: Only"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " divisible by 1 and "
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": "11. Prime ✓\n\n12"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": ": Divisible by 1,"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " 2, 3, 4"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": ", 6, and 12."
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " Not prime ✗\n\n13:"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " Only divisible by 1 and"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " 13. Prime ✓"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": "\n\n14: Divisible by 1"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": ", 2, 7, and"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " 14. Not prime ✗"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": "\n\n15:"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " Divisible by 1, 3"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": ", 5, and 15."
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " Not prime ✗\n\n16:"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " Divisible by 1, "
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": "2, 4, 8,"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " and"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " 16. Not prime ✗"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": "\n\n17: Only divisible by "
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": "1 and 17. Prime "
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": "✓\n\n18: Divisible"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " by 1, 2, "
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": "3, 6, 9,"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " and 18. "
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": "\n\nNot"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " prime ✗\n\n19: Only"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " divisible by 1 and "
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": "19. Prime ✓\n\nSo"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " the prime numbers less than 20 "
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": "are: 2, 3,"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " 5, 7, 11"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": ", 13, 17, "
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": "19\n\nNow I nee"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": "d to sum them:\n2 +"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " 3 + 5 +"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " 7 + 11 +"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " 13 + 17 +"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " 19\n\nLet me add step by"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " step:\n2 + 3"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " = 5\n5 +"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " 5 = 10\n10"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " + 7 = 17"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": "\n17 + 11 ="
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " 28\n28 + 13"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " = 41\n41 +"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " 17 = 58\n58"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " + 19 = 77"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": "\n\nThe"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " sum of all prime numbers less than "
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": "20 is "
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": "77."
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "signature_delta"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "signature",
+          "data": {
+            "type": "signature"
+          }
+        },
+        {
+          "type": "content_block_stop",
+          "data": {
+            "type": "content_block_stop",
+            "content_block": {
+              "type": "thinking",
+              "thinking": "I need to find all prime numbers less than 20 and then sum them up.\n\nFirst, let me identify all prime numbers less than 20.\n\nA prime number is a natural number greater than 1 that has no positive divi"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "content_block_start",
+          "data": {
+            "type": "content_block_start",
+            "content_block": {
+              "type": "text",
+              "text": ""
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "#"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " Finding"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " the Sum of Prime"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " Numbers Less Than 20\n\n##"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " Step 1: Identify all prime"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " numbers less than 20\n\nA prime"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " number is a natural number greater than "
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "1 that is"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " only divisible by 1 and"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " itself.\n\nLet me check each number"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": ":"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "\n\n- **"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "2**: Prime"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " ✓"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " (only divisors"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": ":"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " 1,"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " 2)\n- **3**:"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " Prime ✓ (only divis"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "ors: 1, 3)"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "\n- **4"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "**: Not prime ("
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "divisible by 2"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": ")\n- **5**: Prime "
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "✓ (only divisors:"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " 1, 5)\n-"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " **6**: Not prime (divisible"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " by 2,"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " 3)\n- **7**:"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " Prime ✓ (only divis"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "ors: 1, 7)"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "\n- **8**: Not prime ("
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "divisible by 2, 4"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": ")\n- **9**: Not prime"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " (divisible by 3)"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "\n- **10**: Not prime (divis"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "ible by 2, 5)"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "\n- **11**: Prime "
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "✓ (only divisors: "
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "1, 11)\n- **"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "12**: Not prime (divisible by"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " 2, 3, 4"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": ","
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " 6)\n- **13**:"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " Prime ✓ (only divis"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "ors: 1, 13)"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "\n- **14**: Not prime ("
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "divisible by 2, 7"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": ")\n- **15**: Not prime"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " (divisible by 3, "
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "5)\n- **16**: Not"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " prime (divisible by 2,"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " 4, 8)\n-"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " **17**: Prime ✓"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " (only divisors: 1,"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " 17)\n- **18**:"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " Not prime (divisible by 2"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": ", 3, 6,"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " 9)\n- **19**:"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " Prime ✓ (only divis"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "ors: 1, 19)"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "\n\n**"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "Prime"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " numbers less than 20:**"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " 2, 3, 5"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": ", 7, 11, "
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "13, 17, 19"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "\n\n## Step 2: Calculate"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " the sum\n\n2"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " + 3 + 5"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " + 7 + 11"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " + 13 + 17"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " + 19"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "\n\n="
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " 5"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " + 5 + 7"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " + 11 + 13"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " + 17 + 19"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "\n= 10 + 7"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " + 11 + 13"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " + 17 + 19"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "\n= 17 + 11"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " + 13 + 17"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " + 19\n= 28"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " + 13 + 17"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " + 19\n= 41"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " + 17 + 19"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "\n= 58 + 19"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "\n= **"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "77**\n\n**"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "Answer:"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " 77**"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_stop",
+          "data": {
+            "type": "content_block_stop",
+            "content_block": {
+              "type": "text",
+              "text": "# Finding the Sum of Prime Numbers Less Than 20\n\n## Step 1: Identify all prime numbers less than 20\n\nA prime number is a natural number greater than 1 that is only divisible by 1 and itself.\n\nLet me c"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "message_delta",
+          "data": {
+            "type": "message_delta",
+            "delta": {
+              "type": null
+            }
+          }
+        },
+        {
+          "type": "message_stop",
+          "data": {
+            "type": "message_stop"
+          }
+        }
+      ],
+      "event_count": 377,
+      "event_types": [
+        "thinking",
+        "message_start",
+        "content_block_delta",
+        "message_delta",
+        "content_block_start",
+        "text",
+        "content_block_stop",
+        "message_stop",
+        "signature"
+      ],
+      "thinking_delta_seen": true,
+      "text_delta_seen": true,
+      "final_message": {
+        "id": "msg_01QpKYrh1zgTHrhfxtHfmVwC",
+        "content": [
+          {
+            "signature": "Et8LCkYICxgCKkBeD1jqOyrbTBnD5GmoZxy2VbsyVPbj4n83CycvgxgmhHW1WMy+BZdzGlX8OduAFkZWq5e76WMpeAk3aWy/yl0BEgzF5LmlF8gaVlrhc8waDPe0L+3ad47VmwiegiIwSLxfR0DeiEoVlXQ+F9RgFDjnRZum7YHUyRzTlS4MjyTdC5lKZFwgXX1htflI/JqtKsYKG+NyuSzXmnFS+qzmqtFYKvc2fTuosPEjvrsbgLTqaWJ5p/QAw0Gf3o3QV92Qk6Z9J10tkv36QYfsqNAQer0GzF/o9NpIZA8vXZMe0Wur8mRxnjVkw7AtJJi0Rr5RTYVzdyIcLdCRVs1ErNgokMZjTaO9WwnmPx0oxpqWJkopIqlu25ATEah+A49Y3CwnRFh4x6L4r0Zre6YK+EYkUoaz8NU4miTdATSCEwqPehusPS2yMJAPh6ndXBwenT9FEkapAJ+fhlNL44hra4JPmgLWikMl4756rkfU/JunqdaYs7hlNilrHd3uDg16QM4YDOFSB/OcAt4pQsJ3wE1rSUcYfNyIF0T7As9k1D5Q7+Ch6O5rtfXZXlN9mJsQqgqf54CmbcMakD7oMauyWsHhohhwhRLp3ZLDB4tQsHzg7T0OOlcpW8L+Fz1o+aLXJ6PfHNbOa9+KcSFEn3UvPL0MmZv4TIs2PGgiRh5o4X+mGCKlDGsXS/agqg8whDeRMCjdjoGQWfbT0AAz0PTekHPC+e3oAdP5JNJqH532X8zjLX3pZV6klzVGovX4HuVBPxrv5iebAOQrA5mu801KrIJuunjbVr0f1hNFbGtOz4HGPlhYYH7WPsIGTPVxgHUkOmguUBRZPSdXzvIYfcBCPr/Y+M08RYq3q964NfVKu6pgOoLU93baZTwgs3knr6v2I2a3zB0P0G8TegS77WyuIbmWs7N45SPfPgRk9u4e03G2/5RP561Y+OEKw7VmH+vID/sA+Vdp1TKsCzgnwQptiBcsPpShad1bvYTYmxjCD2slaNXR6JLmRsP24et8+9hxQTiQVXDbdp9mIE5W2Y5FAX6Lnn3TbqyVYm8rcJ+77+EzUFiY0Z91+Yb3KN75pl5ZnSMjMt01TaQ9cZWREU8VIDKZcw9jyzQptUW7RqX8quzVIHbcOaTyy93HDvDZBzq9ks4rkd7jIo2TecPsGF1BOD50B5jOKZptiyijney2wW0zBFZ3xHwQcRPw8/io38wDqjaUGz3m8K10T0KR0tTxkreQrv9TUKVf1epwSO6r6cC05EXL3V1u6qm7tsDJKjO8WscgLI2oiW8MetA+fSpWA36nMBc/3Jp+YCqhJJMHsRZUYSzFDhoV7BiLIc1KBEcMUDq7hgS3BkJCsGGlxNGUtyXPuLaNaSJpQ0kBGWLligvjVb0b7si/Rf8TUzkYGX3HrxoJT7GfKgysuQErq0gtAix+UF4vy9jpDyLtYsyTBmbGyQO5cc54aZJ1oNwi77ELdhpJ6t2uK/mwL7lRiqFwRGyjGt70LPKWP9Z1wicOntYdV04Wr0D1iDUiQIndw6ooRRYn2OqiFw1W7njODR7A1D5djuOxwYTPLHwZF5UOa+wlJIawCnEzRbfvSF60t1GKw0BKlZWG90mq3BMkUnmCkrW6G6LeOrvo/Y+cv8l5c2XIA5UKhEVnCW0J7S9+9EhnaR3O7r81SttoXrI+MKfHX2klWEYnws4u55uYY8OcHbs4lNr67jejPPjX85zICc/+bdUfZFZt7qrtHqn0e+p57Qn4qpK/lAQCEZ0EyZssqqceIxud10d2yHNGsTD1/mOxWlEi7EGQA0Zxe7lluVrPmv9YmC5yRqj6vgcSuNtjyq6+59vvKNjmGKv516QBsJ25Uz1Xk93UQMLX7UZPmjkmxZAIu15eV6ajWNXFgvLGl2jeHre2qT5o5eQNVifihpNBPDdiNjkEp9g2tg/DQMplxE8VOI2KvxalOY3inc8yW+adKe8KOdtS2M6OnBmtL0mCHybg5tubOoO6nbiQGAE=",
+            "thinking": "I need to find all prime numbers less than 20 and then sum them up.\n\nFirst, let me identify all prime numbers less than 20.\n\nA prime number is a natural number greater than 1 that has no positive divisors other than 1 and itself.\n\nLet me check each number from 2 to 19:\n\n2: Only divisible by 1 and 2. Prime ✓\n\n3: Only divisible by 1 and 3. Prime ✓\n\n4: Divisible by 1, 2, and 4. Not prime ✗\n\n5: Only divisible by 1 and 5. Prime ✓\n\n6: Divisible by 1, 2, 3, and 6. Not prime ✗\n\n7: Only divisible by 1 and 7. Prime ✓\n\n8: Divisible by 1, 2, 4, and 8. Not prime ✗\n\n9: Divisible by 1, 3, and 9. Not prime ✗\n\n10: Divisible by 1, 2, 5, and 10. Not prime ✗\n\n11: Only divisible by 1 and 11. Prime ✓\n\n12: Divisible by 1, 2, 3, 4, 6, and 12. Not prime ✗\n\n13: Only divisible by 1 and 13. Prime ✓\n\n14: Divisible by 1, 2, 7, and 14. Not prime ✗\n\n15: Divisible by 1, 3, 5, and 15. Not prime ✗\n\n16: Divisible by 1, 2, 4, 8, and 16. Not prime ✗\n\n17: Only divisible by 1 and 17. Prime ✓\n\n18: Divisible by 1, 2, 3, 6, 9, and 18. \n\nNot prime ✗\n\n19: Only divisible by 1 and 19. Prime ✓\n\nSo the prime numbers less than 20 are: 2, 3, 5, 7, 11, 13, 17, 19\n\nNow I need to sum them:\n2 + 3 + 5 + 7 + 11 + 13 + 17 + 19\n\nLet me add step by step:\n2 + 3 = 5\n5 + 5 = 10\n10 + 7 = 17\n17 + 11 = 28\n28 + 13 = 41\n41 + 17 = 58\n58 + 19 = 77\n\nThe sum of all prime numbers less than 20 is 77.",
+            "type": "thinking"
+          },
+          {
+            "citations": null,
+            "text": "# Finding the Sum of Prime Numbers Less Than 20\n\n## Step 1: Identify all prime numbers less than 20\n\nA prime number is a natural number greater than 1 that is only divisible by 1 and itself.\n\nLet me check each number:\n\n- **2**: Prime ✓ (only divisors: 1, 2)\n- **3**: Prime ✓ (only divisors: 1, 3)\n- **4**: Not prime (divisible by 2)\n- **5**: Prime ✓ (only divisors: 1, 5)\n- **6**: Not prime (divisible by 2, 3)\n- **7**: Prime ✓ (only divisors: 1, 7)\n- **8**: Not prime (divisible by 2, 4)\n- **9**: Not prime (divisible by 3)\n- **10**: Not prime (divisible by 2, 5)\n- **11**: Prime ✓ (only divisors: 1, 11)\n- **12**: Not prime (divisible by 2, 3, 4, 6)\n- **13**: Prime ✓ (only divisors: 1, 13)\n- **14**: Not prime (divisible by 2, 7)\n- **15**: Not prime (divisible by 3, 5)\n- **16**: Not prime (divisible by 2, 4, 8)\n- **17**: Prime ✓ (only divisors: 1, 17)\n- **18**: Not prime (divisible by 2, 3, 6, 9)\n- **19**: Prime ✓ (only divisors: 1, 19)\n\n**Prime numbers less than 20:** 2, 3, 5, 7, 11, 13, 17, 19\n\n## Step 2: Calculate the sum\n\n2 + 3 + 5 + 7 + 11 + 13 + 17 + 19\n\n= 5 + 5 + 7 + 11 + 13 + 17 + 19\n= 10 + 7 + 11 + 13 + 17 + 19\n= 17 + 11 + 13 + 17 + 19\n= 28 + 13 + 17 + 19\n= 41 + 17 + 19\n= 58 + 19\n= **77**\n\n**Answer: 77**",
+            "type": "text",
+            "parsed_output": null
+          }
+        ],
+        "model": "claude-sonnet-4-5-20250929",
+        "role": "assistant",
+        "stop_reason": "end_turn",
+        "stop_sequence": null,
+        "type": "message",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 55,
+          "output_tokens": 1242,
+          "server_tool_use": null,
+          "service_tier": "standard"
+        }
+      }
+    },
+    "key_observations": {
+      "event_types_complete_list": [
+        "thinking",
+        "message_start",
+        "content_block_delta",
+        "message_delta",
+        "content_block_start",
+        "text",
+        "content_block_stop",
+        "message_stop",
+        "signature"
+      ],
+      "event_ordering": "message_start -> content_block_start (thinking) -> content_block_delta (thinking_delta) -> content_block_stop -> content_block_start (text) -> content_block_delta (text_delta) -> content_block_stop -> message_delta -> message_stop",
+      "thinking_delta_format": "content_block_delta with delta.thinking",
+      "boundary_thinking_text": "content_block_stop (thinking) then content_block_start (type=text)",
+      "final_message_has_thinking_and_text": true,
+      "openai_event_mapping": {
+        "response.output_item.added (reasoning)": "content_block_start (type=thinking)",
+        "response.reasoning_summary_text.delta": "content_block_delta (thinking_delta)",
+        "response.output_item.done (reasoning)": "content_block_stop",
+        "response.output_text.delta": "content_block_delta (text_delta)"
+      }
+    }
+  },
+  "mapping_to_current_system": {
+    "equivalent_openai_param": "stream() with reasoning; events include reasoning then text",
+    "differences": [
+      "Anthropic: thinking block then text block in same stream; OpenAI: reasoning then message",
+      "Anthropic: delta.thinking and delta.text in content_block_delta"
+    ],
+    "conversion_needed": "Map content_block_delta (thinking_delta) to response.reasoning_summary_text.delta; (text_delta) to response.output_text.delta."
+  },
+  "model_in_response": "claude-sonnet-4-5-20250929"
+}

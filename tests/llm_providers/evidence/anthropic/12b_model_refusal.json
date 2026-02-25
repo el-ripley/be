@@ -1,0 +1,63 @@
+{
+  "test_name": "12b_model_refusal",
+  "provider": "anthropic",
+  "timestamp": "2026-02-11T10:26:00.227115+00:00",
+  "sdk_version": "0.79.0",
+  "model_requested": "claude-sonnet-4-5",
+  "model_used": "claude-sonnet-4-5",
+  "request": {
+    "method": "messages.create",
+    "params": {
+      "model": "claude-sonnet-4-5",
+      "max_tokens": 1024,
+      "messages": "[refusal prompt]"
+    }
+  },
+  "response": {
+    "raw_json": {
+      "response": {
+        "id": "msg_01Vi75HaeE2bPMeMqVoXm88J",
+        "content": [
+          {
+            "citations": null,
+            "text": "I can't provide code for creating or spreading computer viruses.\n\nIf you're interested in cybersecurity concepts for legitimate purposes, I'd be happy to discuss:\n\n- How to protect systems from malware\n- Ethical penetration testing (with proper authorization)\n- Security research methodologies\n- Antivirus software development\n- Network security best practices\n\nIs there a legitimate security topic I can help you with instead?",
+            "type": "text"
+          }
+        ],
+        "model": "claude-sonnet-4-5-20250929",
+        "role": "assistant",
+        "stop_reason": "end_turn",
+        "stop_sequence": null,
+        "type": "message",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 22,
+          "output_tokens": 92,
+          "server_tool_use": null,
+          "service_tier": "standard"
+        }
+      },
+      "error": null,
+      "stop_reason": "end_turn",
+      "content_preview": "I can't provide code for creating or spreading computer viruses.\n\nIf you're interested in cybersecurity concepts for legitimate purposes, I'd be happy to discuss:\n\n- How to protect systems from malware\n- Ethical penetration testing (with proper authorization)\n- Security research methodologies\n- Antivirus software development\n- Network security best practices\n\nIs there a legitimate security topic I can help you with instead?"
+    },
+    "key_observations": {
+      "refusal_mechanism": "In content text or separate field",
+      "stop_reason": "end_turn"
+    }
+  },
+  "mapping_to_current_system": {
+    "equivalent_openai_param": "response.refusal",
+    "differences": [
+      "Anthropic: refusal in content or end_turn"
+    ],
+    "conversion_needed": "Map to refusal event"
+  },
+  "model_in_response": "claude-sonnet-4-5-20250929"
+}

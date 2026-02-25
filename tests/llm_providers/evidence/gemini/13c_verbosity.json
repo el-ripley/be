@@ -1,0 +1,27 @@
+{
+  "test_name": "13c_verbosity",
+  "provider": "gemini",
+  "timestamp": "2026-02-11T10:36:34.208882+00:00",
+  "sdk_version": "1.2.0",
+  "model_requested": "gemini-2.5-pro",
+  "model_used": "gemini-2.5-pro",
+  "request": {
+    "method": "generate_content",
+    "params": {
+      "system_instruction": "concise vs detailed"
+    }
+  },
+  "response": {
+    "raw_json": {
+      "native_verbosity_param": false,
+      "workaround": "system_instruction"
+    },
+    "key_observations": {
+      "native_verbosity": "No",
+      "workaround": "system_instruction"
+    }
+  },
+  "mapping_to_current_system": {
+    "openai verbosity": "system_instruction"
+  }
+}

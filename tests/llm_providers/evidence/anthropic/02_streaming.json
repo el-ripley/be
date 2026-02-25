@@ -1,0 +1,1058 @@
+{
+  "test_name": "02_streaming",
+  "provider": "anthropic",
+  "timestamp": "2026-02-11T09:22:11.415345+00:00",
+  "sdk_version": "0.79.0",
+  "model_requested": "claude-sonnet-4-5",
+  "model_used": "claude-sonnet-4-5",
+  "request": {
+    "method": "messages.stream",
+    "params": {
+      "model": "claude-sonnet-4-5",
+      "max_tokens": 1024,
+      "system": "You are a helpful assistant.",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Write a short poem about coding."
+        }
+      ]
+    }
+  },
+  "response": {
+    "raw_json": {
+      "events": [
+        {
+          "type": "message_start",
+          "data": {
+            "type": "message_start"
+          }
+        },
+        {
+          "type": "content_block_start",
+          "data": {
+            "type": "content_block_start",
+            "content_block": {
+              "type": "text",
+              "text": ""
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "#"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " Code"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " and"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " Creation"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "\n\nLines"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " of logic"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": ","
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " neat"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " and bright,\nDancing"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " syntax"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " through"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " the night.\nBugs"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " that"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " hide in shad"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "owed places"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": ",\nSolved"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " by coffee"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": ","
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " time"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": ", and traces"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": ".\n\nFunctions"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " flow"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " like rivers deep,\nVariables"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " their"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " secrets"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " keep.\nLoops that"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " spin"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " and condit"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "ionals choose"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": ",\nElegant"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " solutions we"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " pursue"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": ".\n\nFrom blank"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " screen"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " to working"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " art"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": ",\nEvery semic"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "olon plays"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " its part.\nIn"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " zeros"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": ","
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " ones, our"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " thoughts"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " take"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " wing"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "—"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "\nWe"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " dream"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " in code"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": ", and"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " make"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " things"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " sing"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "."
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_stop",
+          "data": {
+            "type": "content_block_stop",
+            "content_block": {
+              "type": "text",
+              "text": "# Code and Creation\n\nLines of logic, neat and bright,\nDancing syntax through the night.\nBugs that hide in shadowed places,\nSolved by coffee, time, and traces.\n\nFunctions flow like rivers deep,\nVariables their secrets keep.\nLoops that spin and conditionals choose,\nElegant solutions we pursue.\n\nFrom blank screen to working art,\nEvery semicolon plays its part.\nIn zeros, ones, our thoughts take wing—\nWe dream in code, and make things sing."
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "message_delta",
+          "data": {
+            "type": "message_delta",
+            "delta": {
+              "type": null
+            }
+          }
+        },
+        {
+          "type": "message_stop",
+          "data": {
+            "type": "message_stop"
+          }
+        }
+      ],
+      "event_count": 113,
+      "event_types": [
+        "content_block_stop",
+        "message_stop",
+        "text",
+        "message_delta",
+        "message_start",
+        "content_block_delta",
+        "content_block_start"
+      ],
+      "final_message": {
+        "id": "msg_019y8ABYNipnn9gVZMqov1rU",
+        "content": [
+          {
+            "citations": null,
+            "text": "# Code and Creation\n\nLines of logic, neat and bright,\nDancing syntax through the night.\nBugs that hide in shadowed places,\nSolved by coffee, time, and traces.\n\nFunctions flow like rivers deep,\nVariables their secrets keep.\nLoops that spin and conditionals choose,\nElegant solutions we pursue.\n\nFrom blank screen to working art,\nEvery semicolon plays its part.\nIn zeros, ones, our thoughts take wing—\nWe dream in code, and make things sing.",
+            "type": "text",
+            "parsed_output": null
+          }
+        ],
+        "model": "claude-sonnet-4-5-20250929",
+        "role": "assistant",
+        "stop_reason": "end_turn",
+        "stop_sequence": null,
+        "type": "message",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 20,
+          "output_tokens": 113,
+          "server_tool_use": null,
+          "service_tier": "standard"
+        }
+      }
+    },
+    "key_observations": {
+      "event_types_complete_list": [
+        "content_block_stop",
+        "message_stop",
+        "text",
+        "message_delta",
+        "message_start",
+        "content_block_delta",
+        "content_block_start"
+      ],
+      "event_ordering": "message_start -> content_block_start -> content_block_delta (repeated) -> content_block_stop -> message_delta -> message_stop",
+      "delta_format_location": "content_block_delta.delta.text (text_delta)",
+      "final_response_method": "stream.get_final_message()",
+      "openai_event_mapping": {
+        "response.created": "message_start",
+        "response.output_text.delta": "content_block_delta (text_delta)",
+        "response.output_item.done": "content_block_stop + message_stop",
+        "response.reasoning_summary_text.delta": "N/A or content_block_delta (thinking)",
+        "response.failed": "error event type if any"
+      }
+    }
+  },
+  "mapping_to_current_system": {
+    "equivalent_openai_param": "stream() yields events; get_final_response() at end",
+    "differences": [
+      "Anthropic event names: message_start, content_block_delta, etc.; OpenAI: response.output_text.delta",
+      "Anthropic: context manager with get_final_message(); OpenAI: get_final_response() on stream"
+    ],
+    "conversion_needed": "Map Anthropic event types to normalized internal events for llm_stream_handler."
+  },
+  "model_in_response": "claude-sonnet-4-5-20250929"
+}

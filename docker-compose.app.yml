@@ -1,0 +1,106 @@
+services:
+  ai-agent-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "127.0.0.1:${APP_PORT:-8000}:8000"
+    environment:
+      # App Configuration
+      - APP_ENV=production
+      - DEBUG=${DEBUG:-false}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      - BACKEND_URL=${BACKEND_URL:-https://matrilineal-parentally-teodora.ngrok-free.app}
+      - ALLOWED_FRONTEND_URLS=${ALLOWED_FRONTEND_URLS:-https://elripley.com,https://matrilineal-parentally-teodora.ngrok-free.app}
+
+      # Database Configuration
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=${POSTGRES_PORT:-5432}
+      - POSTGRES_USER=${POSTGRES_USER:-el-ripley-user}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-crypto-gambling-pass}
+      - POSTGRES_SSL_MODE=${POSTGRES_SSL_MODE:-disable}
+      - POSTGRES_DB_NAME=${POSTGRES_DB_NAME:-el_ripley}
+      - POSTGRES_AGENT_READER_USER=${POSTGRES_AGENT_READER_USER:-agent_reader}
+      - POSTGRES_AGENT_READER_PASSWORD=${POSTGRES_AGENT_READER_PASSWORD:-}
+      - POSTGRES_AGENT_WRITER_USER=${POSTGRES_AGENT_WRITER_USER:-agent_writer}
+      - POSTGRES_AGENT_WRITER_PASSWORD=${POSTGRES_AGENT_WRITER_PASSWORD:-}
+
+      # Redis Configuration
+      - REDIS_HOST=redis
+      - REDIS_PORT=${REDIS_PORT:-6379}
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-redis-password}
+      - REDIS_DB=${REDIS_DB:-0}
+
+      # MongoDB Configuration
+      - MONGODB_HOST=${MONGODB_HOST:-mongodb}
+      - MONGODB_PORT=${MONGODB_PORT:-27017}
+      - MONGODB_USERNAME=${MONGODB_USERNAME:-admin}
+      - MONGODB_PASSWORD=${MONGODB_PASSWORD:-password}
+      - MONGODB_DB_NAME=${MONGODB_DB_NAME:-ai_agent_db}
+
+      # Qdrant (vector DB for playbooks). Service from docker-compose.infra.yml; use same ai_agent_network.
+      - QDRANT_HOST=qdrant
+      - QDRANT_PORT_REST=${QDRANT_PORT_REST:-6333}
+      - QDRANT_PORT_GRPC=${QDRANT_PORT_GRPC:-6334}
+
+      # Facebook Configuration
+      - FB_GRAPH_VERSION=${FB_GRAPH_VERSION:-v23.0}
+      - FB_WEBHOOK_VERIFY_TOKEN=${FB_WEBHOOK_VERIFY_TOKEN}
+      - FB_APP_ID=${FB_APP_ID}
+      - FB_APP_SECRET=${FB_APP_SECRET}
+
+      # AWS S3 Configuration
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-}
+      - AWS_REGION=${AWS_REGION:-ap-southeast-1}
+      - AWS_BUCKET_NAME=${AWS_BUCKET_NAME:-}
+
+      # JWT Configuration
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY:-}
+      - JWT_ALGORITHM=${JWT_ALGORITHM:-HS256}
+      - ACCESS_TOKEN_EXPIRE_MINUTES=${ACCESS_TOKEN_EXPIRE_MINUTES:-15}
+      - REFRESH_TOKEN_EXPIRE_DAYS=${REFRESH_TOKEN_EXPIRE_DAYS:-30}
+
+      # Encryption Configuration (required for BYOK API keys)
+      - ENCRYPTION_KEY=${ENCRYPTION_KEY:-}
+
+      # LLM API Keys (optional - users can provide their own)
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - ANTHROPIC_API_KEY_PROXY=${ANTHROPIC_API_KEY_PROXY:-}
+      - SUPPER_API_BASE_URL=${SUPPER_API_BASE_URL:-}
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY:-}
+      - GOOGLE_APPLICATION_CREDENTIALS=${GOOGLE_APPLICATION_CREDENTIALS:-}
+      - GOOGLE_SERVICE_ACCOUNT_JSON=${GOOGLE_SERVICE_ACCOUNT_JSON:-}
+      - GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT:-}
+      - GOOGLE_CLOUD_LOCATION=${GOOGLE_CLOUD_LOCATION:-us-central1}
+      - GOOGLE_VERTEX_MODEL=${GOOGLE_VERTEX_MODEL:-}
+
+      # Stripe Configuration
+      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY:-}
+      - STRIPE_PUBLISHABLE_KEY=${STRIPE_PUBLISHABLE_KEY:-}
+      - STRIPE_WEBHOOK_SECRET=${STRIPE_WEBHOOK_SECRET:-}
+
+      # Sepay (Vietnam payment) Webhook
+      - SEPAY_WEBHOOK_API_KEY=${SEPAY_WEBHOOK_API_KEY:-}
+
+      # Polar (payment gateway)
+      - POLAR_ACCESS_TOKEN=${POLAR_ACCESS_TOKEN:-}
+      - POLAR_WEBHOOK_SECRET=${POLAR_WEBHOOK_SECRET:-}
+      - POLAR_PRODUCT_ID=${POLAR_PRODUCT_ID:-}
+      - POLAR_SERVER=${POLAR_SERVER:-} # set "sandbox" for sandbox; omit/empty for production
+    volumes:
+      - ./.gcp:/app/.gcp:ro
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+    networks:
+      - ai_agent_network
+
+networks:
+  ai_agent_network:
+    external: true

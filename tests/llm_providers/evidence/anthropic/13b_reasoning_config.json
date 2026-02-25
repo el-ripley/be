@@ -1,0 +1,59 @@
+{
+  "test_name": "13b_reasoning_config",
+  "provider": "anthropic",
+  "timestamp": "2026-02-11T10:20:21.976029+00:00",
+  "sdk_version": "0.79.0",
+  "model_requested": "claude-sonnet-4-5",
+  "model_used": "claude-sonnet-4-5",
+  "request": {
+    "method": "messages.create",
+    "params": {
+      "thinking": "enabled + budget_tokens 2000, 8000; none"
+    }
+  },
+  "response": {
+    "raw_json": {
+      "low_budget_2000_thinking_len": 51,
+      "med_budget_8000_thinking_len": 309,
+      "none_thinking_len": 0,
+      "usage_low": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 43,
+        "output_tokens": 36,
+        "server_tool_use": null,
+        "service_tier": "standard"
+      },
+      "usage_med": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 42,
+        "output_tokens": 294,
+        "server_tool_use": null,
+        "service_tier": "standard"
+      }
+    },
+    "key_observations": {
+      "openai_low": "budget_tokens=2000",
+      "openai_medium": "8000",
+      "openai_high": "16000",
+      "openai_none": "omit thinking"
+    }
+  },
+  "mapping_to_current_system": {
+    "effort low": "budget_tokens 2000",
+    "effort medium": "8000",
+    "effort high": "16000",
+    "none": "omit or type disabled"
+  }
+}

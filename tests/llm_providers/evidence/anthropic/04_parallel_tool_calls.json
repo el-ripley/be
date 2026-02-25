@@ -1,0 +1,163 @@
+{
+  "test_name": "04_parallel_tool_calls",
+  "provider": "anthropic",
+  "timestamp": "2026-02-11T09:23:11.596448+00:00",
+  "sdk_version": "0.79.0",
+  "model_requested": "claude-sonnet-4-5",
+  "model_used": "claude-sonnet-4-5",
+  "request": {
+    "method": "messages.create",
+    "params": {
+      "model": "claude-sonnet-4-5",
+      "max_tokens": 1024,
+      "system": "You are a helpful assistant.",
+      "tools": [
+        {
+          "name": "get_weather",
+          "description": "Get current weather for a city",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "city": {
+                "type": "string"
+              },
+              "unit": {
+                "type": "string",
+                "enum": [
+                  "celsius",
+                  "fahrenheit"
+                ]
+              }
+            },
+            "required": [
+              "city"
+            ]
+          }
+        },
+        {
+          "name": "get_time",
+          "description": "Get current time for a timezone or city",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "timezone": {
+                "type": "string",
+                "description": "City or timezone e.g. Tokyo"
+              }
+            },
+            "required": [
+              "timezone"
+            ]
+          }
+        }
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "What's the weather in Hanoi and what time is it in Tokyo?"
+        }
+      ]
+    }
+  },
+  "response": {
+    "raw_json": {
+      "turn1_response": {
+        "id": "msg_014joQBTGn44iH6ZVsmZiswt",
+        "content": [
+          {
+            "id": "toolu_01Xmd3Qm8L7xsAV3PpAp9yk4",
+            "input": {
+              "city": "Hanoi"
+            },
+            "name": "get_weather",
+            "type": "tool_use"
+          },
+          {
+            "id": "toolu_01W2AJwFQN2uk1sNXBzQtbYv",
+            "input": {
+              "timezone": "Tokyo"
+            },
+            "name": "get_time",
+            "type": "tool_use"
+          }
+        ],
+        "model": "claude-sonnet-4-5-20250929",
+        "role": "assistant",
+        "stop_reason": "tool_use",
+        "stop_sequence": null,
+        "type": "message",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 669,
+          "output_tokens": 91,
+          "server_tool_use": null,
+          "service_tier": "standard"
+        }
+      },
+      "tool_calls_count": 2,
+      "tool_calls": [
+        {
+          "id": "toolu_01Xmd3Qm8L7xsAV3PpAp9yk4",
+          "name": "get_weather",
+          "input": {
+            "city": "Hanoi"
+          }
+        },
+        {
+          "id": "toolu_01W2AJwFQN2uk1sNXBzQtbYv",
+          "name": "get_time",
+          "input": {
+            "timezone": "Tokyo"
+          }
+        }
+      ],
+      "turn2_response": {
+        "id": "msg_01Po378RM6UJCfYiKUyjoAqE",
+        "content": [
+          {
+            "citations": null,
+            "text": "The weather in Hanoi is currently 25°C and sunny.\n\nThe time in Tokyo is 3:45 PM JST.",
+            "type": "text"
+          }
+        ],
+        "model": "claude-sonnet-4-5-20250929",
+        "role": "assistant",
+        "stop_reason": "end_turn",
+        "stop_sequence": null,
+        "type": "message",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 836,
+          "output_tokens": 33,
+          "server_tool_use": null,
+          "service_tier": "standard"
+        }
+      }
+    },
+    "key_observations": {
+      "multiple_tool_calls_in_one_response": true,
+      "each_has_id": true,
+      "sending_multiple_results": "single user message with array of tool_result blocks"
+    }
+  },
+  "mapping_to_current_system": {
+    "equivalent_openai_param": "parallel_tool_calls",
+    "differences": [
+      "Anthropic supports multiple tool_use blocks; each has unique id."
+    ],
+    "conversion_needed": "Same as single tool call; collect all tool_use blocks and send all tool_results."
+  },
+  "model_in_response": "claude-sonnet-4-5-20250929"
+}

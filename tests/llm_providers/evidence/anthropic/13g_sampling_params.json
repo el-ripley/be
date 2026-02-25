@@ -1,0 +1,34 @@
+{
+  "test_name": "13g_sampling_params",
+  "provider": "anthropic",
+  "timestamp": "2026-02-11T10:20:36.865302+00:00",
+  "sdk_version": "0.79.0",
+  "model_requested": "claude-sonnet-4-5",
+  "model_used": "claude-sonnet-4-5",
+  "request": {
+    "method": "messages.create",
+    "params": {
+      "temperature": 0.0
+    }
+  },
+  "response": {
+    "raw_json": {
+      "temperature_supported": true,
+      "top_p": "check SDK",
+      "top_k": "Anthropic-specific",
+      "frequency_penalty": false,
+      "presence_penalty": false,
+      "stop_sequences": "check SDK"
+    },
+    "key_observations": {
+      "temperature": "Yes (0-1)",
+      "top_p": "Yes",
+      "top_k": "Yes",
+      "frequency_penalty": "No",
+      "presence_penalty": "No"
+    }
+  },
+  "mapping_to_current_system": {
+    "inventory": "temperature, top_p, top_k, stop_sequences"
+  }
+}

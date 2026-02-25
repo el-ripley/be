@@ -1,0 +1,76 @@
+{
+  "test_name": "01_basic_completion",
+  "provider": "anthropic",
+  "timestamp": "2026-02-11T09:17:03.256344+00:00",
+  "sdk_version": "0.79.0",
+  "model_requested": "claude-sonnet-4-5",
+  "model_used": "claude-sonnet-4-5",
+  "request": {
+    "method": "messages.create",
+    "params": {
+      "model": "claude-sonnet-4-5",
+      "max_tokens": 1024,
+      "system": "You are a helpful assistant.",
+      "messages": [
+        {
+          "role": "user",
+          "content": "What is 2+2? Reply in one sentence."
+        }
+      ]
+    }
+  },
+  "response": {
+    "raw_json": {
+      "id": "msg_01ArYZ54QdKy6TQFLSWziCzT",
+      "content": [
+        {
+          "citations": null,
+          "text": "2+2 equals 4.",
+          "type": "text"
+        }
+      ],
+      "model": "claude-sonnet-4-5-20250929",
+      "role": "assistant",
+      "stop_reason": "end_turn",
+      "stop_sequence": null,
+      "type": "message",
+      "usage": {
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 0,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 25,
+        "output_tokens": 12,
+        "server_tool_use": null,
+        "service_tier": "standard"
+      }
+    },
+    "key_observations": {
+      "response_structure": "id, type, role, content, stop_reason, stop_sequence, model, usage",
+      "content_format": "content is list of content blocks (text, tool_use); text in .text",
+      "role_values": [
+        "user",
+        "assistant"
+      ],
+      "stop_reason": "end_turn",
+      "usage_format": {
+        "input_tokens": 25,
+        "output_tokens": 12
+      },
+      "content_path": "response.content[0].text"
+    }
+  },
+  "mapping_to_current_system": {
+    "equivalent_openai_param": "input= messages (OpenAI uses input= with message items)",
+    "differences": [
+      "Anthropic: system= separate param; OpenAI: system in input as role system",
+      "Anthropic: content[].text; OpenAI: content[].output_text / input_text",
+      "Anthropic: stop_reason; OpenAI: status / output items"
+    ],
+    "conversion_needed": "Map system to/from messages; normalize content block types."
+  },
+  "model_in_response": "claude-sonnet-4-5-20250929"
+}

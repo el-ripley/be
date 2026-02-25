@@ -1,0 +1,316 @@
+{
+  "test_name": "10_streaming_reasoning",
+  "provider": "gemini",
+  "timestamp": "2026-02-11T10:18:42.777577+00:00",
+  "sdk_version": "1.2.0",
+  "model_requested": "gemini-2.5-pro",
+  "model_used": "gemini-2.5-pro",
+  "request": {
+    "method": "generate_content_stream",
+    "params": {
+      "model": "gemini-2.5-pro",
+      "thinking_config": {
+        "include_thoughts": true
+      },
+      "contents": "Solve step by step: What is the sum of all prime numbers less than 20?"
+    }
+  },
+  "response": {
+    "raw_json": {
+      "chunks": [
+        {
+          "raw_keys": [
+            "candidates",
+            "model_version",
+            "prompt_feedback",
+            "usage_metadata",
+            "automatic_function_calling_history",
+            "parsed"
+          ],
+          "thought_parts_count": 1,
+          "text_parts_count": 0,
+          "thought_preview": "**Examining User Intent**\n\nI'm focused on understanding the user's ultimate goal. It's clear they wa",
+          "text_preview": null
+        },
+        {
+          "raw_keys": [
+            "candidates",
+            "model_version",
+            "prompt_feedback",
+            "usage_metadata",
+            "automatic_function_calling_history",
+            "parsed"
+          ],
+          "thought_parts_count": 1,
+          "text_parts_count": 0,
+          "thought_preview": "**Structuring the Response**\n\nI've outlined the critical steps for the solution. Now, I'm working to",
+          "text_preview": null
+        },
+        {
+          "raw_keys": [
+            "candidates",
+            "model_version",
+            "prompt_feedback",
+            "usage_metadata",
+            "automatic_function_calling_history",
+            "parsed"
+          ],
+          "thought_parts_count": 1,
+          "text_parts_count": 0,
+          "thought_preview": "**Detailing the Primality Checks**\n\nI'm now detailing the process of identifying primes. I'm going t",
+          "text_preview": null
+        },
+        {
+          "raw_keys": [
+            "candidates",
+            "model_version",
+            "prompt_feedback",
+            "usage_metadata",
+            "automatic_function_calling_history",
+            "parsed"
+          ],
+          "thought_parts_count": 1,
+          "text_parts_count": 0,
+          "thought_preview": "**Outlining the Calculations**\n\nI'm developing the method for calculating the final sum. I'll includ",
+          "text_preview": null
+        },
+        {
+          "raw_keys": [
+            "candidates",
+            "model_version",
+            "prompt_feedback",
+            "usage_metadata",
+            "automatic_function_calling_history",
+            "parsed"
+          ],
+          "thought_parts_count": 1,
+          "text_parts_count": 0,
+          "thought_preview": "**Constructing the Solution**\n\nI'm now structuring the answer step by step. I am defining a prime nu",
+          "text_preview": null
+        },
+        {
+          "raw_keys": [
+            "candidates",
+            "model_version",
+            "prompt_feedback",
+            "usage_metadata",
+            "automatic_function_calling_history",
+            "parsed"
+          ],
+          "thought_parts_count": 1,
+          "text_parts_count": 0,
+          "thought_preview": "**Developing the Answer Structure**\n\nI'm now carefully crafting the final format. I will present the",
+          "text_preview": null
+        },
+        {
+          "raw_keys": [
+            "candidates",
+            "model_version",
+            "prompt_feedback",
+            "usage_metadata",
+            "automatic_function_calling_history",
+            "parsed"
+          ],
+          "thought_parts_count": 0,
+          "text_parts_count": 1,
+          "thought_preview": null,
+          "text_preview": "Of course! Let's solve this step by step.\n\nThe sum of all prime numbers less than 20 is **77**.\n\nHer"
+        },
+        {
+          "raw_keys": [
+            "candidates",
+            "model_version",
+            "prompt_feedback",
+            "usage_metadata",
+            "automatic_function_calling_history",
+            "parsed"
+          ],
+          "thought_parts_count": 0,
+          "text_parts_count": 1,
+          "thought_preview": null,
+          "text_preview": ":\n\n### Step 1: Understand what a prime number is.\n\nA prime number is a whole number greater than 1 t"
+        },
+        {
+          "raw_keys": [
+            "candidates",
+            "model_version",
+            "prompt_feedback",
+            "usage_metadata",
+            "automatic_function_calling_history",
+            "parsed"
+          ],
+          "thought_parts_count": 0,
+          "text_parts_count": 1,
+          "thought_preview": null,
+          "text_preview": "*   **Example of a non-prime number:** 6 is not prime (it's a composite number) because it can be di"
+        },
+        {
+          "raw_keys": [
+            "candidates",
+            "model_version",
+            "prompt_feedback",
+            "usage_metadata",
+            "automatic_function_calling_history",
+            "parsed"
+          ],
+          "thought_parts_count": 0,
+          "text_parts_count": 1,
+          "thought_preview": null,
+          "text_preview": " each number from 2 up to 19 to see if it is prime.\n\n*   **2**: Is prime (divisible by 1 and 2).\n*  "
+        },
+        {
+          "raw_keys": [
+            "candidates",
+            "model_version",
+            "prompt_feedback",
+            "usage_metadata",
+            "automatic_function_calling_history",
+            "parsed"
+          ],
+          "thought_parts_count": 0,
+          "text_parts_count": 1,
+          "thought_preview": null,
+          "text_preview": " by 2).\n*   **5**: Is prime (divisible by 1 and 5).\n*   **6**: Is not prime (divisible by 2 and 3).\n"
+        },
+        {
+          "raw_keys": [
+            "candidates",
+            "model_version",
+            "prompt_feedback",
+            "usage_metadata",
+            "automatic_function_calling_history",
+            "parsed"
+          ],
+          "thought_parts_count": 0,
+          "text_parts_count": 1,
+          "thought_preview": null,
+          "text_preview": "isible by 2 and 4).\n*   **9**: Is not prime (divisible by 3).\n*   **10**: Is not prime (divisible by"
+        },
+        {
+          "raw_keys": [
+            "candidates",
+            "model_version",
+            "prompt_feedback",
+            "usage_metadata",
+            "automatic_function_calling_history",
+            "parsed"
+          ],
+          "thought_parts_count": 0,
+          "text_parts_count": 1,
+          "thought_preview": null,
+          "text_preview": "2**: Is not prime (divisible by 2, 3, 4, 6).\n*   **13**: Is prime (divisible by 1 and 13).\n*   **14*"
+        },
+        {
+          "raw_keys": [
+            "candidates",
+            "model_version",
+            "prompt_feedback",
+            "usage_metadata",
+            "automatic_function_calling_history",
+            "parsed"
+          ],
+          "thought_parts_count": 0,
+          "text_parts_count": 1,
+          "thought_preview": null,
+          "text_preview": "**15**: Is not prime (divisible by 3 and 5).\n*   **16**: Is not prime (divisible by 2, 4, 8).\n*   **"
+        },
+        {
+          "raw_keys": [
+            "candidates",
+            "model_version",
+            "prompt_feedback",
+            "usage_metadata",
+            "automatic_function_calling_history",
+            "parsed"
+          ],
+          "thought_parts_count": 0,
+          "text_parts_count": 1,
+          "thought_preview": null,
+          "text_preview": "18**: Is not prime (divisible by 2, 3, 6, 9).\n*   **19**: Is prime (divisible by 1 and 19).\n\nSo, the"
+        },
+        {
+          "raw_keys": [
+            "candidates",
+            "model_version",
+            "prompt_feedback",
+            "usage_metadata",
+            "automatic_function_calling_history",
+            "parsed"
+          ],
+          "thought_parts_count": 0,
+          "text_parts_count": 1,
+          "thought_preview": null,
+          "text_preview": " 7, 11, 13, 17, 19.**\n\n### Step 3: Add the prime numbers together.\n\nNow, we just need to add the num"
+        },
+        {
+          "raw_keys": [
+            "candidates",
+            "model_version",
+            "prompt_feedback",
+            "usage_metadata",
+            "automatic_function_calling_history",
+            "parsed"
+          ],
+          "thought_parts_count": 0,
+          "text_parts_count": 1,
+          "thought_preview": null,
+          "text_preview": " 19\n\nTo make the addition easier, we can group the numbers:\n*   (2 + 3) + 5 = 5 + 5 = 10\n*   10 + 7 "
+        },
+        {
+          "raw_keys": [
+            "candidates",
+            "model_version",
+            "prompt_feedback",
+            "usage_metadata",
+            "automatic_function_calling_history",
+            "parsed"
+          ],
+          "thought_parts_count": 0,
+          "text_parts_count": 1,
+          "thought_preview": null,
+          "text_preview": "8 + 13 = 41\n*   41 + 17 = 58\n*   58 + 19 = **77**\n\n**Final Answer:** The sum of all prime numbers le"
+        }
+      ],
+      "chunk_count": 18,
+      "event_types": [
+        "GenerateContentChunk_with_thoughts",
+        "GenerateContentChunk_with_thoughts",
+        "GenerateContentChunk_with_thoughts",
+        "GenerateContentChunk_with_thoughts",
+        "GenerateContentChunk_with_thoughts",
+        "GenerateContentChunk_with_thoughts",
+        "GenerateContentChunk_with_thoughts",
+        "GenerateContentChunk_with_thoughts",
+        "GenerateContentChunk_with_thoughts",
+        "GenerateContentChunk_with_thoughts",
+        "GenerateContentChunk_with_thoughts",
+        "GenerateContentChunk_with_thoughts",
+        "GenerateContentChunk_with_thoughts",
+        "GenerateContentChunk_with_thoughts",
+        "GenerateContentChunk_with_thoughts",
+        "GenerateContentChunk_with_thoughts",
+        "GenerateContentChunk_with_thoughts",
+        "GenerateContentChunk_with_thoughts"
+      ]
+    },
+    "key_observations": {
+      "event_types_complete_list": [
+        "GenerateContentChunk_with_thoughts"
+      ],
+      "event_ordering": "Chunks may contain thought=True parts then text parts; verify ordering",
+      "thinking_in_chunks": true,
+      "boundary_thinking_text": "Same chunk can have both thought and text parts; or thought chunks then text chunks",
+      "openai_event_mapping": {
+        "response.reasoning_summary_text.delta": "chunk parts with thought=True",
+        "response.output_text.delta": "chunk parts with text"
+      }
+    }
+  },
+  "mapping_to_current_system": {
+    "equivalent_openai_param": "Stream chunks; thought parts then text parts",
+    "differences": [
+      "Gemini: no named events; chunks have parts with thought=True or text"
+    ],
+    "conversion_needed": "Map chunk parts with thought=True to reasoning deltas; text parts to output_text deltas."
+  }
+}

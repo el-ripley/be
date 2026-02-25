@@ -1,0 +1,123 @@
+{
+  "test_name": "06_structured_output",
+  "provider": "anthropic",
+  "timestamp": "2026-02-11T09:23:26.354672+00:00",
+  "sdk_version": "0.79.0",
+  "model_requested": "claude-sonnet-4-5",
+  "model_used": "claude-sonnet-4-5",
+  "request": {
+    "method": "messages.create",
+    "params": {
+      "model": "claude-sonnet-4-5",
+      "max_tokens": 1024,
+      "system": "You are a helpful assistant.",
+      "tools": [
+        {
+          "name": "structured_response",
+          "description": "Return structured analysis with summary, key_points, sentiment",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "summary": {
+                "type": "string"
+              },
+              "key_points": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "sentiment": {
+                "type": "string",
+                "enum": [
+                  "positive",
+                  "negative",
+                  "neutral"
+                ]
+              }
+            },
+            "required": [
+              "summary",
+              "key_points",
+              "sentiment"
+            ]
+          }
+        }
+      ],
+      "tool_choice": {
+        "type": "tool",
+        "name": "structured_response"
+      },
+      "messages": [
+        {
+          "role": "user",
+          "content": "Analyze in one sentence: AI is transforming healthcare. Return structured analysis."
+        }
+      ]
+    }
+  },
+  "response": {
+    "raw_json": {
+      "response": {
+        "id": "msg_01UJNdE9YQhVnC8AYtZR5JcK",
+        "content": [
+          {
+            "id": "toolu_01BsiWKnRt2ryWKuuLhNEqNr",
+            "input": {
+              "summary": "AI is transforming healthcare by revolutionizing diagnostics, treatment, and patient care delivery.",
+              "key_points": [
+                "AI is driving significant changes in the healthcare industry",
+                "Transformation impacts multiple areas including diagnostics and treatment",
+                "Healthcare delivery and patient care are being modernized through AI technology"
+              ],
+              "sentiment": "positive"
+            },
+            "name": "structured_response",
+            "type": "tool_use"
+          }
+        ],
+        "model": "claude-sonnet-4-5-20250929",
+        "role": "assistant",
+        "stop_reason": "tool_use",
+        "stop_sequence": null,
+        "type": "message",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 734,
+          "output_tokens": 122,
+          "server_tool_use": null,
+          "service_tier": "standard"
+        }
+      },
+      "output_location": "content[].type==tool_use, name==structured_response, input (dict)",
+      "parsed_structured": {
+        "summary": "AI is transforming healthcare by revolutionizing diagnostics, treatment, and patient care delivery.",
+        "key_points": [
+          "AI is driving significant changes in the healthcare industry",
+          "Transformation impacts multiple areas including diagnostics and treatment",
+          "Healthcare delivery and patient care are being modernized through AI technology"
+        ],
+        "sentiment": "positive"
+      }
+    },
+    "key_observations": {
+      "native_structured_output": "No; use tool_choice to force tool_use with schema",
+      "output_location": "content[].type==tool_use, name==structured_response, input (dict)",
+      "validation": "input_schema constrains tool_use input; no separate validation step"
+    }
+  },
+  "mapping_to_current_system": {
+    "equivalent_openai_param": "responses.parse(text_format= schema)",
+    "differences": [
+      "Anthropic: tool-as-structured-output; OpenAI: native parse() with schema"
+    ],
+    "conversion_needed": "For parse()-like use: create synthetic tool, tool_choice that tool, then read tool_use.input."
+  },
+  "model_in_response": "claude-sonnet-4-5-20250929"
+}

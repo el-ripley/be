@@ -1,0 +1,35 @@
+{
+  "test_name": "12c_invalid_request",
+  "provider": "gemini",
+  "timestamp": "2026-02-11T10:26:43.522454+00:00",
+  "sdk_version": "1.2.0",
+  "model_requested": "gemini-2.5-pro",
+  "model_used": "gemini-2.5-pro",
+  "request": {
+    "method": "generate_content",
+    "params": {
+      "model": "gemini-2.5-pro",
+      "tools": "[invalid schema]"
+    }
+  },
+  "response": {
+    "raw_json": {
+      "error_info": {
+        "type": "ClientError",
+        "message": "400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'Invalid value at \\'tools[0].function_declarations[0].parameters.type\\' (type.googleapis.com/google.cloud.aiplatform.v1beta1.Type), \"INVALID\"', 'status': 'INVALID_ARGUMENT', 'details': [{'@type': 'type.googleapis.com/google.rpc.BadRequest', 'fieldViolations': [{'field': 'tools[0].function_declarations[0].parameters.type', 'description': 'Invalid value at \\'tools[0].function_declarations[0].parameters.type\\' (type.googleapis.com/google.cloud.aiplatform.v1beta1.Type), \"INVALID\"'}]}]}}",
+        "repr": "ClientError('400 INVALID_ARGUMENT. {\\'error\\': {\\'code\\': 400, \\'message\\': \\'Invalid value at \\\\\\'tools[0].function_declarations[0].parameters.type\\\\\\' (type.googleapis.com/google.cloud.aiplatform.v1beta1.Type), \"INVALID\"\\', \\'status\\': \\'INVALID_ARGUMENT\\', \\'details\\': [{\\'@type\\': \\'type.googleapis.com/google.rpc.BadRequest\\', \\'fieldViolations\\': [{\\'field\\': \\'tools[0].function_declarations[0].parameters.type\\', \\'description\\': \\'Invalid value at \\\\\\'tools[0].function_declarations[0].parameters.type\\\\\\' (type.googleapis.com/google.cloud.aiplatform.v1beta1.Type), \"INVALID\"\\'}]}]}}')"
+      }
+    },
+    "key_observations": {
+      "error_class": "ClientError",
+      "retryable": false
+    }
+  },
+  "mapping_to_current_system": {
+    "equivalent_openai_param": "BadRequestError",
+    "differences": [
+      "ClientError"
+    ],
+    "conversion_needed": "Normalize error types"
+  }
+}

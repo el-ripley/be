@@ -1,0 +1,845 @@
+// ================================================================
+// ElRipley Database Schema - Complete Schema
+// Generated from SQLAlchemy models
+// Database: PostgreSQL
+// ================================================================
+
+// ================================================================
+// USERS AND ROLES TABLES
+// ================================================================
+
+Table roles {
+  id varchar(36) [pk]
+  name varchar(50) [not null, unique, default: 'user']
+}
+
+Table users {
+  id varchar(36) [pk]
+  created_at integer [not null]
+  updated_at integer [not null]
+}
+
+Table user_api_keys {
+  id uuid [pk, default: `gen_random_uuid()`]
+  user_id varchar(36) [not null]
+  key_name varchar(100) // "My OpenAI Key", "Team Key"
+  encrypted_key text [not null] // AES-256 encrypted API key
+  key_prefix varchar(20) // "sk-proj-abc..." for display purposes
+  provider varchar(50) [not null, default: 'openai'] // 'openai', 'anthropic', etc.
+  is_active boolean [not null, default: true]
+  settings jsonb // User preferences: model, reasoning effort, verbosity, etc.
+  last_used_at bigint // Track last usage timestamp
+  created_at bigint [not null, default: `EXTRACT(EPOCH FROM NOW())::BIGINT * 1000`]
+  updated_at bigint [not null, default: `EXTRACT(EPOCH FROM NOW())::BIGINT * 1000`]
+}
+
+Table user_role {
+  user_id varchar(36) [pk]
+  role_id varchar(36) [pk]
+}
+
+Table refresh_tokens {
+  id varchar(36) [pk]
+  user_id varchar(36) [not null]
+  token varchar(512) [not null, unique] // JWT refresh token
+  expires_at integer [not null] // Unix timestamp when token expires
+  is_revoked boolean [not null, default: false] // For token rotation/revocation
+  created_at integer [not null]
+  updated_at integer [not null]
+}
+
+Table user_conversation_settings {
+  id uuid [pk, default: `gen_random_uuid()`]
+  user_id varchar(36) [not null, unique]
+  context_token_limit integer // User's preferred context token limit
+  context_buffer_percent integer // User's preferred buffer percentage (0-100)
+  summarizer_model varchar(100) // User's preferred model for summarization
+  vision_model varchar(100) // User's preferred model for vision tasks
+  created_at bigint [not null, default: `EXTRACT(EPOCH FROM NOW())::BIGINT * 1000`]
+  updated_at bigint [not null, default: `EXTRACT(EPOCH FROM NOW())::BIGINT * 1000`]
+}
+
+// ================================================================
+// FACEBOOK INTEGRATION TABLES
+// ================================================================
+
+Table facebook_app_scope_users {
+  id varchar(255) [pk] // ASID
+  user_id varchar(36) [not null]
+  name varchar(255)
+  gender varchar(255)
+  email varchar(255)
+  picture varchar(255)
+  created_at integer [not null]
+  updated_at integer [not null]
+}
+
+Table fan_pages {
+  id varchar(255) [pk] // page_id
+  name varchar(1024)
+  avatar varchar(1024)
+  category varchar
+  created_at integer [not null]
+  updated_at integer [not null]
+}
+
+Table facebook_page_admins {
+  id varchar(36) [pk]
+  facebook_user_id varchar(255) [not null]
+  page_id varchar(255) [not null]
+  access_token text [not null] // page token
+  tasks jsonb // e.g., ["MANAGE", "MESSAGING", "CREATE_CONTENT"]
+  created_at integer [not null]
+  updated_at integer [not null]
+}
+
+Table facebook_page_scope_users {
+  id varchar(255) [pk] // PSID
+  fan_page_id varchar(255) [not null]
+  user_info jsonb
+  created_at integer [not null]
+  updated_at integer [not null]
+}
+
+// ================================================================
+// POSTS AND COMMENTS TABLES
+// ================================================================
+
+Table posts {
+  id varchar(255) [pk] // Facebook post_id
+  fan_page_id varchar(255) [not null]
+  message text // post text content
+  video_link text // video URL if post contains video
+  photo_link text // photo URL if post contains photo
+  facebook_created_time integer // created_time from webhook
+  // Engagement aggregate counts
+  reaction_total_count integer [default: 0]
+  reaction_like_count integer [default: 0]
+  reaction_love_count integer [default: 0]
+  reaction_haha_count integer [default: 0]
+  reaction_wow_count integer [default: 0]
+  reaction_sad_count integer [default: 0]
+  reaction_angry_count integer [default: 0]
+  reaction_care_count integer [default: 0]
+  share_count integer [default: 0]
+  comment_count integer [default: 0]
+  // Additional metadata
+  full_picture text // High-res image URL
+  permalink_url text // Direct link to post
+  status_type varchar(100) // mobile_status_update, added_photos, etc.
+  is_published boolean [default: true]
+  // Tracking timestamps
+  reactions_fetched_at integer // When reactions were last fetched
+  engagement_fetched_at integer // When full engagement was last fetched
+  created_at integer [not null]
+  updated_at integer [not null]
+}
+
+Table comments {
+  id varchar(255) [pk] // Facebook comment_id
+  post_id varchar(255) [not null]
+  parent_comment_id varchar(255) // for reply comments, references another comment, if null, it is a top-level comment
+  is_from_page boolean [not null, default: false] // TRUE if comment is from page itself
+  fan_page_id varchar(255) [not null] // direct reference to fan page for performance
+  facebook_page_scope_user_id varchar(255) // PSID if from user, NULL if from page
+  message text // comment text content
+  photo_url text // photo URL if comment contains photo
+  video_url text // video URL if comment contains video
+  facebook_created_time integer // created_time from webhook
+  // Engagement counts
+  like_count integer [default: 0]
+  reply_count integer [default: 0]
+  // Tracking timestamp
+  reactions_fetched_at integer
+  is_hidden boolean [not null, default: false] // for hiding comments without deleting
+  page_seen_at integer // when page/admin viewed this comment (for per-comment tracking)
+  deleted_at integer // soft delete timestamp, NULL if not deleted
+  created_at integer [not null]
+  updated_at integer [not null]
+}
+
+// ================================================================
+// REACTIONS TABLES
+// ================================================================
+
+Table post_reactions {
+  id uuid [pk, default: `gen_random_uuid()`]
+  post_id varchar(255) [not null]
+  fan_page_id varchar(255) [not null]
+  // Reactor info
+  reactor_id varchar(255) // Page-scoped user ID (PSID), NULL for page reactions
+  reactor_name varchar(500) // User/Page display name, NULL for page reactions
+  reactor_profile_pic text // Profile picture URL (optional)
+  // Reaction details
+  reaction_type varchar(20) [not null] // LIKE, LOVE, HAHA, WOW, SAD, ANGRY, CARE
+  // Timestamps
+  created_at integer [not null]
+  updated_at integer [not null]
+}
+
+Table comment_reactions {
+  id uuid [pk, default: `gen_random_uuid()`]
+  comment_id varchar(255) [not null]
+  post_id varchar(255) [not null]
+  fan_page_id varchar(255) [not null]
+  // Reactor info
+  reactor_id varchar(255) // Page-scoped user ID (PSID), NULL for page reactions
+  reactor_name varchar(500) // User/Page display name, NULL for page reactions
+  // Reaction details
+  reaction_type varchar(20) [not null]
+  // Timestamps
+  created_at integer [not null]
+  updated_at integer [not null]
+}
+
+// ================================================================
+// COMMENT CONVERSATIONS TABLES
+// ================================================================
+
+Table facebook_conversation_comments {
+  id uuid [pk, default: `gen_random_uuid()`]
+  root_comment_id varchar(255) [not null] // anchor comment id
+  fan_page_id varchar(255) [not null]
+  post_id varchar(255) [not null]
+  participant_scope_users jsonb [not null, default: `'[]'::jsonb`] // list of participant snapshots keyed by facebook_page_scope_user_id
+  has_page_reply boolean [not null, default: false]
+  latest_comment_is_from_page boolean
+  latest_comment_id varchar(255) // most recent comment in the thread
+  latest_comment_facebook_time integer
+  page_last_seen_comment_id varchar(255) // cursor: last comment page has seen
+  page_last_seen_at integer // timestamp when page last viewed this thread
+  mark_as_read boolean [not null, default: false] // user manually toggle read/unread state (UX feature)
+  created_at integer [not null]
+  updated_at integer [not null]
+}
+
+Table facebook_conversation_comment_entries {
+  id uuid [pk, default: `gen_random_uuid()`]
+  conversation_id uuid [not null]
+  comment_id varchar(255) [not null]
+  is_root_comment boolean [not null, default: false]
+  created_at integer [not null]
+  updated_at integer [not null]
+}
+
+// ================================================================
+// SYNC STATE TABLES
+// ================================================================
+
+Table facebook_post_sync_states {
+  id serial [pk]
+  fan_page_id varchar(255) [not null, unique]
+  posts_cursor text // Facebook paging cursor (after)
+  total_synced_posts integer [not null, default: 0]
+  status varchar(50) [not null, default: 'idle'] // idle | in_progress | completed
+  last_sync_at integer
+  created_at integer [not null]
+  updated_at integer [not null]
+}
+
+Table facebook_post_comment_sync_states {
+  id serial [pk]
+  post_id varchar(255) [not null, unique]
+  fan_page_id varchar(255) [not null]
+  comments_cursor text // Facebook paging cursor for root comments
+  total_synced_root_comments integer [not null, default: 0]
+  total_synced_comments integer [not null, default: 0] // Including replies
+  status varchar(50) [not null, default: 'idle'] // idle | in_progress | completed
+  last_sync_at integer
+  created_at integer [not null]
+  updated_at integer [not null]
+}
+
+// ================================================================
+// MESSENGER CONVERSATIONS AND MESSAGES
+// ================================================================
+
+Table facebook_conversation_messages {
+  id varchar(255) [pk] // native Graph conversation id (e.g., t_*)
+  fan_page_id varchar(255) [not null]
+  facebook_page_scope_user_id varchar(255) [not null]
+  participants_snapshot jsonb [not null, default: `'[]'::jsonb`]
+  latest_message_is_from_page boolean
+  latest_message_id varchar(255)
+  latest_message_facebook_time bigint
+  page_last_seen_message_id varchar(255) // cursor: last message page has seen (app controls this)
+  page_last_seen_at bigint
+  user_seen_at bigint // timestamp when user saw conversation (from FB webhook, no specific message)
+  mark_as_read boolean [not null, default: false] // user manually toggle read/unread state (UX feature)
+  deleted_at integer // soft delete timestamp, NULL if not deleted
+  created_at integer [not null]
+  updated_at integer [not null]
+}
+
+Table messages {
+  id varchar(255) [pk] // Facebook message_id (mid)
+  conversation_id varchar(255) [not null] // references facebook_conversation_messages table
+  is_echo boolean [not null, default: false] // TRUE if message from page, FALSE if from user
+  text text // text content
+  photo_url text // photo/image/gif/sticker URL
+  video_url text // video URL
+  audio_url text // audio URL
+  template_data jsonb // for templates and interactive elements
+  facebook_timestamp bigint // timestamp from webhook (milliseconds)
+  page_seen_at bigint // when page saw this message (app controls, for per-message tracking)
+  deleted_at integer // soft delete timestamp, NULL if not deleted
+  created_at integer [not null]
+  updated_at integer [not null]
+}
+
+Table facebook_inbox_sync_states {
+  id serial [pk]
+  fan_page_id varchar(255) [not null, unique]
+  fb_cursor text // Facebook paging cursor (after cursor)
+  total_synced_conversations integer [not null, default: 0]
+  total_synced_messages integer [not null, default: 0]
+  status varchar(50) [not null, default: 'idle'] // idle | in_progress | completed
+  last_sync_at integer
+  created_at integer [not null]
+  updated_at integer [not null]
+}
+
+// ================================================================
+// UNIFIED MEDIA ASSETS TABLES
+// ================================================================
+
+// Unified media assets table - tracks ALL media in S3: user uploads, Facebook mirrors, etc.
+Table media_assets {
+  id uuid [pk, default: `gen_random_uuid()`]
+  user_id varchar(36) [not null] // Owner of this media (for quota tracking)
+  
+  // Source differentiation
+  source_type varchar(20) [not null] // 'user_upload' | 'facebook_mirror'
+  
+  // Facebook mirror specific fields (NULL for user uploads)
+  fb_owner_type varchar(50) // 'fan_page', 'page_scope_user', 'post', 'comment', 'message'
+  fb_owner_id varchar(255) // ID of the FB entity that owns this media
+  fb_field_name varchar(100) // Field/column name (e.g., 'avatar', 'photo_url', 'profile_pic')
+  source_url text // Original Facebook URL
+  source_hash varchar(64) // SHA256/ETag for deduplication
+  
+  // Core media info
+  media_type varchar(20) [not null, default: 'image'] // image | video | audio
+  s3_key varchar(500) [not null]
+  s3_url text [not null]
+  file_size_bytes bigint [not null, default: 0] // For quota tracking
+  mime_type varchar(100) // e.g., 'image/jpeg', 'video/mp4'
+  original_filename varchar(500) // Original filename (for user uploads)
+  
+  // Status & lifecycle
+  status varchar(20) [not null, default: 'ready'] // pending | ready | failed
+  error_message text
+  retention_policy varchar(30) [not null, default: 'one_day'] // 'one_day' | 'one_week' | 'two_weeks' | 'one_month' | 'permanent'
+  expires_at bigint // Epoch millis when asset expires (NULL for permanent)
+  
+  // AI-generated description (for fallback when media stale/expired)
+  description text
+  description_model varchar(100) // Model used to generate (e.g., 'gpt-4o-mini')
+  description_generated_at bigint // When description was generated
+  
+  // Additional metadata
+  metadata jsonb // Any additional data (dimensions, duration, etc.)
+  last_checked_at bigint // Last S3 availability check
+  
+  created_at bigint [not null, default: `EXTRACT(EPOCH FROM NOW())::BIGINT * 1000`]
+  updated_at bigint [not null, default: `EXTRACT(EPOCH FROM NOW())::BIGINT * 1000`]
+}
+
+// User storage quota tracking - only 'permanent' retention media counts toward quota
+Table user_storage_quotas {
+  id uuid [pk, default: `gen_random_uuid()`]
+  user_id varchar(36) [not null, unique]
+  
+  // Current usage (bytes) - calculated from media_assets where retention_policy = 'permanent'
+  permanent_storage_used_bytes bigint [not null, default: 0]
+  
+  // Storage limit (bytes) - default: 500MB
+  permanent_storage_limit_bytes bigint [not null, default: 524288000]
+  
+  last_reconciled_at bigint // Last time quota was recalculated from actual media
+  created_at bigint [not null, default: `EXTRACT(EPOCH FROM NOW())::BIGINT * 1000`]
+  updated_at bigint [not null, default: `EXTRACT(EPOCH FROM NOW())::BIGINT * 1000`]
+}
+
+// Junction table: prompts <-> media assets (many-to-many)
+Table suggest_response_prompt_media {
+  id uuid [pk, default: `gen_random_uuid()`]
+  
+  // Polymorphic reference to prompt
+  prompt_type varchar(30) [not null] // 'page_prompt' | 'page_scope_user_prompt'
+  prompt_id uuid [not null]
+  
+  // Reference to media asset
+  media_id uuid [not null]
+  
+  // Optional ordering for display
+  display_order int [not null, default: 0]
+  
+  created_at bigint [not null, default: `EXTRACT(EPOCH FROM NOW())::BIGINT * 1000`]
+}
+
+// Media attachments for memory_blocks
+Table memory_block_media {
+  id uuid [pk, default: `gen_random_uuid()`]
+  block_id uuid [not null]
+  media_id uuid [not null]
+  display_order integer [not null, default: 1]
+  created_at bigint [not null, default: `EXTRACT(EPOCH FROM NOW())::BIGINT * 1000`]
+  
+  Indexes {
+    (block_id, media_id) [unique]
+  }
+}
+
+// ================================================================
+// BILLING CORE TABLES
+// ================================================================
+
+Table billing_settings {
+  id uuid [pk, default: `gen_random_uuid()`]
+  setting_key varchar(100) [not null, unique]
+  setting_value decimal(10, 4) [not null]
+  description text
+  created_at bigint [not null, default: `EXTRACT(EPOCH FROM NOW())::BIGINT * 1000`]
+  updated_at bigint [not null, default: `EXTRACT(EPOCH FROM NOW())::BIGINT * 1000`]
+}
+
+Table user_credit_balance {
+  id uuid [pk, default: `gen_random_uuid()`]
+  user_id varchar(36) [not null, unique]
+  balance_usd decimal(10, 4) [not null, default: 0]
+  lifetime_earned_usd decimal(10, 4) [default: 0]
+  lifetime_spent_usd decimal(10, 4) [default: 0]
+  last_credited_at bigint
+  last_spent_at bigint
+  created_at bigint [not null, default: `EXTRACT(EPOCH FROM NOW())::BIGINT * 1000`]
+  updated_at bigint [not null, default: `EXTRACT(EPOCH FROM NOW())::BIGINT * 1000`]
+}
+
+Table credit_transactions {
+  id uuid [pk, default: `gen_random_uuid()`]
+  user_id varchar(36) [not null]
+  transaction_type varchar(50) [not null] // 'welcome_bonus', 'topup', 'ai_usage', 'adjustment'
+  amount_usd decimal(10, 4) [not null]
+  balance_before_usd decimal(10, 4) [not null]
+  balance_after_usd decimal(10, 4) [not null]
+  source_type varchar(50) // 'stripe_payment', 'payos_payment', 'agent_response', 'manual_adjustment'
+  source_id uuid
+  description text
+  metadata jsonb
+  created_at bigint [not null, default: `EXTRACT(EPOCH FROM NOW())::BIGINT * 1000`]
+}
+
+// ================================================================
+// STRIPE INTEGRATION TABLES
+// ================================================================
+
+Table stripe_customers {
+  id uuid [pk, default: `gen_random_uuid()`]
+  user_id varchar(36) [not null, unique]
+  stripe_customer_id varchar(255) [not null, unique]
+  email varchar(255)
+  name varchar(255)
+  default_payment_method_id varchar(255)
+  metadata jsonb
+  created_at bigint [not null, default: `EXTRACT(EPOCH FROM NOW())::BIGINT * 1000`]
+  updated_at bigint [not null, default: `EXTRACT(EPOCH FROM NOW())::BIGINT * 1000`]
+}
+
+Table stripe_products {
+  id uuid [pk, default: `gen_random_uuid()`]
+  product_code varchar(50) [not null, unique]
+  product_name varchar(100) [not null]
+  product_type varchar(50) [not null, default: 'topup']
+  amount_usd decimal(10, 2)
+  credits_usd decimal(10, 4)
+  stripe_product_id varchar(255) [not null]
+  stripe_price_id varchar(255)
+  is_active boolean [default: true]
+  description text
+  metadata jsonb
+  created_at bigint [not null, default: `EXTRACT(EPOCH FROM NOW())::BIGINT * 1000`]
+  updated_at bigint [not null, default: `EXTRACT(EPOCH FROM NOW())::BIGINT * 1000`]
+}
+
+Table stripe_payments {
+  id uuid [pk, default: `gen_random_uuid()`]
+  user_id varchar(36) [not null]
+  stripe_customer_id uuid [not null]
+  stripe_payment_intent_id varchar(255)
+  stripe_charge_id varchar(255)
+  stripe_invoice_id varchar(255)
+  stripe_product_id uuid
+  amount_usd decimal(10, 2) [not null]
+  credits_usd decimal(10, 4) [not null]
+  currency varchar(3) [not null, default: 'usd']
+  payment_method_type varchar(50)
+  payment_method_last4 varchar(4)
+  payment_method_brand varchar(50)
+  status varchar(50) [not null]
+  failure_code varchar(100)
+  failure_message text
+  refunded_amount_usd decimal(10, 2) [default: 0]
+  refunded_at bigint
+  metadata jsonb
+  paid_at bigint
+  created_at bigint [not null, default: `EXTRACT(EPOCH FROM NOW())::BIGINT * 1000`]
+  updated_at bigint [not null, default: `EXTRACT(EPOCH FROM NOW())::BIGINT * 1000`]
+}
+
+Table stripe_webhook_events {
+  id uuid [pk, default: `gen_random_uuid()`]
+  stripe_event_id varchar(255) [not null, unique]
+  event_type varchar(100) [not null]
+  api_version varchar(50)
+  status varchar(50) [not null, default: 'pending']
+  event_data jsonb [not null]
+  stripe_customer_id varchar(255)
+  stripe_payment_intent_id varchar(255)
+  stripe_invoice_id varchar(255)
+  user_id varchar(36)
+  processed_at bigint
+  error_message text
+  retry_count integer [default: 0]
+  last_retry_at bigint
+  event_created_at bigint [not null]
+  received_at bigint [not null, default: `EXTRACT(EPOCH FROM NOW())::BIGINT * 1000`]
+}
+
+// ================================================================
+// SEPAY INTEGRATION TABLES (VND bank transfer via VietQR)
+// ================================================================
+
+Table sepay_config {
+  id uuid [pk, default: `gen_random_uuid()`]
+  config_key varchar(100) [not null, unique]
+  config_value text [not null]
+  description text
+  created_at bigint [not null, default: `EXTRACT(EPOCH FROM NOW())::BIGINT * 1000`]
+  updated_at bigint [not null, default: `EXTRACT(EPOCH FROM NOW())::BIGINT * 1000`]
+}
+
+Table user_topup_codes {
+  id uuid [pk, default: `gen_random_uuid()`]
+  user_id varchar(36) [not null, unique]
+  topup_code varchar(20) [not null, unique]
+  created_at bigint [not null, default: `EXTRACT(EPOCH FROM NOW())::BIGINT * 1000`]
+}
+
+Table sepay_transactions {
+  id uuid [pk, default: `gen_random_uuid()`]
+  sepay_id bigint [not null, unique]
+  user_id varchar(36)
+  gateway varchar(50) [not null]
+  account_number varchar(50) [not null]
+  amount_vnd bigint [not null]
+  amount_usd decimal(10, 4)
+  transfer_type varchar(10) [not null]
+  content text
+  reference_code varchar(100)
+  transaction_date varchar(50)
+  status varchar(50) [not null, default: 'unmatched']
+  event_data jsonb [not null]
+  notes text
+  processed_at bigint
+  created_at bigint [not null, default: `EXTRACT(EPOCH FROM NOW())::BIGINT * 1000`]
+}
+
+// ================================================================
+// OPENAI INTEGRATION TABLES
+// ================================================================
+
+Table openai_conversation {
+  id uuid [pk, default: `gen_random_uuid()`]
+  user_id varchar(36) [not null]
+  title varchar(500) // Optional conversation title
+  current_branch_id uuid // Current active branch
+  message_sequence_counter integer [not null, default: 0] // Counter for message sequence numbers
+  oldest_message_id uuid // Reference to the oldest message in conversation
+  created_at bigint [not null, default: `EXTRACT(EPOCH FROM NOW())::BIGINT * 1000`]
+  updated_at bigint [not null, default: `EXTRACT(EPOCH FROM NOW())::BIGINT * 1000`]
+}
+
+Table openai_message {
+  id uuid [pk, default: `gen_random_uuid()`]
+  conversation_id uuid [not null]
+  // Sequence number for ordering messages across all branches
+  sequence_number integer [not null] // Global sequence within conversation for ordering
+  // Message type determines which fields are relevant
+  role varchar(50) [not null] // Recommended roles: 'system', 'developer', 'user', 'assistant', 'tool'
+  type varchar(50) [not null] // Recommended types: 'message', 'reasoning', 'function_call', 'function_call_output', 'user_input'
+  content jsonb // Content fields (for type='message' or 'user_input') - nullable
+  metadata jsonb // Optional metadata for tagging message source or flags
+  reasoning_summary jsonb // Reasoning fields (for type='reasoning') - nullable
+  // For function_call and function_call_output
+  call_id varchar(255) // Links function_call to function_call_output - nullable
+  function_name varchar(255) // nullable
+  function_arguments jsonb // Function arguments (for type='function_call') - nullable
+  function_output jsonb // Function output (for type='function_call_output') - nullable
+  // Status - nullable
+  status varchar(50)
+  // Timestamps
+  created_at bigint [not null, default: `EXTRACT(EPOCH FROM NOW())::BIGINT * 1000`]
+  updated_at bigint [not null, default: `EXTRACT(EPOCH FROM NOW())::BIGINT * 1000`]
+}
+
+Table openai_conversation_branch {
+  id uuid [pk, default: `gen_random_uuid()`]
+  conversation_id uuid [not null]
+  created_from_message_id uuid // Message tạo branch từ đó
+  created_from_branch_id uuid // Branch cũ chứa message tạo branch
+  message_ids uuid[] [not null, default: `'{}'`] // Array chứa message IDs theo thứ tự
+  branch_name varchar(255) // Optional branch name
+  is_active boolean [default: false] // Current active branch
+  created_at bigint [not null, default: `EXTRACT(EPOCH FROM NOW())::BIGINT * 1000`]
+  updated_at bigint [not null, default: `EXTRACT(EPOCH FROM NOW())::BIGINT * 1000`]
+}
+
+Table openai_response {
+  id uuid [pk, default: `gen_random_uuid()`]
+  response_id varchar(255) [unique, not null] // OpenAI response ID
+  // User and conversation context
+  user_id varchar(36) [not null]
+  conversation_id uuid
+  // Branch tracking
+  branch_id uuid
+  // API Key tracking (BYOK support)
+  api_key_type varchar(20) [not null, default: 'system'] // 'system' | 'user_byok'
+  user_api_key_id uuid // Reference to user's BYOK key if used
+  // Model & timing
+  model varchar(100) [not null] // e.g., 'gpt-5-mini', 'gpt-4o'
+  created_at bigint [not null] // OpenAI timestamp (milliseconds)
+  latency_ms integer // Time taken for API call
+  // Token usage (from response.usage)
+  input_tokens integer [not null, default: 0]
+  cached_tokens integer [default: 0] // For prompt caching
+  output_tokens integer [not null, default: 0]
+  reasoning_tokens integer [default: 0] // For reasoning models (o1)
+  total_tokens integer [not null, default: 0]
+  // Cost tracking (USD)
+  input_cost decimal(10, 6) [default: 0]
+  output_cost decimal(10, 6) [default: 0]
+  total_cost decimal(10, 6) [default: 0]
+  // Request/Response data (JSONB for flexibility)
+  input jsonb // Full input messages/prompts
+  output jsonb // Full response output
+  tools jsonb // Tools used in this call
+  metadata jsonb // Additional context
+  // Status tracking
+  status varchar(50) [not null] // 'completed', 'failed', 'in_progress'
+  error jsonb // Error details if failed
+  // Timestamps
+  logged_at bigint [not null, default: `EXTRACT(EPOCH FROM NOW())::BIGINT * 1000`]
+  agent_response_id uuid // Reference to agent_response
+}
+
+Table openai_branch_message_mapping {
+  id uuid [pk, default: `gen_random_uuid()`]
+  message_id uuid [not null]
+  branch_id uuid [not null]
+  is_modified boolean [default: false] // Message có bị modify trong branch này không
+  modified_content jsonb // Nội dung đã modify (nếu có)
+  modified_reasoning_summary jsonb // Reasoning summary đã modify (nếu có)
+  modified_function_arguments jsonb // Function arguments đã modify (nếu có)
+  modified_function_output jsonb // Function output đã modify (nếu có)
+  is_hidden boolean [default: false] // Message có bị ẩn trong branch này không
+  created_at bigint [not null, default: `EXTRACT(EPOCH FROM NOW())::BIGINT * 1000`]
+}
+
+Table agent_response {
+  id uuid [pk, default: `gen_random_uuid()`]
+  user_id varchar(36) [not null]
+  conversation_id uuid // NULL for standalone agents (e.g., suggest_response_agent)
+  branch_id uuid // NULL for standalone agents (e.g., suggest_response_agent)
+  agent_type varchar(64) [not null, default: 'conversation_agent'] // Categorizes the agent execution
+  message_ids uuid[] [not null, default: `'{}'`] // Array of message IDs generated in this agent response
+  // API Key tracking (BYOK support)
+  api_key_type varchar(20) [not null, default: 'system'] // 'system' | 'user_byok'
+  user_api_key_id uuid // Reference to user's BYOK key if used
+  // Aggregate fields
+  model varchar(100) // Primary model used
+  total_input_tokens integer [default: 0]
+  total_output_tokens integer [default: 0]
+  total_tokens integer [default: 0]
+  total_latency_ms integer
+  total_cost decimal(10, 6) [default: 0] // Aggregate cost of all openai_response in this agent execution
+  call_count integer [default: 0] // Number of LLM calls
+  status varchar(50) [not null, default: 'in_progress'] // 'completed' | 'failed' | 'partial' | 'in_progress'
+  error jsonb
+  created_at bigint [not null, default: `EXTRACT(EPOCH FROM NOW())::BIGINT * 1000`]
+  updated_at bigint [not null, default: `EXTRACT(EPOCH FROM NOW())::BIGINT * 1000`]
+}
+
+// ================================================================
+// SUGGEST RESPONSE TABLES
+// ================================================================
+
+Table suggest_response_agent {
+  id uuid [pk, default: `gen_random_uuid()`]
+  user_id varchar(36) [not null, unique]
+  settings jsonb [default: `'{"model": "gpt-5.2", "reasoning": "low", "verbosity": "low"}'::jsonb`]
+  allow_auto_suggest boolean [not null, default: false]
+  num_suggest_response integer [not null, default: 3]
+  created_at bigint [not null, default: `EXTRACT(EPOCH FROM NOW())::BIGINT * 1000`]
+  updated_at bigint [not null, default: `EXTRACT(EPOCH FROM NOW())::BIGINT * 1000`]
+}
+
+Table page_memory {
+  id uuid [pk, default: `gen_random_uuid()`]
+  fan_page_id varchar(255) [not null]
+  owner_user_id varchar(36) [not null]
+  prompt_type varchar(20) [not null] // 'messages' | 'comments'
+  created_by_type varchar(20) [not null] // 'user' | 'agent'
+  is_active boolean [not null, default: true]
+  created_at bigint [not null, default: `EXTRACT(EPOCH FROM NOW())::BIGINT * 1000`]
+}
+
+Table page_scope_user_memory {
+  id uuid [pk, default: `gen_random_uuid()`]
+  fan_page_id varchar(255) [not null]
+  facebook_page_scope_user_id varchar(255) [not null]
+  owner_user_id varchar(36) [not null]
+  created_by_type varchar(20) [not null] // 'user' | 'agent'
+  is_active boolean [not null, default: true]
+  created_at bigint [not null, default: `EXTRACT(EPOCH FROM NOW())::BIGINT * 1000`]
+}
+
+Table user_memory {
+  id uuid [pk, default: `gen_random_uuid()`]
+  owner_user_id varchar(36) [not null]
+  created_by_type varchar(20) [not null] // 'user' | 'agent'
+  is_active boolean [not null, default: true]
+  created_at bigint [not null, default: `EXTRACT(EPOCH FROM NOW())::BIGINT * 1000`]
+}
+
+Table memory_blocks {
+  id uuid [pk, default: `gen_random_uuid()`]
+  prompt_type varchar(30) [not null] // 'page_prompt' | 'user_prompt' | 'user_memory'
+  prompt_id uuid [not null]
+  block_key varchar(100) [not null]
+  title varchar(255) [not null]
+  content text [not null]
+  display_order integer [not null, default: 0]
+  created_at bigint [not null, default: `EXTRACT(EPOCH FROM NOW())::BIGINT * 1000`]
+  created_by_type varchar(20) [not null] // 'user' | 'agent'
+}
+
+Table suggest_response_history {
+  id uuid [pk, default: `gen_random_uuid()`]
+  user_id varchar(36) [not null]
+  fan_page_id varchar(255) [not null]
+  conversation_type varchar(20) [not null] // 'messages' | 'comments'
+  facebook_conversation_messages_id varchar(255)
+  facebook_conversation_comments_id uuid
+  latest_item_id varchar(255) [not null]
+  latest_item_facebook_time bigint [not null]
+  page_prompt_id uuid // references page_memory.id
+  page_scope_user_prompt_id uuid // references page_scope_user_memory.id
+  suggestions jsonb [not null, default: `'[]'::jsonb`]
+  suggestion_count integer [not null, default: 0]
+  agent_response_id uuid [not null]
+  trigger_type varchar(20) [not null] // 'user' | 'auto'
+  selected_suggestion_index integer
+  reaction varchar(20) // 'like' | 'dislike'
+  created_at bigint [not null, default: `EXTRACT(EPOCH FROM NOW())::BIGINT * 1000`]
+  updated_at bigint [not null, default: `EXTRACT(EPOCH FROM NOW())::BIGINT * 1000`]
+}
+
+// ================================================================
+// RELATIONSHIPS
+// ================================================================
+
+// Users Domain Relationships
+Ref: user_api_keys.user_id > users.id [delete: cascade]
+Ref: user_role.user_id > users.id [delete: cascade]
+Ref: user_role.role_id > roles.id [delete: cascade]
+Ref: refresh_tokens.user_id > users.id [delete: cascade]
+Ref: user_conversation_settings.user_id > users.id [delete: cascade]
+
+// Media Assets Relationships
+Ref: media_assets.user_id > users.id [delete: cascade]
+Ref: user_storage_quotas.user_id > users.id [delete: cascade]
+Ref: suggest_response_prompt_media.media_id > media_assets.id [delete: cascade]
+Ref: memory_block_media.block_id > memory_blocks.id [delete: cascade]
+Ref: memory_block_media.media_id > media_assets.id [delete: cascade]
+
+// Billing Relationships
+Ref: user_credit_balance.user_id > users.id [delete: cascade]
+Ref: credit_transactions.user_id > users.id [delete: cascade]
+
+// Stripe Relationships
+Ref: stripe_customers.user_id > users.id [delete: cascade]
+Ref: stripe_payments.user_id > users.id [delete: cascade]
+Ref: stripe_payments.stripe_customer_id > stripe_customers.id [delete: cascade]
+Ref: stripe_payments.stripe_product_id > stripe_products.id [delete: set null]
+Ref: stripe_webhook_events.user_id > users.id [delete: set null]
+
+// SePay Relationships
+Ref: user_topup_codes.user_id > users.id [delete: cascade]
+Ref: sepay_transactions.user_id > users.id [delete: set null]
+
+// Facebook Integration Relationships
+Ref: facebook_app_scope_users.user_id > users.id [delete: cascade]
+Ref: facebook_page_admins.facebook_user_id > facebook_app_scope_users.id [delete: cascade]
+Ref: facebook_page_admins.page_id > fan_pages.id [delete: cascade]
+Ref: facebook_page_scope_users.fan_page_id > fan_pages.id [delete: cascade]
+Ref: posts.fan_page_id > fan_pages.id [delete: cascade]
+Ref: comments.post_id > posts.id [delete: cascade]
+Ref: comments.fan_page_id > fan_pages.id [delete: cascade]
+Ref: comments.parent_comment_id > comments.id [delete: cascade]
+Ref: comments.facebook_page_scope_user_id > facebook_page_scope_users.id [delete: set null]
+Ref: post_reactions.post_id > posts.id [delete: cascade]
+Ref: post_reactions.fan_page_id > fan_pages.id [delete: cascade]
+Ref: comment_reactions.comment_id > comments.id [delete: cascade]
+Ref: comment_reactions.post_id > posts.id [delete: cascade]
+Ref: comment_reactions.fan_page_id > fan_pages.id [delete: cascade]
+Ref: facebook_conversation_comments.root_comment_id > comments.id [delete: cascade]
+Ref: facebook_conversation_comments.fan_page_id > fan_pages.id [delete: cascade]
+Ref: facebook_conversation_comments.post_id > posts.id [delete: cascade]
+Ref: facebook_conversation_comments.latest_comment_id > comments.id [delete: set null]
+Ref: facebook_conversation_comments.page_last_seen_comment_id > comments.id [delete: set null]
+Ref: facebook_conversation_comment_entries.conversation_id > facebook_conversation_comments.id [delete: cascade]
+Ref: facebook_conversation_comment_entries.comment_id > comments.id [delete: cascade]
+Ref: facebook_post_sync_states.fan_page_id > fan_pages.id [delete: cascade]
+Ref: facebook_post_comment_sync_states.post_id > posts.id [delete: cascade]
+Ref: facebook_post_comment_sync_states.fan_page_id > fan_pages.id [delete: cascade]
+Ref: facebook_conversation_messages.fan_page_id > fan_pages.id [delete: cascade]
+Ref: facebook_conversation_messages.facebook_page_scope_user_id > facebook_page_scope_users.id [delete: cascade]
+Ref: messages.conversation_id > facebook_conversation_messages.id [delete: cascade]
+Ref: facebook_inbox_sync_states.fan_page_id > fan_pages.id [delete: cascade]
+
+// OpenAI Integration Relationships
+Ref: openai_conversation.user_id > users.id
+Ref: openai_conversation.current_branch_id > openai_conversation_branch.id [delete: set null]
+Ref: openai_message.conversation_id > openai_conversation.id [delete: cascade]
+Ref: openai_conversation_branch.conversation_id > openai_conversation.id [delete: cascade]
+Ref: openai_conversation_branch.created_from_message_id > openai_message.id [delete: set null]
+Ref: openai_conversation_branch.created_from_branch_id > openai_conversation_branch.id [delete: set null]
+Ref: openai_response.user_id > users.id
+Ref: openai_response.conversation_id > openai_conversation.id [delete: set null]
+Ref: openai_response.branch_id > openai_conversation_branch.id [delete: set null]
+Ref: openai_response.user_api_key_id > user_api_keys.id [delete: set null]
+Ref: openai_response.agent_response_id > agent_response.id [delete: set null]
+Ref: openai_branch_message_mapping.message_id > openai_message.id [delete: cascade]
+Ref: openai_branch_message_mapping.branch_id > openai_conversation_branch.id [delete: cascade]
+Ref: agent_response.user_id > users.id
+Ref: agent_response.conversation_id > openai_conversation.id [delete: cascade]
+Ref: agent_response.branch_id > openai_conversation_branch.id [delete: cascade]
+Ref: agent_response.user_api_key_id > user_api_keys.id [delete: set null]
+
+// Suggest Response & Memory Relationships
+Ref: suggest_response_agent.user_id > users.id [delete: cascade]
+Ref: page_memory.fan_page_id > fan_pages.id [delete: cascade]
+Ref: page_memory.owner_user_id > users.id [delete: cascade]
+Ref: page_scope_user_memory.fan_page_id > fan_pages.id [delete: cascade]
+Ref: page_scope_user_memory.facebook_page_scope_user_id > facebook_page_scope_users.id [delete: cascade]
+Ref: page_scope_user_memory.owner_user_id > users.id [delete: cascade]
+Ref: user_memory.owner_user_id > users.id [delete: cascade]
+Ref: suggest_response_history.user_id > users.id [delete: cascade]
+Ref: suggest_response_history.fan_page_id > fan_pages.id [delete: cascade]
+Ref: suggest_response_history.facebook_conversation_messages_id > facebook_conversation_messages.id [delete: set null]
+Ref: suggest_response_history.facebook_conversation_comments_id > facebook_conversation_comments.id [delete: set null]
+Ref: suggest_response_history.page_prompt_id > page_memory.id [delete: restrict]
+Ref: suggest_response_history.page_scope_user_prompt_id > page_scope_user_memory.id [delete: restrict]
+Ref: suggest_response_history.agent_response_id > agent_response.id [delete: restrict]
+

@@ -1,0 +1,70 @@
+services:
+  # PostgreSQL - Main Database
+  postgres:
+    image: postgres:16.3
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT:-5434}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER:-el-ripley-user}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-crypto-gambling-pass}
+      - POSTGRES_DB=${POSTGRES_DB_NAME:-el_ripley}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-el-ripley-user}"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+    networks:
+      - ai_agent_network
+
+  redis:
+    image: redis:7.2-alpine
+    ports:
+      - "127.0.0.1:${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis_data:/data
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-redis-password}
+    command: redis-server --requirepass ${REDIS_PASSWORD:-redis-password}
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+    networks:
+      - ai_agent_network
+
+  # Qdrant - Vector DB for playbooks semantic search (named vectors, hybrid RRF)
+  qdrant:
+    image: qdrant/qdrant:v1.12.4
+    ports:
+      - "127.0.0.1:${QDRANT_PORT_REST:-6333}:6333"
+      - "127.0.0.1:${QDRANT_PORT_GRPC:-6334}:6334"
+    volumes:
+      - qdrant_data:/qdrant/storage
+    environment:
+      - QDRANT__SERVICE__GRPC_PORT=6334
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:6333/readyz"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+    networks:
+      - ai_agent_network
+
+volumes:
+  postgres_data:
+  redis_data:
+  qdrant_data:
+
+networks:
+  ai_agent_network:
+    name: ai_agent_network
+    driver: bridge

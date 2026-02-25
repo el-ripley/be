@@ -1,0 +1,31 @@
+{
+  "test_name": "13g_sampling_params",
+  "provider": "gemini",
+  "timestamp": "2026-02-11T10:36:57.264478+00:00",
+  "sdk_version": "1.2.0",
+  "model_requested": "gemini-2.5-pro",
+  "model_used": "gemini-2.5-pro",
+  "request": {
+    "method": "generate_content",
+    "params": {
+      "temperature": 0.0
+    }
+  },
+  "response": {
+    "raw_json": {
+      "temperature_supported": true,
+      "top_p": "in config",
+      "top_k": "in config",
+      "stop_sequences": "in config"
+    },
+    "key_observations": {
+      "temperature": "Yes",
+      "top_p": "Yes",
+      "top_k": "Yes",
+      "stop_sequences": "Yes"
+    }
+  },
+  "mapping_to_current_system": {
+    "inventory": "temperature, top_p, top_k, stop_sequences"
+  }
+}

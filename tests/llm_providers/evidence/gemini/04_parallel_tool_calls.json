@@ -1,0 +1,153 @@
+{
+  "test_name": "04_parallel_tool_calls",
+  "provider": "gemini",
+  "timestamp": "2026-02-11T06:23:33.163360+00:00",
+  "sdk_version": "1.2.0",
+  "model_used": "gemini-2.5-pro",
+  "request": {
+    "method": "models.generate_content",
+    "params": {
+      "model": "gemini-2.5-pro",
+      "tools": [
+        "function_declarations=[FunctionDeclaration(response=None, description='Get current weather for a city', name='get_weather', parameters=Schema(min_items=None, example=None, property_ordering=None, pattern=None, minimum=None, default=None, any_of=None, max_length=None, title=None, min_length=None, min_properties=None, max_items=None, maximum=None, nullable=None, max_properties=None, type=<Type.OBJECT: 'OBJECT'>, description=None, enum=None, format=None, items=None, properties={'city': Schema(min_items=None, example=None, property_ordering=None, pattern=None, minimum=None, default=None, any_of=None, max_length=None, title=None, min_length=None, min_properties=None, max_items=None, maximum=None, nullable=None, max_properties=None, type=<Type.STRING: 'STRING'>, description=None, enum=None, format=None, items=None, properties=None, required=None), 'unit': Schema(min_items=None, example=None, property_ordering=None, pattern=None, minimum=None, default=None, any_of=None, max_length=None, title=None, min_length=None, min_properties=None, max_items=None, maximum=None, nullable=None, max_properties=None, type=<Type.STRING: 'STRING'>, description=None, enum=['celsius', 'fahrenheit'], format=None, items=None, properties=None, required=None)}, required=['city'])), FunctionDeclaration(response=None, description='Get current time for a timezone or city', name='get_time', parameters=Schema(min_items=None, example=None, property_ordering=None, pattern=None, minimum=None, default=None, any_of=None, max_length=None, title=None, min_length=None, min_properties=None, max_items=None, maximum=None, nullable=None, max_properties=None, type=<Type.OBJECT: 'OBJECT'>, description=None, enum=None, format=None, items=None, properties={'timezone': Schema(min_items=None, example=None, property_ordering=None, pattern=None, minimum=None, default=None, any_of=None, max_length=None, title=None, min_length=None, min_properties=None, max_items=None, maximum=None, nullable=None, max_properties=None, type=<Type.STRING: 'STRING'>, description='City or timezone e.g. Tokyo', enum=None, format=None, items=None, properties=None, required=None)}, required=['timezone']))] retrieval=None google_search=None google_search_retrieval=None code_execution=None"
+      ],
+      "prompt": "What's the weather in Hanoi and what time is it in Tokyo?"
+    }
+  },
+  "response": {
+    "raw_json": {
+      "turn1_response": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "video_metadata": null,
+                  "thought": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": {
+                    "id": null,
+                    "args": {
+                      "city": "Hanoi"
+                    },
+                    "name": "get_weather"
+                  },
+                  "function_response": null,
+                  "inline_data": null,
+                  "text": null
+                },
+                {
+                  "video_metadata": null,
+                  "thought": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": {
+                    "id": null,
+                    "args": {
+                      "timezone": "Tokyo"
+                    },
+                    "name": "get_time"
+                  },
+                  "function_response": null,
+                  "inline_data": null,
+                  "text": null
+                }
+              ],
+              "role": "model"
+            },
+            "citation_metadata": null,
+            "finish_message": null,
+            "token_count": null,
+            "avg_logprobs": -1.0503123023293235,
+            "finish_reason": "STOP",
+            "grounding_metadata": null,
+            "index": null,
+            "logprobs_result": null,
+            "safety_ratings": null
+          }
+        ],
+        "model_version": "gemini-2.5-pro",
+        "prompt_feedback": null,
+        "usage_metadata": {
+          "cached_content_token_count": null,
+          "candidates_token_count": 11,
+          "prompt_token_count": 63,
+          "total_token_count": 212
+        },
+        "automatic_function_calling_history": [],
+        "parsed": null
+      },
+      "function_calls_count": 2,
+      "function_calls": [
+        {
+          "name": "get_weather",
+          "args": {
+            "city": "Hanoi"
+          }
+        },
+        {
+          "name": "get_time",
+          "args": {
+            "timezone": "Tokyo"
+          }
+        }
+      ],
+      "turn2_response": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "video_metadata": null,
+                  "thought": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": null,
+                  "function_response": null,
+                  "inline_data": null,
+                  "text": "It's 25°C and sunny in Hanoi, and the time in Tokyo is 3:45 PM JST."
+                }
+              ],
+              "role": "model"
+            },
+            "citation_metadata": null,
+            "finish_message": null,
+            "token_count": null,
+            "avg_logprobs": -0.7179288182939801,
+            "finish_reason": "STOP",
+            "grounding_metadata": null,
+            "index": null,
+            "logprobs_result": null,
+            "safety_ratings": null
+          }
+        ],
+        "model_version": "gemini-2.5-pro",
+        "prompt_feedback": null,
+        "usage_metadata": {
+          "cached_content_token_count": null,
+          "candidates_token_count": 28,
+          "prompt_token_count": 95,
+          "total_token_count": 321
+        },
+        "automatic_function_calling_history": [],
+        "parsed": null
+      }
+    },
+    "key_observations": {
+      "multiple_tool_calls_in_one_response": true,
+      "no_call_id": "Gemini matches by function name only",
+      "sending_multiple_results": "Content(role=tool) with multiple Part.from_function_response"
+    }
+  },
+  "mapping_to_current_system": {
+    "equivalent_openai_param": "parallel_tool_calls",
+    "differences": [
+      "Gemini can return multiple function_call parts; order/match by name."
+    ],
+    "conversion_needed": "Assign synthetic call_ids when converting to unified format for tool_executor."
+  }
+}

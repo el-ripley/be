@@ -1,0 +1,26 @@
+{
+  "test_name": "13e_store",
+  "provider": "anthropic",
+  "timestamp": "2026-02-11T10:20:32.762588+00:00",
+  "sdk_version": "0.79.0",
+  "model_requested": "claude-sonnet-4-5",
+  "model_used": "claude-sonnet-4-5",
+  "request": {
+    "method": "N/A",
+    "params": "Documentation only"
+  },
+  "response": {
+    "raw_json": {
+      "store_equivalent": false,
+      "metadata_param": true,
+      "note": "Anthropic has metadata for logging; prompt caching is different"
+    },
+    "key_observations": {
+      "openai_store": "store=True stores on OpenAI side",
+      "anthropic": "No store equivalent; metadata if any"
+    }
+  },
+  "mapping_to_current_system": {
+    "adapter": "Ignore store param for Anthropic"
+  }
+}

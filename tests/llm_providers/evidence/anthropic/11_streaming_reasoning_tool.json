@@ -1,0 +1,2183 @@
+{
+  "test_name": "11_streaming_reasoning_tool",
+  "provider": "anthropic",
+  "timestamp": "2026-02-11T10:19:16.888595+00:00",
+  "sdk_version": "0.79.0",
+  "model_requested": "claude-sonnet-4-5",
+  "model_used": "claude-sonnet-4-5",
+  "request": {
+    "method": "messages.stream (2 turns)",
+    "params": {
+      "turn1": {
+        "model": "claude-sonnet-4-5",
+        "max_tokens": 16000,
+        "thinking": {
+          "type": "enabled",
+          "budget_tokens": 10000
+        },
+        "system": "You are a helpful assistant.",
+        "tools": [
+          {
+            "name": "get_weather",
+            "description": "Get current weather for a city",
+            "input_schema": {
+              "type": "object",
+              "properties": {
+                "city": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "city"
+              ]
+            }
+          }
+        ],
+        "messages": [
+          {
+            "role": "user",
+            "content": "I'm planning a trip to Hanoi tomorrow. What's the weather like and what should I pack?"
+          }
+        ]
+      },
+      "turn2_messages_count": 3
+    }
+  },
+  "response": {
+    "raw_json": {
+      "events_turn1": [
+        {
+          "type": "message_start",
+          "data": {
+            "type": "message_start"
+          }
+        },
+        {
+          "type": "content_block_start",
+          "data": {
+            "type": "content_block_start",
+            "content_block": {
+              "type": "thinking",
+              "thinking": ""
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": "The user is asking about the weather in"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " Hanoi and"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " what they should pack for their trip."
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " I have"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " a function to"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " get the current weather for a city."
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " Let me call"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " that function with"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " \""
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": "Hanoi\" as the city parameter"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": "."
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": "\n\nOnce"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " I get the weather information"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": ", I can"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": " provide p"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": "acking recommendations based on the conditions"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "thinking_delta",
+              "thinking": "."
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "thinking",
+          "data": {
+            "type": "thinking"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "signature_delta"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "signature",
+          "data": {
+            "type": "signature"
+          }
+        },
+        {
+          "type": "content_block_stop",
+          "data": {
+            "type": "content_block_stop",
+            "content_block": {
+              "type": "thinking",
+              "thinking": "The user is asking about the weather in Hanoi and what they should pack for their trip. I have a function to get the current weather for a city. Let m"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "content_block_start",
+          "data": {
+            "type": "content_block_start",
+            "content_block": {
+              "type": "tool_use"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "input_json_delta"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "input_json",
+          "data": {
+            "type": "input_json"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "input_json_delta"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "input_json",
+          "data": {
+            "type": "input_json"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "input_json_delta"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "input_json",
+          "data": {
+            "type": "input_json"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "input_json_delta"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "input_json",
+          "data": {
+            "type": "input_json"
+          }
+        },
+        {
+          "type": "content_block_stop",
+          "data": {
+            "type": "content_block_stop",
+            "content_block": {
+              "type": "tool_use"
+            },
+            "index": 1
+          }
+        },
+        {
+          "type": "message_delta",
+          "data": {
+            "type": "message_delta",
+            "delta": {
+              "type": null
+            }
+          }
+        },
+        {
+          "type": "message_stop",
+          "data": {
+            "type": "message_stop"
+          }
+        }
+      ],
+      "event_count_turn1": 51,
+      "event_types_turn1": [
+        "message_start",
+        "content_block_start",
+        "content_block_delta",
+        "thinking",
+        "content_block_delta",
+        "thinking",
+        "content_block_delta",
+        "thinking",
+        "content_block_delta",
+        "thinking",
+        "content_block_delta",
+        "thinking",
+        "content_block_delta",
+        "thinking",
+        "content_block_delta",
+        "thinking",
+        "content_block_delta",
+        "thinking",
+        "content_block_delta",
+        "thinking",
+        "content_block_delta",
+        "thinking",
+        "content_block_delta",
+        "thinking",
+        "content_block_delta",
+        "thinking",
+        "content_block_delta",
+        "thinking",
+        "content_block_delta",
+        "thinking",
+        "content_block_delta",
+        "thinking",
+        "content_block_delta",
+        "thinking",
+        "content_block_delta",
+        "thinking",
+        "content_block_delta",
+        "signature",
+        "content_block_stop",
+        "content_block_start",
+        "content_block_delta",
+        "input_json",
+        "content_block_delta",
+        "input_json",
+        "content_block_delta",
+        "input_json",
+        "content_block_delta",
+        "input_json",
+        "content_block_stop",
+        "message_delta",
+        "message_stop"
+      ],
+      "tool_calls_turn1": [
+        {
+          "id": "toolu_01KAcDmbJ64bc222QFeYJUYK",
+          "name": "get_weather",
+          "input": {
+            "city": "Hanoi"
+          }
+        }
+      ],
+      "content_blocks_turn1": [
+        "thinking",
+        "tool_use"
+      ],
+      "events_turn2": [
+        {
+          "type": "message_start",
+          "data": {
+            "type": "message_start"
+          }
+        },
+        {
+          "type": "content_block_start",
+          "data": {
+            "type": "content_block_start",
+            "content_block": {
+              "type": "text",
+              "text": ""
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "Great"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " news"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " for"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " your trip!"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " The current"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " weather in Hanoi is **"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "25°C ("
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "77"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "°F) and sunny with a light"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " breeze**"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " - perfect weather"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " for exploring the city!"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "\n\n##"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " Packing Recommendations:\n\n**"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "Clothing"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": ":**\n- Light"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": ", breathable clothing"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " (cotton"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " or linen)\n- T"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "-shirts and shorts/"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "light"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " pants\n- A"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " light"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " long"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "-sl"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "eeved shirt for sun"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " protection or"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " air"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "-"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "conditioned spaces"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "\n- Comfortable walking shoes\n-"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " Sand"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "als"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "\n- A"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " light jacket"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " or card"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "igan for even"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "ings or"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " indoor"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " air"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " conditioning"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "\n\n**Essentials:**\n-"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " Sunglasses"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "\n- Sunscreen (SP"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "F 30+)\n- A"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " hat or"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " cap for"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " sun protection\n- Re"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "usable water bottle to"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " stay hydrated\n- Light"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " rain jacket or small"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " umbrella (just"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " in case,"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " as"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " weather"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " can change)\n\n**Other"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " items"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": ":**\n- Mosqu"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "ito repellent\n- Light"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " scarf ("
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "useful"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " for visiting"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " temples)"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "\n\nThe"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " pleasant"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " temperatures and sunny conditions"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " make it"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " ideal for s"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "ightseeing,"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " visiting"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " Hanoi's Old"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " Quarter,"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " H"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": "oan Kiem Lake, and enjoying"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " outdoor"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta",
+              "text": " activities. Have a wonderful trip!"
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_stop",
+          "data": {
+            "type": "content_block_stop",
+            "content_block": {
+              "type": "text",
+              "text": "Great news for your trip! The current weather in Hanoi is **25°C (77°F) and sunny with a light breeze** - perfect weather for exploring the city!\n\n## "
+            },
+            "index": 0
+          }
+        },
+        {
+          "type": "message_delta",
+          "data": {
+            "type": "message_delta",
+            "delta": {
+              "type": null
+            }
+          }
+        },
+        {
+          "type": "message_stop",
+          "data": {
+            "type": "message_stop"
+          }
+        }
+      ],
+      "event_count_turn2": 157,
+      "event_types_turn2": [
+        "message_start",
+        "content_block_start",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_stop",
+        "message_delta",
+        "message_stop"
+      ],
+      "final_message_turn1": {
+        "id": "msg_013QnDLeCafNEwiEtAWBAq4f",
+        "content": [
+          {
+            "signature": "EtkDCkYICxgCKkDoNKHPtHu5YoUmhRX9jhj0nqBvL7HOVIa0kfaZxy+Gykq3nl5ibfj6mAEMF+J/NtN1FT/0A6DUM29knyw138atEgytScQF1F4UMWUsF5waDMfFAdHULWM6NFPDPSIwBtnqVUhwoL7JbA/it34xnRJ0uBxMP3ymBsQ678vwzO6xWqMuLtwxfwBcVQp4s64nKsAC63DBnRpHwPrP6zCFB4EHfDrL1GaWO+kCvmbXLUoqqIMX1nqA38XUMk3SX8AACnbf4+fZKkQi2eFHWHAUalMaq/16SkUOz7QqMLXYYhI0ic650StZa5qsuqOWzv+mSvKqoXDxrrm2qrCFffgUukyxeOuwbWNGDQrJZjTInyprczlg1Ga3qHJg/bsNVhfJAZBQ5gOjgNoIMPIG1sLSPAltRNCsmG/GmKVvGPgA0WqqcByu1Xc2Mq4FPw1MIr2h9cKPntc55Ss9htUP1tGqkZWYZOFKuLJpUE+uLBlKUo0Myil4aLrnddcJ95jQmOfJqvjlBiR+JQx8j/EbfKww1b3lEiMK41W7iK3fnpBjvtVKRovibmKiqcwbiBFrhQwKxVvOpPxGJ+63tBYPdLys5Qv18nrQc0DaVr2fzylKgi1l63UYAQ==",
+            "thinking": "The user is asking about the weather in Hanoi and what they should pack for their trip. I have a function to get the current weather for a city. Let me call that function with \"Hanoi\" as the city parameter.\n\nOnce I get the weather information, I can provide packing recommendations based on the conditions.",
+            "type": "thinking"
+          },
+          {
+            "id": "toolu_01KAcDmbJ64bc222QFeYJUYK",
+            "input": {
+              "city": "Hanoi"
+            },
+            "name": "get_weather",
+            "type": "tool_use"
+          }
+        ],
+        "model": "claude-sonnet-4-5-20250929",
+        "role": "assistant",
+        "stop_reason": "tool_use",
+        "stop_sequence": null,
+        "type": "message",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 616,
+          "output_tokens": 131,
+          "server_tool_use": null,
+          "service_tier": "standard"
+        }
+      },
+      "final_message_turn2": {
+        "id": "msg_0124M2C2xTAtHeFu5arYESXu",
+        "content": [
+          {
+            "citations": null,
+            "text": "Great news for your trip! The current weather in Hanoi is **25°C (77°F) and sunny with a light breeze** - perfect weather for exploring the city!\n\n## Packing Recommendations:\n\n**Clothing:**\n- Light, breathable clothing (cotton or linen)\n- T-shirts and shorts/light pants\n- A light long-sleeved shirt for sun protection or air-conditioned spaces\n- Comfortable walking shoes\n- Sandals\n- A light jacket or cardigan for evenings or indoor air conditioning\n\n**Essentials:**\n- Sunglasses\n- Sunscreen (SPF 30+)\n- A hat or cap for sun protection\n- Reusable water bottle to stay hydrated\n- Light rain jacket or small umbrella (just in case, as weather can change)\n\n**Other items:**\n- Mosquito repellent\n- Light scarf (useful for visiting temples)\n\nThe pleasant temperatures and sunny conditions make it ideal for sightseeing, visiting Hanoi's Old Quarter, Hoan Kiem Lake, and enjoying outdoor activities. Have a wonderful trip!",
+            "type": "text",
+            "parsed_output": null
+          }
+        ],
+        "model": "claude-sonnet-4-5-20250929",
+        "role": "assistant",
+        "stop_reason": "end_turn",
+        "stop_sequence": null,
+        "type": "message",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 767,
+          "output_tokens": 253,
+          "server_tool_use": null,
+          "service_tier": "standard"
+        }
+      }
+    },
+    "key_observations": {
+      "thinking_before_tool_call": true,
+      "mixed_blocks_order_turn1": [
+        "thinking",
+        "tool_use"
+      ],
+      "event_sequence_turn1": [
+        "message_start",
+        "content_block_start",
+        "content_block_delta",
+        "thinking",
+        "content_block_delta",
+        "thinking",
+        "content_block_delta",
+        "thinking",
+        "content_block_delta",
+        "thinking",
+        "content_block_delta",
+        "thinking",
+        "content_block_delta",
+        "thinking",
+        "content_block_delta",
+        "thinking",
+        "content_block_delta",
+        "thinking",
+        "content_block_delta",
+        "thinking",
+        "content_block_delta",
+        "thinking",
+        "content_block_delta",
+        "thinking",
+        "content_block_delta"
+      ],
+      "event_sequence_turn2": [
+        "message_start",
+        "content_block_start",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta"
+      ],
+      "thinking_after_tool_result": true
+    }
+  },
+  "mapping_to_current_system": {
+    "equivalent_openai_param": "stream() with reasoning + tools; same loop as iteration_runner",
+    "differences": [
+      "Anthropic: thinking then tool_use in content; turn2 thinking then text"
+    ],
+    "conversion_needed": "Map stream events for thinking + tool_use + text; same loop logic."
+  },
+  "model_in_response": "claude-sonnet-4-5-20250929"
+}

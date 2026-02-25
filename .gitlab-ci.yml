@@ -1,0 +1,71 @@
+stages:
+  - build
+  - deploy
+
+variables:
+  GITLAB_REGISTRY: "registry.gitlab.com"
+  BE_DOCKER_IMAGE: "ybds/ai-agent"
+  BE_PIPELINE_NUMBER: "0.0.3"
+
+  SSH_HOST: "143.198.215.19"
+  SSH_PORT: "22"
+  SSH_USER: "catsby"
+
+image: docker:27.0.3
+
+services:
+  - name: docker:27.0.3-dind
+    alias: docker
+
+# build:
+#   stage: build
+#   image: alpine:latest
+#   before_script:
+#     - apk update
+#     - apk add --no-cache docker
+#   script:
+#     - echo $GITLAB_ACCESS_TOKEN | docker login $GITLAB_REGISTRY --username gitlab-ci-token --password-stdin
+#     - docker build --file Dockerfile -t $GITLAB_REGISTRY/$BE_DOCKER_IMAGE:$BE_PIPELINE_NUMBER .
+#     - docker tag $GITLAB_REGISTRY/$BE_DOCKER_IMAGE:$BE_PIPELINE_NUMBER $GITLAB_REGISTRY/$BE_DOCKER_IMAGE:$BE_PIPELINE_NUMBER
+#     - docker push $GITLAB_REGISTRY/$BE_DOCKER_IMAGE:$BE_PIPELINE_NUMBER
+#   after_script:
+#     - rm -rf /usr/local/share/.cache
+#     - rm -rf /tmp/*
+#   tags:
+#     - ybds-be
+
+# deploy_ed25519:
+#   stage: deploy
+#   image: alpine:latest
+#   before_script:
+#     - apk update
+#     - apk add --no-cache openssh-client
+#   script:
+#     - mkdir -p ~/.ssh
+#     - chmod 700 ~/.ssh
+#     # For ED25519 keys
+#     - echo "$SSH_PRIV_KEY_ED25519" > ~/.ssh/id_ed25519
+#     - chmod 600 ~/.ssh/id_ed25519
+#     # SSH config for ED25519
+#     - echo "Host *" > ~/.ssh/config
+#     - echo "  StrictHostKeyChecking no" >> ~/.ssh/config
+#     - echo "  UserKnownHostsFile /dev/null" >> ~/.ssh/config
+#     - echo "  IdentityFile ~/.ssh/id_ed25519" >> ~/.ssh/config
+#     - echo "  IdentitiesOnly yes" >> ~/.ssh/config
+#     - chmod 600 ~/.ssh/config
+#     # Test connection
+#     - ssh -p $SSH_PORT $SSH_USER@$SSH_HOST "echo 'SSH connection successful'"
+#     - >
+#       ssh -p $SSH_PORT $SSH_USER@$SSH_HOST "
+#       cd /var/deploy &&
+#       echo $GITLAB_ACCESS_TOKEN | docker login $GITLAB_REGISTRY --username gitlab-ci-token --password-stdin &&
+#       export GITLAB_REGISTRY=$GITLAB_REGISTRY &&
+#       export BE_DOCKER_IMAGE=$BE_DOCKER_IMAGE &&
+#       export BE_PIPELINE_NUMBER=$BE_PIPELINE_NUMBER &&
+#       docker-compose -f docker-compose.be.yml pull && 
+#       docker-compose -f docker-compose.be.yml up -d --force-recreate &&
+#       echo 'Ai-agent container started version ${BE_PIPELINE_NUMBER}' "
+#   environment:
+#     name: product
+#   tags:
+#     - ybds-be

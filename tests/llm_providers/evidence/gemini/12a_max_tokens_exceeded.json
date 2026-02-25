@@ -1,0 +1,75 @@
+{
+  "test_name": "12a_max_tokens_exceeded",
+  "provider": "gemini",
+  "timestamp": "2026-02-11T10:26:04.706904+00:00",
+  "sdk_version": "1.2.0",
+  "model_requested": "gemini-2.5-pro",
+  "model_used": "gemini-2.5-pro",
+  "request": {
+    "method": "generate_content",
+    "params": {
+      "model": "gemini-2.5-pro",
+      "max_output_tokens": 5
+    }
+  },
+  "response": {
+    "raw_json": {
+      "response": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "video_metadata": null,
+                  "thought": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": null,
+                  "function_response": null,
+                  "inline_data": null,
+                  "text": "##"
+                }
+              ],
+              "role": "model"
+            },
+            "citation_metadata": null,
+            "finish_message": null,
+            "token_count": null,
+            "avg_logprobs": -0.6103907823562622,
+            "finish_reason": "MAX_TOKENS",
+            "grounding_metadata": null,
+            "index": null,
+            "logprobs_result": null,
+            "safety_ratings": null
+          }
+        ],
+        "model_version": "gemini-2.5-pro",
+        "prompt_feedback": null,
+        "usage_metadata": {
+          "cached_content_token_count": null,
+          "candidates_token_count": 1,
+          "prompt_token_count": 8,
+          "total_token_count": 9
+        },
+        "automatic_function_calling_history": [],
+        "parsed": null
+      },
+      "error": null,
+      "finish_reason": "MAX_TOKENS",
+      "text_preview": "##"
+    },
+    "key_observations": {
+      "finish_reason_value": "FinishReason.MAX_TOKENS",
+      "partial_content_accessible": true
+    }
+  },
+  "mapping_to_current_system": {
+    "equivalent_openai_param": "response.incomplete",
+    "differences": [
+      "Gemini: finish_reason when max tokens"
+    ],
+    "conversion_needed": "Map finish_reason to incomplete"
+  },
+  "model_in_response": "gemini-2.5-pro"
+}

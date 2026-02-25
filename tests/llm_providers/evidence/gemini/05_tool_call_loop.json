@@ -1,0 +1,56 @@
+{
+  "test_name": "05_tool_call_loop",
+  "provider": "gemini",
+  "timestamp": "2026-02-11T06:24:24.889781+00:00",
+  "sdk_version": "1.2.0",
+  "model_used": "gemini-2.5-pro",
+  "request": {
+    "method": "models.generate_content (loop)",
+    "params": {
+      "model": "gemini-2.5-pro",
+      "tools": [
+        "function_declarations=[FunctionDeclaration(response=None, description='Get current weather for a city', name='get_weather', parameters=Schema(min_items=None, example=None, property_ordering=None, pattern=None, minimum=None, default=None, any_of=None, max_length=None, title=None, min_length=None, min_properties=None, max_items=None, maximum=None, nullable=None, max_properties=None, type=<Type.OBJECT: 'OBJECT'>, description=None, enum=None, format=None, items=None, properties={'city': Schema(min_items=None, example=None, property_ordering=None, pattern=None, minimum=None, default=None, any_of=None, max_length=None, title=None, min_length=None, min_properties=None, max_items=None, maximum=None, nullable=None, max_properties=None, type=<Type.STRING: 'STRING'>, description=None, enum=None, format=None, items=None, properties=None, required=None)}, required=['city'])), FunctionDeclaration(response=None, description='Suggest outfit based on weather', name='suggest_outfit', parameters=Schema(min_items=None, example=None, property_ordering=None, pattern=None, minimum=None, default=None, any_of=None, max_length=None, title=None, min_length=None, min_properties=None, max_items=None, maximum=None, nullable=None, max_properties=None, type=<Type.OBJECT: 'OBJECT'>, description=None, enum=None, format=None, items=None, properties={'weather_summary': Schema(min_items=None, example=None, property_ordering=None, pattern=None, minimum=None, default=None, any_of=None, max_length=None, title=None, min_length=None, min_properties=None, max_items=None, maximum=None, nullable=None, max_properties=None, type=<Type.STRING: 'STRING'>, description=None, enum=None, format=None, items=None, properties=None, required=None)}, required=['weather_summary']))] retrieval=None google_search=None google_search_retrieval=None code_execution=None"
+      ],
+      "initial_prompt": "Find the weather in Hanoi, then based on that suggest an outfit."
+    }
+  },
+  "response": {
+    "raw_json": {
+      "turn_log": [
+        {
+          "turn": 1,
+          "function_calls_count": 1
+        },
+        {
+          "turn": 2,
+          "function_calls_count": 1
+        },
+        {
+          "turn": 3,
+          "function_calls_count": 1
+        },
+        {
+          "turn": 4,
+          "function_calls_count": 1
+        },
+        {
+          "turn": 5,
+          "function_calls_count": 1
+        }
+      ],
+      "final_text_preview": ""
+    },
+    "key_observations": {
+      "context_accumulation": "Chat session maintains history; send_message adds to history automatically",
+      "stop_condition": "No function_call in response parts",
+      "mixed_content": "Response can have text and function_call in same parts"
+    }
+  },
+  "mapping_to_current_system": {
+    "equivalent_openai_param": "Same loop; chat.send_message accumulates context",
+    "differences": [
+      "Gemini chat keeps history; no explicit messages array to maintain."
+    ],
+    "conversion_needed": "IterationRunner: for Gemini use chat session; for OpenAI/Anthropic maintain messages list."
+  }
+}

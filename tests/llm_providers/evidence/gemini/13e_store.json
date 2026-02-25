@@ -1,0 +1,25 @@
+{
+  "test_name": "13e_store",
+  "provider": "gemini",
+  "timestamp": "2026-02-11T10:36:48.411253+00:00",
+  "sdk_version": "1.2.0",
+  "model_requested": "gemini-2.5-pro",
+  "model_used": "gemini-2.5-pro",
+  "request": {
+    "method": "N/A",
+    "params": "Documentation only"
+  },
+  "response": {
+    "raw_json": {
+      "store_equivalent": false,
+      "note": "Context caching / tuned models are different"
+    },
+    "key_observations": {
+      "openai_store": "store=True",
+      "gemini": "No store equivalent"
+    }
+  },
+  "mapping_to_current_system": {
+    "adapter": "Ignore store param for Gemini"
+  }
+}

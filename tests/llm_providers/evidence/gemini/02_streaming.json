@@ -1,0 +1,132 @@
+{
+  "test_name": "02_streaming",
+  "provider": "gemini",
+  "timestamp": "2026-02-11T06:18:08.560420+00:00",
+  "sdk_version": "1.2.0",
+  "model_used": "gemini-2.5-pro",
+  "request": {
+    "method": "generate_content_stream",
+    "params": {
+      "model": "gemini-2.5-pro",
+      "system_instruction": "You are a helpful assistant.",
+      "prompt": "Write a short poem about coding.",
+      "stream": true
+    }
+  },
+  "response": {
+    "raw_json": {
+      "chunks": [
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "video_metadata": null,
+                    "thought": null,
+                    "code_execution_result": null,
+                    "executable_code": null,
+                    "file_data": null,
+                    "function_call": null,
+                    "function_response": null,
+                    "inline_data": null,
+                    "text": "The screen a void, the cursor a spark,\nA blinking hope against the dark.\nWith lines of logic, stark and neat,\nA world is"
+                  }
+                ],
+                "role": "model"
+              },
+              "citation_metadata": null,
+              "finish_message": null,
+              "token_count": null,
+              "avg_logprobs": null,
+              "finish_reason": null,
+              "grounding_metadata": null,
+              "index": null,
+              "logprobs_result": null,
+              "safety_ratings": null
+            }
+          ],
+          "model_version": "gemini-2.5-pro",
+          "prompt_feedback": null,
+          "usage_metadata": {
+            "cached_content_token_count": null,
+            "candidates_token_count": null,
+            "prompt_token_count": null,
+            "total_token_count": null
+          },
+          "automatic_function_calling_history": null,
+          "parsed": null
+        },
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "video_metadata": null,
+                    "thought": null,
+                    "code_execution_result": null,
+                    "executable_code": null,
+                    "file_data": null,
+                    "function_call": null,
+                    "function_response": null,
+                    "inline_data": null,
+                    "text": " built, both sharp and sweet.\n\nThe brackets close, the functions run,\nA puzzle solved, a battle won.\nFrom thought to light, from seed to tree,\nThe silent art of making be."
+                  }
+                ],
+                "role": "model"
+              },
+              "citation_metadata": null,
+              "finish_message": null,
+              "token_count": null,
+              "avg_logprobs": null,
+              "finish_reason": "STOP",
+              "grounding_metadata": null,
+              "index": null,
+              "logprobs_result": null,
+              "safety_ratings": null
+            }
+          ],
+          "model_version": "gemini-2.5-pro",
+          "prompt_feedback": null,
+          "usage_metadata": {
+            "cached_content_token_count": null,
+            "candidates_token_count": 76,
+            "prompt_token_count": 13,
+            "total_token_count": 1805
+          },
+          "automatic_function_calling_history": null,
+          "parsed": null
+        }
+      ],
+      "chunk_count": 2,
+      "event_types": [
+        "GenerateContentChunk",
+        "GenerateContentChunk"
+      ]
+    },
+    "key_observations": {
+      "event_types_complete_list": [
+        "GenerateContentChunk"
+      ],
+      "event_ordering": "Iteration of GenerateContentChunk; no named event types like Anthropic",
+      "delta_format_location": "chunk.text (each chunk is partial text)",
+      "final_response_method": "Accumulate chunk.text or use last chunk; no explicit get_final",
+      "openai_event_mapping": {
+        "response.created": "first chunk",
+        "response.output_text.delta": "chunk.text per chunk",
+        "response.output_item.done": "last chunk",
+        "response.reasoning_summary_text.delta": "N/A or chunk part",
+        "response.failed": "exception or chunk with error"
+      }
+    }
+  },
+  "mapping_to_current_system": {
+    "equivalent_openai_param": "Stream yields chunks; no separate final response call",
+    "differences": [
+      "Gemini: no event type names; each yield is a chunk with .text",
+      "Gemini: final = accumulate chunks; OpenAI: explicit get_final_response()"
+    ],
+    "conversion_needed": "Wrap chunk iteration as normalized delta events; build final from chunks."
+  }
+}

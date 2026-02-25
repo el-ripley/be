@@ -1,0 +1,129 @@
+{
+  "test_name": "03_single_tool_call",
+  "provider": "gemini",
+  "timestamp": "2026-02-11T06:23:05.975119+00:00",
+  "sdk_version": "1.2.0",
+  "model_used": "gemini-2.5-pro",
+  "request": {
+    "method": "models.generate_content",
+    "params": {
+      "model": "gemini-2.5-pro",
+      "tools": [
+        "function_declarations=[FunctionDeclaration(response=None, description='Get current weather for a city', name='get_weather', parameters=Schema(min_items=None, example=None, property_ordering=None, pattern=None, minimum=None, default=None, any_of=None, max_length=None, title=None, min_length=None, min_properties=None, max_items=None, maximum=None, nullable=None, max_properties=None, type=<Type.OBJECT: 'OBJECT'>, description=None, enum=None, format=None, items=None, properties={'city': Schema(min_items=None, example=None, property_ordering=None, pattern=None, minimum=None, default=None, any_of=None, max_length=None, title=None, min_length=None, min_properties=None, max_items=None, maximum=None, nullable=None, max_properties=None, type=<Type.STRING: 'STRING'>, description='City name', enum=None, format=None, items=None, properties=None, required=None), 'unit': Schema(min_items=None, example=None, property_ordering=None, pattern=None, minimum=None, default=None, any_of=None, max_length=None, title=None, min_length=None, min_properties=None, max_items=None, maximum=None, nullable=None, max_properties=None, type=<Type.STRING: 'STRING'>, description=None, enum=['celsius', 'fahrenheit'], format=None, items=None, properties=None, required=None)}, required=['city']))] retrieval=None google_search=None google_search_retrieval=None code_execution=None"
+      ],
+      "prompt": "What's the weather in Hanoi?"
+    }
+  },
+  "response": {
+    "raw_json": {
+      "turn1_response": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "video_metadata": null,
+                  "thought": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": {
+                    "id": null,
+                    "args": {
+                      "city": "Hanoi"
+                    },
+                    "name": "get_weather"
+                  },
+                  "function_response": null,
+                  "inline_data": null,
+                  "text": null
+                }
+              ],
+              "role": "model"
+            },
+            "citation_metadata": null,
+            "finish_message": null,
+            "token_count": null,
+            "avg_logprobs": -1.5177205403645833,
+            "finish_reason": "STOP",
+            "grounding_metadata": null,
+            "index": null,
+            "logprobs_result": null,
+            "safety_ratings": null
+          }
+        ],
+        "model_version": "gemini-2.5-pro",
+        "prompt_feedback": null,
+        "usage_metadata": {
+          "cached_content_token_count": null,
+          "candidates_token_count": 6,
+          "prompt_token_count": 35,
+          "total_token_count": 204
+        },
+        "automatic_function_calling_history": [],
+        "parsed": null
+      },
+      "function_call_name": "get_weather",
+      "function_call_args": {
+        "city": "Hanoi"
+      },
+      "turn2_response": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "video_metadata": null,
+                  "thought": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": null,
+                  "function_response": null,
+                  "inline_data": null,
+                  "text": "The weather in Hanoi is sunny with a temperature of 25°C.\n"
+                }
+              ],
+              "role": "model"
+            },
+            "citation_metadata": null,
+            "finish_message": null,
+            "token_count": null,
+            "avg_logprobs": -0.011679609908777125,
+            "finish_reason": "STOP",
+            "grounding_metadata": null,
+            "index": null,
+            "logprobs_result": null,
+            "safety_ratings": null
+          }
+        ],
+        "model_version": "gemini-2.5-pro",
+        "prompt_feedback": null,
+        "usage_metadata": {
+          "cached_content_token_count": null,
+          "candidates_token_count": 17,
+          "prompt_token_count": 51,
+          "total_token_count": 68
+        },
+        "automatic_function_calling_history": [],
+        "parsed": null
+      },
+      "final_text_preview": "The weather in Hanoi is sunny with a temperature of 25°C.\n"
+    },
+    "key_observations": {
+      "tool_call_location": "response.function_calls",
+      "tool_call_id_key": "NO ID (match by function name)",
+      "arguments_key": "args (dict)",
+      "stop_reason_tool_use": "function_calls present",
+      "tool_result_format": "Content(role=tool) with Part.from_function_response; match by name"
+    }
+  },
+  "mapping_to_current_system": {
+    "equivalent_openai_param": "tools; output in parts as function_call",
+    "differences": [
+      "Gemini: no call_id; match tool results by function name only",
+      "Gemini: tool result as Content role=tool in contents array"
+    ],
+    "conversion_needed": "Assign synthetic call_id for multi-call ordering; map function_call <-> function_call_output."
+  }
+}

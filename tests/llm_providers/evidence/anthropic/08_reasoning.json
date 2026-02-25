@@ -1,0 +1,101 @@
+{
+  "test_name": "08_reasoning",
+  "provider": "anthropic",
+  "timestamp": "2026-02-11T14:01:43.298245+00:00",
+  "sdk_version": "0.79.0",
+  "model_requested": "claude-sonnet-4-5",
+  "model_used": "claude-sonnet-4-5",
+  "request": {
+    "method": "messages.create",
+    "params": {
+      "model": "claude-sonnet-4-5",
+      "max_tokens": 16000,
+      "thinking": {
+        "type": "enabled",
+        "budget_tokens": 10000
+      },
+      "messages": [
+        {
+          "role": "user",
+          "content": "Hãy chạy lệnh ip addr rồi báo cáo lại cho tôi public IP address nhé"
+        }
+      ]
+    }
+  },
+  "response": {
+    "raw_json": {
+      "response": {
+        "id": "msg_017qpPikrw1XNvhRPLLSMFgx",
+        "content": [
+          {
+            "signature": "EtMICkYICxgCKkDAGCLiKNgwnklLUTEeHcWy67Fus/qgSfPvv1kB7IWZdvLwsFWSSHZEJWNz0j0/g78WxpKULXBJh7YnzFke/MUmEgy/kj3C9g2J96HVUdMaDMzVEW9YAbk7bI2URiIw3QJ15XidMPgtwCsJ69AMyZkEIhZsVF0oYp/Rook3WUJBTd3GEnWhKh+ggGHVOQHqKroHz1MZmeZxhyWtHmGGSgo5o4jAAgEbdDsS5hZuH1TuXIsZaEgdckeeo/AmCCE3zZv9mw4dchDJIGHtJt4Y8jCykEw3+Rplj+tyBE0TakztTsGJhnOhCFN4ZRnX9hf6G3v5eYSj3LFLl0DaFi20krwtVN6lD0UGfgAuirq62Wq55TGpXmB7XVXJ19fIFbEVvM5pCeYz4TZv4IaKekcgEjB4UdVkqu9woPBLDZPxoISMyBSZJJzXjOnBRvalsFjTvYtEsZY3xOSNT7PWvf4lNLjQLFanS2iLcbHcaVmZEppGo/CdKCAucTGdGraoYa4vxPRLoN/smAmqOsApJXjujseu5qDizl45xJip1SxuHgfexzMVacKXUlbCV+cd9HueLkCyzvDcUj80WaRuekmNM4zcxvxpDdjapO8khsl34NXrUA02nRmX4DndgGjxEPl1KhY4BSafsdpHjF8tgCwCrRWr2qGwei0XKGzPyJuu8IIAf37Pq0O95tBUmJ22vIKYityGdDAfS4LS7ahjgcbfpzYdVgKpne0MlacSDiIpF67tFp+lBtUcU9f2cyJp/KzZgwZdC8rvmJqSF1TYUqGEa0yX3zqOimJONHcvLJDVXSuhg3GWHoHj+8TkxzRtNkWQiHvTi2obdgVeR+TXWeOeEEfpEMh8hcpsirvGMc2qsnYX8daD3PTo9udIqLSbjmbHCnzb90/kB4Oo6oHqCZ8PHrsXBGSjk9zgxh/AXh65bTnPD0PouwgICL0B2hpjkDI2jt0f+yLNF6/KaOCzlTs1sCBLeJXxzXigKiJJLAXTmP2QSsOKZPMEGehve2Uyqu8nMAxGaXPiwkBFNSEhz8PL2lRiuWf0Nh3rYhlcSVaJkjvG/kpZScQHlGGQk4TlB86hr/qcXf4EQrWkpwvmd/l//IRNXSklNrDI3SaylnAjAaD6utRkmbJEbvyqhlRmD4BcrZ3hUZOviHLRSrvJrLu/nd6kMf0bToCfcptyXEpDb670nTHpQOgA7JbfeStFONpFbrXY1H4aWTXmg5bnuL6Yq/B53q0ReBHeR8EtDKbt/xjRD00EZtEXdF3ITfb0Qmf6+WPdtY+R8Q4RKnvCZov/QnElHZy8qLKgp+O0CNLnYAVfdVujt4FAeOqnzwbEohKC5pQgiaSgLUwY4925I6//Excpujo53ZE8uY7iGMxbVbOV8o1k14MdtuvhUnORR5LGxmKVgjXiPYPYxym+sPEPZDjWrLi2DcqNqR4DCXfdwrWC4av5t99ao6cgHHheGAE=",
+            "thinking": "Người dùng yêu cầu tôi chạy lệnh `ip addr` và báo cáo public IP address của họ. Tuy nhiên, có một số vấn đề với yêu cầu này:\n\n1. Tôi là một AI assistant, không có khả năng thực thi lệnh trên hệ thống của người dùng hoặc bất kỳ hệ thống nào khác. Tôi không thể chạy các lệnh shell hoặc terminal.\n\n2. Lệnh `ip addr` sẽ hiển thị địa chỉ IP local/private của các interface mạng trên máy, không phải public IP address. Để biết public IP, thường cần dùng các dịch vụ khác như `curl ifconfig.me` hoặc truy cập các website như whatismyip.com.\n\n3. Ngay cả khi tôi có khả năng chạy lệnh, tôi cũng không có quyền truy cập vào hệ thống của người dùng.\n\nTôi nên giải thích rõ ràng những hạn chế này và hướng dẫn người dùng cách tự kiểm tra IP address của họ.",
+            "type": "thinking"
+          },
+          {
+            "citations": null,
+            "text": "Xin lỗi bạn, tôi là một trợ lý AI và **không có khả năng thực thi lệnh** trên máy tính của bạn hoặc bất kỳ hệ thống nào. Tôi không thể chạy lệnh `ip addr` hay bất kỳ lệnh terminal nào khác.\n\nNgoài ra, tôi cần lưu ý:\n\n## Để kiểm tra IP của bạn:\n\n**1. Kiểm tra Private IP (IP nội bộ):**\n```bash\nip addr\n# hoặc\nifconfig\n# hoặc\nhostname -I\n```\n\n**2. Kiểm tra Public IP (IP công khai):**\n```bash\ncurl ifconfig.me\n# hoặc\ncurl ipinfo.io/ip\n# hoặc\nwget -qO- ifconfig.me\n```\n\nHoặc truy cập website: https://whatismyipaddress.com\n\nBạn có thể tự chạy các lệnh trên terminal/command prompt của máy mình để kiểm tra. Nếu cần hỗ trợ về cách sử dụng hoặc hiểu kết quả, tôi sẵn lòng giúp bạn! 😊",
+            "type": "text"
+          }
+        ],
+        "model": "claude-sonnet-4-5-20250929",
+        "role": "assistant",
+        "stop_reason": "end_turn",
+        "stop_sequence": null,
+        "type": "message",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 67,
+          "output_tokens": 684,
+          "server_tool_use": null,
+          "service_tier": "standard"
+        }
+      },
+      "content_block_types": [
+        "thinking",
+        "text"
+      ],
+      "thinking_preview": "Người dùng yêu cầu tôi chạy lệnh `ip addr` và báo cáo public IP address của họ. Tuy nhiên, có một số vấn đề với yêu cầu này:\n\n1. Tôi là một AI assistant, không có khả năng thực thi lệnh trên hệ thống của người dùng hoặc bất kỳ hệ thống nào khác. Tôi không thể chạy các lệnh shell hoặc terminal.\n\n2. Lệnh `ip addr` sẽ hiển thị địa chỉ IP local/private của các interface mạng trên máy, không phải public IP address. Để biết public IP, thường cần dùng các dịch vụ khác như `curl ifconfig.me` hoặc truy c",
+      "answer_preview": "Xin lỗi bạn, tôi là một trợ lý AI và **không có khả năng thực thi lệnh** trên máy tính của bạn hoặc bất kỳ hệ thống nào. Tôi không thể chạy lệnh `ip addr` hay bất kỳ lệnh terminal nào khác.\n\nNgoài ra, tôi cần lưu ý:\n\n## Để kiểm tra IP của bạn:\n\n**1. Kiểm tra Private IP (IP nội bộ):**\n```bash\nip addr\n# hoặc\nifconfig\n# hoặc\nhostname -I\n```\n\n**2. Kiểm tra Public IP (IP công khai):**\n```bash\ncurl ifconfig.me\n# hoặc\ncurl ipinfo.io/ip\n# hoặc\nwget -qO- ifconfig.me\n```\n\nHoặc truy cập website: https://wh",
+      "usage": {
+        "input_tokens": 67,
+        "output_tokens": 684,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    },
+    "key_observations": {
+      "enable_param": "thinking={type: adaptive} (no budget_tokens; use output_config.effort for guidance)",
+      "output_location": "content[].type == 'thinking' with .thinking text; then content[].type == 'text' with .text answer",
+      "content_block_types_found": [
+        "thinking",
+        "text"
+      ],
+      "thinking_present": true,
+      "model_in_response_source": "from API response message.model (not echoed from request)",
+      "streaming_thinking": "content_block_delta with type=thinking_delta (thinking text streamed in deltas)",
+      "usage_format": {
+        "input_tokens": 67,
+        "output_tokens": 684,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0
+      }
+    }
+  },
+  "mapping_to_current_system": {
+    "equivalent_openai_param": "reasoning={effort, summary}",
+    "differences": [
+      "Anthropic: thinking block with full text vs OpenAI: reasoning with optional summary",
+      "Anthropic: budget_tokens (absolute limit) vs OpenAI: effort (low/medium/high)",
+      "Anthropic: thinking text is raw internal monologue; OpenAI: summary is condensed"
+    ],
+    "conversion_needed": "Map thinking block to reasoning output; map effort levels to budget_tokens ranges."
+  },
+  "model_in_response": "claude-sonnet-4-5-20250929"
+}

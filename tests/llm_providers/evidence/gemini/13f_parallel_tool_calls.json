@@ -1,0 +1,27 @@
+{
+  "test_name": "13f_parallel_tool_calls",
+  "provider": "gemini",
+  "timestamp": "2026-02-11T10:36:53.075302+00:00",
+  "sdk_version": "1.2.0",
+  "model_requested": "gemini-2.5-pro",
+  "model_used": "gemini-2.5-pro",
+  "request": {
+    "method": "generate_content",
+    "params": {
+      "tools": 2
+    }
+  },
+  "response": {
+    "raw_json": {
+      "function_calls_count": 2,
+      "explicit_disable_param": false
+    },
+    "key_observations": {
+      "parallel_supported": true,
+      "explicit_param": "No"
+    }
+  },
+  "mapping_to_current_system": {
+    "openai parallel_tool_calls": "Gemini: no param; model decides"
+  }
+}

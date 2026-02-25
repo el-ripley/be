@@ -1,0 +1,69 @@
+{
+  "test_name": "12a_max_tokens_exceeded",
+  "provider": "anthropic",
+  "timestamp": "2026-02-11T10:25:57.476945+00:00",
+  "sdk_version": "0.79.0",
+  "model_requested": "claude-sonnet-4-5",
+  "model_used": "claude-sonnet-4-5",
+  "request": {
+    "method": "messages.create",
+    "params": {
+      "model": "claude-sonnet-4-5",
+      "max_tokens": 5,
+      "messages": [
+        {
+          "role": "user",
+          "content": "Write a long essay about artificial intelligence."
+        }
+      ]
+    }
+  },
+  "response": {
+    "raw_json": {
+      "response": {
+        "id": "msg_01GoXqsz7NF64pER8JppVmY9",
+        "content": [
+          {
+            "citations": null,
+            "text": "# The Age of",
+            "type": "text"
+          }
+        ],
+        "model": "claude-sonnet-4-5-20250929",
+        "role": "assistant",
+        "stop_reason": "max_tokens",
+        "stop_sequence": null,
+        "type": "message",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 15,
+          "output_tokens": 5,
+          "server_tool_use": null,
+          "service_tier": "standard"
+        }
+      },
+      "error": null,
+      "stop_reason": "max_tokens",
+      "content_preview": "# The Age of"
+    },
+    "key_observations": {
+      "stop_reason_value": "max_tokens",
+      "partial_content_accessible": true,
+      "streaming_behavior": "See 12e for stream with low max_tokens"
+    }
+  },
+  "mapping_to_current_system": {
+    "equivalent_openai_param": "response.incomplete (max_tokens)",
+    "differences": [
+      "Anthropic: stop_reason when max_tokens reached"
+    ],
+    "conversion_needed": "Map stop_reason to incomplete event"
+  },
+  "model_in_response": "claude-sonnet-4-5-20250929"
+}

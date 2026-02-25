@@ -1,0 +1,157 @@
+{
+  "test_name": "12e_streaming_error_events",
+  "provider": "anthropic",
+  "timestamp": "2026-02-11T10:26:02.406302+00:00",
+  "sdk_version": "0.79.0",
+  "model_requested": "claude-sonnet-4-5",
+  "model_used": "claude-sonnet-4-5",
+  "request": {
+    "method": "messages.stream",
+    "params": {
+      "model": "claude-sonnet-4-5",
+      "max_tokens": 5,
+      "messages": [
+        {
+          "role": "user",
+          "content": "Write a very long essay about everything."
+        }
+      ]
+    }
+  },
+  "response": {
+    "raw_json": {
+      "events": [
+        {
+          "type": "message_start",
+          "data": {
+            "type": "message_start"
+          }
+        },
+        {
+          "type": "content_block_start",
+          "data": {
+            "type": "content_block_start",
+            "content_block": {
+              "type": "text"
+            }
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta"
+            }
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta"
+            }
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta"
+            }
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_delta",
+          "data": {
+            "type": "content_block_delta",
+            "delta": {
+              "type": "text_delta"
+            }
+          }
+        },
+        {
+          "type": "text",
+          "data": {
+            "type": "text"
+          }
+        },
+        {
+          "type": "content_block_stop",
+          "data": {
+            "type": "content_block_stop",
+            "content_block": {
+              "type": "text"
+            }
+          }
+        },
+        {
+          "type": "message_delta",
+          "data": {
+            "type": "message_delta",
+            "delta": {
+              "type": null
+            }
+          }
+        },
+        {
+          "type": "message_stop",
+          "data": {
+            "type": "message_stop"
+          }
+        }
+      ],
+      "event_count": 13,
+      "event_types": [
+        "message_start",
+        "content_block_start",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_delta",
+        "text",
+        "content_block_stop",
+        "message_delta",
+        "message_stop"
+      ],
+      "stream_error": null,
+      "final_stop_reason": "max_tokens"
+    },
+    "key_observations": {
+      "incomplete_signal_in_stream": "message_delta with stop_reason=max_tokens or final_message.stop_reason",
+      "error_event_type": "Any event type for error?",
+      "partial_content_in_events": false
+    }
+  },
+  "mapping_to_current_system": {
+    "equivalent_openai_param": "response.incomplete",
+    "differences": [
+      "Anthropic: message_delta or final stop_reason"
+    ],
+    "conversion_needed": "Map to incomplete event"
+  },
+  "model_in_response": "claude-sonnet-4-5-20250929"
+}

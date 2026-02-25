@@ -1,0 +1,132 @@
+{
+  "test_name": "03_single_tool_call",
+  "provider": "anthropic",
+  "timestamp": "2026-02-11T09:23:00.227658+00:00",
+  "sdk_version": "0.79.0",
+  "model_requested": "claude-sonnet-4-5",
+  "model_used": "claude-sonnet-4-5",
+  "request": {
+    "method": "messages.create",
+    "params": {
+      "model": "claude-sonnet-4-5",
+      "max_tokens": 1024,
+      "system": "You are a helpful assistant.",
+      "tools": [
+        {
+          "name": "get_weather",
+          "description": "Get current weather for a city",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "city": {
+                "type": "string",
+                "description": "City name"
+              },
+              "unit": {
+                "type": "string",
+                "enum": [
+                  "celsius",
+                  "fahrenheit"
+                ]
+              }
+            },
+            "required": [
+              "city"
+            ]
+          }
+        }
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "What's the weather in Hanoi?"
+        }
+      ]
+    }
+  },
+  "response": {
+    "raw_json": {
+      "turn1_response": {
+        "id": "msg_01RYqBSZS4GZ2BAEEpk1UTfQ",
+        "content": [
+          {
+            "id": "toolu_017R6AmURTyDyRCQ6tGh98QC",
+            "input": {
+              "city": "Hanoi"
+            },
+            "name": "get_weather",
+            "type": "tool_use"
+          }
+        ],
+        "model": "claude-sonnet-4-5-20250929",
+        "role": "assistant",
+        "stop_reason": "tool_use",
+        "stop_sequence": null,
+        "type": "message",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 600,
+          "output_tokens": 55,
+          "server_tool_use": null,
+          "service_tier": "standard"
+        }
+      },
+      "tool_use_id": "toolu_017R6AmURTyDyRCQ6tGh98QC",
+      "tool_name": "get_weather",
+      "tool_input": {
+        "city": "Hanoi"
+      },
+      "turn2_response": {
+        "id": "msg_0125Lq5KrHNenYcLJaJgkA8R",
+        "content": [
+          {
+            "citations": null,
+            "text": "The weather in Hanoi is currently 25°C and sunny.",
+            "type": "text"
+          }
+        ],
+        "model": "claude-sonnet-4-5-20250929",
+        "role": "assistant",
+        "stop_reason": "end_turn",
+        "stop_sequence": null,
+        "type": "message",
+        "usage": {
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 0,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "inference_geo": "not_available",
+          "input_tokens": 673,
+          "output_tokens": 18,
+          "server_tool_use": null,
+          "service_tier": "standard"
+        }
+      },
+      "final_text_preview": "The weather in Hanoi is currently 25°C and sunny."
+    },
+    "key_observations": {
+      "tool_call_location": "content[].type == 'tool_use'",
+      "tool_call_id_key": "id (e.g. toolu_xxx)",
+      "arguments_key": "input (dict, not JSON string)",
+      "stop_reason_tool_use": "tool_use",
+      "tool_result_format": "role: user, content: [{type: tool_result, tool_use_id, content}]"
+    }
+  },
+  "mapping_to_current_system": {
+    "equivalent_openai_param": "tools + tool_choice; output has function_call items",
+    "differences": [
+      "Anthropic: input_schema (not parameters); id (not call_id); input is dict",
+      "Tool result in user message as tool_result block; match by tool_use_id"
+    ],
+    "conversion_needed": "Convert tool def parameters->input_schema; arguments JSON string->dict; call_id<->id."
+  },
+  "model_in_response": "claude-sonnet-4-5-20250929"
+}

@@ -1,0 +1,76 @@
+{
+  "test_name": "12e_streaming_error_events",
+  "provider": "gemini",
+  "timestamp": "2026-02-11T10:26:45.779208+00:00",
+  "sdk_version": "1.2.0",
+  "model_requested": "gemini-2.5-pro",
+  "model_used": "gemini-2.5-pro",
+  "request": {
+    "method": "generate_content_stream",
+    "params": {
+      "model": "gemini-2.5-pro",
+      "max_output_tokens": 5
+    }
+  },
+  "response": {
+    "raw_json": {
+      "chunks_count": 1,
+      "chunks_sample": [
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "video_metadata": null,
+                    "thought": null,
+                    "code_execution_result": null,
+                    "executable_code": null,
+                    "file_data": null,
+                    "function_call": null,
+                    "function_response": null,
+                    "inline_data": null,
+                    "text": "It"
+                  }
+                ],
+                "role": "model"
+              },
+              "citation_metadata": null,
+              "finish_message": null,
+              "token_count": null,
+              "avg_logprobs": null,
+              "finish_reason": "MAX_TOKENS",
+              "grounding_metadata": null,
+              "index": null,
+              "logprobs_result": null,
+              "safety_ratings": null
+            }
+          ],
+          "model_version": "gemini-2.5-pro",
+          "prompt_feedback": null,
+          "usage_metadata": {
+            "cached_content_token_count": null,
+            "candidates_token_count": 1,
+            "prompt_token_count": 8,
+            "total_token_count": 9
+          },
+          "automatic_function_calling_history": null,
+          "parsed": null
+        }
+      ],
+      "stream_error": null,
+      "last_chunk_finish_reason": "MAX_TOKENS"
+    },
+    "key_observations": {
+      "incomplete_signal": "last chunk finish_reason=MAX_TOKENS?",
+      "error_during_stream": "exception or chunk with error"
+    }
+  },
+  "mapping_to_current_system": {
+    "equivalent_openai_param": "response.incomplete",
+    "differences": [
+      "Gemini: last chunk finish_reason"
+    ],
+    "conversion_needed": "Map to incomplete"
+  }
+}

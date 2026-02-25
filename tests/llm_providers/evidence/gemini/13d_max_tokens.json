@@ -1,0 +1,41 @@
+{
+  "test_name": "13d_max_tokens",
+  "provider": "gemini",
+  "timestamp": "2026-02-11T10:36:48.403302+00:00",
+  "sdk_version": "1.2.0",
+  "model_requested": "gemini-2.5-pro",
+  "model_used": "gemini-2.5-pro",
+  "request": {
+    "method": "generate_content",
+    "params": {
+      "max_output_tokens": 8192,
+      "note": "optional, can omit"
+    }
+  },
+  "response": {
+    "raw_json": {
+      "param_name": "max_output_tokens",
+      "required": false,
+      "usage_limited": {
+        "cached_content_token_count": null,
+        "candidates_token_count": 10,
+        "prompt_token_count": 3,
+        "total_token_count": 579
+      },
+      "usage_no_limit": {
+        "cached_content_token_count": null,
+        "candidates_token_count": 10,
+        "prompt_token_count": 3,
+        "total_token_count": 518
+      }
+    },
+    "key_observations": {
+      "param_name": "max_output_tokens",
+      "required": false
+    }
+  },
+  "mapping_to_current_system": {
+    "openai": "optional",
+    "gemini": "max_output_tokens (optional)"
+  }
+}

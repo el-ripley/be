@@ -1,0 +1,28 @@
+{
+  "test_name": "13f_parallel_tool_calls",
+  "provider": "anthropic",
+  "timestamp": "2026-02-11T10:20:35.185847+00:00",
+  "sdk_version": "0.79.0",
+  "model_requested": "claude-sonnet-4-5",
+  "model_used": "claude-sonnet-4-5",
+  "request": {
+    "method": "messages.create",
+    "params": {
+      "tools": 2,
+      "prompt": "asks both weather and time"
+    }
+  },
+  "response": {
+    "raw_json": {
+      "tool_use_count": 2,
+      "disable_parallel_param_found": false
+    },
+    "key_observations": {
+      "parallel_supported": true,
+      "explicit_disable_param": false
+    }
+  },
+  "mapping_to_current_system": {
+    "openai parallel_tool_calls": "Anthropic: no explicit param; model decides"
+  }
+}
