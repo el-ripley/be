@@ -95,9 +95,7 @@ class Settings:
         self.postgres_host = self._get_env("POSTGRES_HOST", "localhost")
         self.postgres_port = self._get_env("POSTGRES_PORT", "5434")
         self.postgres_user = self._get_env("POSTGRES_USER", "el-ripley-user")
-        self.postgres_password = self._get_env(
-            "POSTGRES_PASSWORD", "crypto-gambling-pass"
-        )
+        self.postgres_password = self._get_env("POSTGRES_PASSWORD", "")
         self.postgres_db_name = self._get_env("POSTGRES_DB_NAME", "el_ripley")
 
         # Agent Reader (RLS-restricted role for AI agent SELECT queries)
@@ -105,7 +103,7 @@ class Settings:
             "POSTGRES_AGENT_READER_USER", "agent_reader"
         )
         self.postgres_agent_reader_password = self._get_env(
-            "POSTGRES_AGENT_READER_PASSWORD", "agent-reader-dev-password"
+            "POSTGRES_AGENT_READER_PASSWORD", ""
         )
 
         # Agent Writer (RLS-restricted role for AI agent INSERT/UPDATE/DELETE queries)
@@ -113,7 +111,7 @@ class Settings:
             "POSTGRES_AGENT_WRITER_USER", "agent_writer"
         )
         self.postgres_agent_writer_password = self._get_env(
-            "POSTGRES_AGENT_WRITER_PASSWORD", "agent-writer-dev-password"
+            "POSTGRES_AGENT_WRITER_PASSWORD", ""
         )
 
         # Suggest Response Reader (conversation-scoped, minimal SELECT access)
@@ -121,8 +119,7 @@ class Settings:
             "POSTGRES_SUGGEST_RESPONSE_READER_USER", "suggest_response_reader"
         )
         self.postgres_suggest_response_reader_password = self._get_env(
-            "POSTGRES_SUGGEST_RESPONSE_READER_PASSWORD",
-            "suggest-response-reader-dev-password",
+            "POSTGRES_SUGGEST_RESPONSE_READER_PASSWORD", ""
         )
 
         # Suggest Response Writer (conversation-scoped, minimal INSERT/UPDATE access)
@@ -130,8 +127,7 @@ class Settings:
             "POSTGRES_SUGGEST_RESPONSE_WRITER_USER", "suggest_response_writer"
         )
         self.postgres_suggest_response_writer_password = self._get_env(
-            "POSTGRES_SUGGEST_RESPONSE_WRITER_PASSWORD",
-            "suggest-response-writer-dev-password",
+            "POSTGRES_SUGGEST_RESPONSE_WRITER_PASSWORD", ""
         )
 
         # Qdrant (vector DB for playbooks semantic search)
@@ -143,13 +139,13 @@ class Settings:
         self.mongodb_host = self._get_env("MONGODB_HOST", "localhost")
         self.mongodb_port = self._get_env_int("MONGODB_PORT", 27017)
         self.mongodb_username = self._get_env("MONGODB_USERNAME", "admin")
-        self.mongodb_password = self._get_env("MONGODB_PASSWORD", "password")
+        self.mongodb_password = self._get_env("MONGODB_PASSWORD", "")
         self.mongodb_db_name = self._get_env("MONGODB_DB_NAME", "ai_agent_db")
 
         # Redis Configuration
         self.redis_host = self._get_env("REDIS_HOST", "localhost")
         self.redis_port = self._get_env_int("REDIS_PORT", 6379)
-        self.redis_password = self._get_env("REDIS_PASSWORD", "redis-password")
+        self.redis_password = self._get_env("REDIS_PASSWORD", "")
         self.redis_db = self._get_env_int("REDIS_DB", 0)
 
         # Facebook settings

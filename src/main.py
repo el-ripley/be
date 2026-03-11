@@ -1,5 +1,5 @@
 from contextlib import asynccontextmanager
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.exceptions import RequestValidationError
 import uvicorn
@@ -103,6 +103,7 @@ async def lifespan(app: FastAPI):
 
     redis_client = RedisClient()
     await redis_client.connect()
+    app.state.redis_client = redis_client
 
     redis_user_sessions = RedisUserSessions(redis_client)
     redis_agent_manager = RedisAgentManager(redis_client)
@@ -324,8 +325,8 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(
-    title="Facebook API Testing Server",
-    description="Standalone server for testing Facebook API integration",
+    title="El Ripley AI Agent",
+    description="AI-powered Facebook Fanpage Management System — multi-LLM, RLS-secured, real-time via Socket.IO",
     version="2.0.0",
     lifespan=lifespan,
 )
@@ -381,7 +382,7 @@ app.include_router(notifications_router, prefix="/api")
 @app.get("/")
 async def root():
     return {
-        "message": "Facebook API Testing Server",
+        "message": "El Ripley AI Agent",
         "status": "ready",
         "endpoints": {
             "auth": "/facebook/auth/callback",
@@ -414,8 +415,18 @@ async def root():
 
 
 @app.get("/health")
-async def health_check():
-    return {"status": "healthy", "message": "Facebook testing server is running"}
+async def health_check(request: Request):
+    checks: dict[str, str] = {"api": "healthy"}
+    try:
+        redis_client = getattr(request.app.state, "redis_client", None)
+        if redis_client is not None and await redis_client.is_connected():
+            checks["redis"] = "healthy"
+        else:
+            checks["redis"] = "degraded"
+    except Exception:
+        checks["redis"] = "degraded"
+    overall = "healthy" if all(v == "healthy" for v in checks.values()) else "degraded"
+    return {"status": overall, "checks": checks, "message": "El Ripley AI Agent"}
 
 
 # Create ASGI app with Socket.IO support

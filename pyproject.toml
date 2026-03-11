@@ -66,3 +66,27 @@ disallow_incomplete_defs = true
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = "test_*.py"
+python_classes = "Test*"
+python_functions = "test_*"
+asyncio_mode = "auto"
+addopts = [
+    "-v",
+    "--tb=short",
+    "--cov=src",
+    "--cov-report=term-missing",
+    "--cov-report=xml",
+    "--ignore=tests/llm_providers",
+    "--ignore=tests/test_sql_tool_rls.py",
+    "--ignore=tests/test_anthropic_proxy.py",
+]
+
+[tool.coverage.run]
+source = ["src"]
+omit = ["src/main.py", "src/settings.py", "*/migrations/*"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "if __name__ == .__main__.:",
+    "raise NotImplementedError",
+]

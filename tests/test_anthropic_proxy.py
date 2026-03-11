@@ -6,6 +6,7 @@ Run:
 """
 
 import json
+import os
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -18,7 +19,7 @@ sys.path.insert(0, str(project_root))
 PROXY_BASE_URL = "https://api.sv2.llm.ai.vn/v1"
 # Anthropic SDK gửi path /v1/messages → base_url nên để không có /v1
 ANTHROPIC_BASE_URL = "https://api.sv2.llm.ai.vn"
-API_KEY = "sk-Vf35orfj2WMKEQY362B7852b260b41FfB1Fc683091Fb7fF3"
+API_KEY = os.environ.get("ANTHROPIC_PROXY_API_KEY", "")
 MODEL = "anthropic:sonnet-4-5-20250929"
 
 # Đổi sang True hoặc chạy với --anthropic để test bằng Anthropic SDK
