@@ -2,10 +2,10 @@
 
 from typing import List, Optional
 
-from src.api.openai_conversations.schemas import MessageResponse
 from src.agent.general_agent.context.function_output_normalizer import (
     normalize_function_output_to_api_format,
 )
+from src.api.openai_conversations.schemas import MessageResponse
 
 
 class SuggestResponseIterationWarningInjector:

@@ -85,24 +85,24 @@ When fetch="post_reactions" or "comment_reactions":
    }
 """
 
-import uuid
-import time
 import json
+import time
+import uuid
 from typing import Any, Dict
 
 import asyncpg
 
 from src.agent.tools.base import BaseTool, ToolCallContext, ToolResult
 from src.api.openai_conversations.schemas import MessageResponse
-from src.services.facebook.users.page_scope_user_service import PageScopeUserService
 from src.database.postgres.repositories.facebook_queries.user_interactions import (
+    count_user_comment_reactions,
     count_user_comments,
     count_user_post_reactions,
-    count_user_comment_reactions,
+    get_user_comment_reactions_minimal,
     get_user_comments_minimal,
     get_user_post_reactions_minimal,
-    get_user_comment_reactions_minimal,
 )
+from src.services.facebook.users.page_scope_user_service import PageScopeUserService
 from src.utils.logger import get_logger
 
 logger = get_logger()

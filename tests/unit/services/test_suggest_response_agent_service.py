@@ -1,7 +1,8 @@
 """Unit tests for SuggestResponseAgentService (_format_agent_record and validation)."""
 
+from unittest.mock import AsyncMock, patch
+
 import pytest
-from unittest.mock import patch, AsyncMock
 
 from src.services.suggest_response.suggest_response_agent_service import (
     SuggestResponseAgentService,
@@ -33,7 +34,12 @@ def test_format_agent_record_with_record() -> None:
 
 
 def test_format_agent_record_missing_user_id_uses_param() -> None:
-    record = {"id": "id-1", "settings": {}, "allow_auto_suggest": False, "num_suggest_response": 3}
+    record = {
+        "id": "id-1",
+        "settings": {},
+        "allow_auto_suggest": False,
+        "num_suggest_response": 3,
+    }
     result = SuggestResponseAgentService._format_agent_record(record, "user-99")
     assert result["user_id"] == "user-99"
 
@@ -41,9 +47,17 @@ def test_format_agent_record_missing_user_id_uses_param() -> None:
 @pytest.mark.asyncio
 async def test_update_settings_num_suggest_response_below_one_raises() -> None:
     svc = SuggestResponseAgentService()
-    with patch.object(svc, "get_settings", new_callable=AsyncMock, return_value={
-        "user_id": "u1", "settings": {}, "allow_auto_suggest": False, "num_suggest_response": 3
-    }):
+    with patch.object(
+        svc,
+        "get_settings",
+        new_callable=AsyncMock,
+        return_value={
+            "user_id": "u1",
+            "settings": {},
+            "allow_auto_suggest": False,
+            "num_suggest_response": 3,
+        },
+    ):
         with pytest.raises(ValueError, match="at least 1"):
             await svc.update_settings("u1", num_suggest_response=0)
 
@@ -51,8 +65,16 @@ async def test_update_settings_num_suggest_response_below_one_raises() -> None:
 @pytest.mark.asyncio
 async def test_update_settings_num_suggest_response_above_10_raises() -> None:
     svc = SuggestResponseAgentService()
-    with patch.object(svc, "get_settings", new_callable=AsyncMock, return_value={
-        "user_id": "u1", "settings": {}, "allow_auto_suggest": False, "num_suggest_response": 3
-    }):
+    with patch.object(
+        svc,
+        "get_settings",
+        new_callable=AsyncMock,
+        return_value={
+            "user_id": "u1",
+            "settings": {},
+            "allow_auto_suggest": False,
+            "num_suggest_response": 3,
+        },
+    ):
         with pytest.raises(ValueError, match="cannot exceed 10"):
             await svc.update_settings("u1", num_suggest_response=11)

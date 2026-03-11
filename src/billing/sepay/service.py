@@ -2,7 +2,8 @@
 SePay Service - Get config and manage topup codes.
 """
 
-from typing import Dict, Any
+from typing import Any, Dict
+
 import asyncpg
 
 from src.billing.repositories import sepay_queries

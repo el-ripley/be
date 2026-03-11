@@ -1,14 +1,15 @@
 """Shared pytest fixtures and test configuration."""
 
-import pytest
 from unittest.mock import AsyncMock, MagicMock, patch
+
+import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
 from src.api.auth.router import router as auth_router
 
-
 # ----- Minimal test app for integration tests (no lifespan / no Redis-DB) -----
+
 
 def _root() -> dict:
     """Mirror of main app root endpoint."""
@@ -63,7 +64,11 @@ test_app.include_router(auth_router)
 def mock_auth_service() -> MagicMock:
     """AuthService mock for tests."""
     service = MagicMock()
-    service.validate_token.return_value = {"user_id": "test-user-123", "sub": "test-user-123", "type": "access"}
+    service.validate_token.return_value = {
+        "user_id": "test-user-123",
+        "sub": "test-user-123",
+        "type": "access",
+    }
     service.get_refresh_token_from_request.return_value = None
     service.get_access_token_from_request.return_value = None
     return service

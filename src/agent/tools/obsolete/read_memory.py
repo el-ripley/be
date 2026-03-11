@@ -1,7 +1,7 @@
 """Read memory tool - read a specific memory with full data structure."""
 
-import uuid
 import time
+import uuid
 from typing import Any, Dict
 
 import asyncpg
@@ -176,7 +176,9 @@ class ReadMemoryTool(BaseTool):
                     "fan_page_id": fan_page_id,
                     "prompt_type": prompt_type,
                     "is_active": memory_record["is_active"] if memory_record else True,
-                    "created_at": memory_record["created_at"] if memory_record else None,
+                    "created_at": memory_record["created_at"]
+                    if memory_record
+                    else None,
                 }
             else:  # user_memory
                 from src.database.postgres.repositories.suggest_response_queries import (
@@ -191,7 +193,9 @@ class ReadMemoryTool(BaseTool):
                     "fan_page_id": fan_page_id,
                     "psid": psid,
                     "is_active": memory_record["is_active"] if memory_record else True,
-                    "created_at": memory_record["created_at"] if memory_record else None,
+                    "created_at": memory_record["created_at"]
+                    if memory_record
+                    else None,
                 }
 
             # Render memory text

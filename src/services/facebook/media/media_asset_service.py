@@ -1,13 +1,13 @@
-from typing import Any, Dict, List, Optional
 import json
+from typing import Any, Dict, List, Optional
 
-from src.database.postgres.utils import get_current_timestamp_ms
-from src.services.media.media_mirror_service import MediaMirrorService
-from src.services.media.media_description_service import MediaDescriptionService
 from src.database.postgres.repositories.media_assets_queries import (
-    update_media_description_by_id,
     get_fb_media_asset,
+    update_media_description_by_id,
 )
+from src.database.postgres.utils import get_current_timestamp_ms
+from src.services.media.media_description_service import MediaDescriptionService
+from src.services.media.media_mirror_service import MediaMirrorService
 from src.utils.logger import get_logger
 
 logger = get_logger()
@@ -831,7 +831,9 @@ class MediaAssetService:
             media_attr = (
                 "avatar_media"
                 if field_name in ("avatar", "profile_pic")
-                else "cover_media" if field_name == "cover" else "photo_media"
+                else "cover_media"
+                if field_name == "cover"
+                else "photo_media"
             )
             media = target.get(media_attr)
             if isinstance(media, dict):

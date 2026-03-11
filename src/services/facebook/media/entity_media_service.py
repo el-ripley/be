@@ -7,18 +7,19 @@ Handles the complete workflow of:
 4. Generating AI descriptions
 """
 
-from typing import Any, Dict, Optional, List, Tuple
+from typing import Any, Dict, List, Optional, Tuple
+
 import asyncpg
 
-from src.services.media.media_mirror_service import MediaMirrorService
-from src.services.media.media_description_service import MediaDescriptionService
+from src.database.postgres.executor import execute_async_single
 from src.database.postgres.repositories.media_assets_queries import (
     get_fb_media_asset,
     get_fb_media_assets_batch,
     update_media_description_by_id,
 )
-from src.database.postgres.executor import execute_async_single
 from src.database.postgres.utils import get_current_timestamp_ms
+from src.services.media.media_description_service import MediaDescriptionService
+from src.services.media.media_mirror_service import MediaMirrorService
 from src.utils.logger import get_logger
 
 logger = get_logger()
@@ -266,13 +267,13 @@ class EntityMediaService:
         if not entities:
             return []
 
-        logger.info(
-            f"Batch processing {len(entities)} entities for user {user_id}"
-        )
+        logger.info(f"Batch processing {len(entities)} entities for user {user_id}")
 
         # Step 1: Lookup all entities and collect media items
         entity_media_map: Dict[str, Dict[str, Any]] = {}  # entity_key -> entity_data
-        all_media_items: List[Dict[str, Any]] = []  # All media items with entity tracking
+        all_media_items: List[
+            Dict[str, Any]
+        ] = []  # All media items with entity tracking
 
         for entity in entities:
             owner_type = entity.get("owner_type")
@@ -315,7 +316,9 @@ class EntityMediaService:
                             "effective_owner_id": effective_owner_id,
                             "field_name": item["field_name"],
                             "original_url": item["original_url"],
-                            "retention_policy": item.get("retention_policy", "one_week"),
+                            "retention_policy": item.get(
+                                "retention_policy", "one_week"
+                            ),
                         }
                     )
 
@@ -347,7 +350,11 @@ class EntityMediaService:
 
         # Step 2: Pre-fetch ALL existing assets in one batch query
         batch_query_items: List[Tuple[str, str, str]] = [
-            (item["effective_owner_type"], item["effective_owner_id"], item["field_name"])
+            (
+                item["effective_owner_type"],
+                item["effective_owner_id"],
+                item["field_name"],
+            )
             for item in all_media_items
         ]
         existing_assets_map = await get_fb_media_assets_batch(conn, batch_query_items)
@@ -422,7 +429,9 @@ class EntityMediaService:
             mirrored_results = await self.mirror_service.batch_ensure_media_assets(
                 conn, mirror_batch
             )
-            logger.info(f"Batch mirror completed: {len(mirrored_results)} items processed")
+            logger.info(
+                f"Batch mirror completed: {len(mirrored_results)} items processed"
+            )
 
         # Step 5: Collect all media assets (mirrored + already existing)
         all_media_assets: List[Dict[str, Any]] = []
@@ -490,7 +499,11 @@ class EntityMediaService:
             # Final check: fetch latest descriptions from DB to prevent duplicates
             # (in case another process updated them)
             final_check_items: List[Tuple[str, str, str]] = [
-                (item["effective_owner_type"], item["effective_owner_id"], item["field_name"])
+                (
+                    item["effective_owner_type"],
+                    item["effective_owner_id"],
+                    item["field_name"],
+                )
                 for item in items_to_describe
             ]
             final_assets_map = await get_fb_media_assets_batch(conn, final_check_items)
@@ -529,7 +542,9 @@ class EntityMediaService:
                     for item in items_with_ids
                 ]
 
-                logger.info(f"Batch describing {len(describe_items)} media items (parallel LLM)")
+                logger.info(
+                    f"Batch describing {len(describe_items)} media items (parallel LLM)"
+                )
                 descriptions = await self.description_service.describe_batch(
                     conn=conn,
                     items=describe_items,
@@ -539,7 +554,9 @@ class EntityMediaService:
                     conversation_id=conversation_id,
                     branch_id=branch_id,
                 )
-                logger.info(f"Batch describe completed: {len(descriptions)} descriptions generated")
+                logger.info(
+                    f"Batch describe completed: {len(descriptions)} descriptions generated"
+                )
 
                 # Update media assets with descriptions
                 for item in items_with_ids:
@@ -884,9 +901,9 @@ class EntityMediaService:
                             for media_asset in all_media_assets:
                                 if media_asset["media_id"] == media_id:
                                     media_asset["action"] = "failed"
-                                    media_asset["error"] = (
-                                        "Failed to generate description"
-                                    )
+                                    media_asset[
+                                        "error"
+                                    ] = "Failed to generate description"
                                     break
 
             # Format final media results

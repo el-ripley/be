@@ -7,18 +7,18 @@ reducing context size while preserving essential information.
 
 import json
 import time
-from typing import List, Dict, Any, Optional, Tuple
 from dataclasses import dataclass
-from pydantic import BaseModel, Field
+from typing import Any, Dict, List, Optional, Tuple
 
 import asyncpg
+from pydantic import BaseModel, Field
 
-from src.agent.core.llm_call import LLM_call
 from src.agent.common.agent_types import AGENT_TYPE_SUMMARIZATION_AGENT
+from src.agent.core.llm_call import LLM_call
 from src.database.postgres.repositories.agent_queries import (
     create_agent_response,
-    insert_openai_response_with_agent,
     finalize_agent_response,
+    insert_openai_response_with_agent,
 )
 from src.utils.logger import get_logger
 

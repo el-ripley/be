@@ -5,8 +5,9 @@ The agent uses media_ids to reference images; the runner resolves
 these to actual URLs before downstream delivery (FE, GraphAPI).
 """
 
+from typing import List, Optional, Union
+
 from pydantic import BaseModel, Field
-from typing import Optional, List, Union
 
 
 class MessageSuggestion(BaseModel):

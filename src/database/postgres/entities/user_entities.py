@@ -5,9 +5,9 @@ Pure database entity representations for users and roles.
 These models represent the complete structure of database records.
 """
 
-from pydantic import BaseModel, Field
 from typing import List, Optional
 
+from pydantic import BaseModel, Field
 
 # ================================================================
 # ROLE ENTITY

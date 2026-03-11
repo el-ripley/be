@@ -3,10 +3,10 @@ Schemas for user operations including user settings and file management.
 """
 
 from typing import List, Optional
+
 from pydantic import BaseModel, Field, validator
 
 from src.agent.common.conversation_settings import SUPPORTED_MODELS
-
 
 # ================================================================
 # USER CONVERSATION SETTINGS SCHEMAS

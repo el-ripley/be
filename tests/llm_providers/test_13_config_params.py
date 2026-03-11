@@ -332,12 +332,22 @@ def run_13b_gemini() -> None:
         provider="gemini",
         request_data={
             "method": "generate_content",
-            "params": {"thinking_config": "include_thoughts=True/False (SDK không có thinking_budget)"},
+            "params": {
+                "thinking_config": "include_thoughts=True/False (SDK không có thinking_budget)"
+            },
         },
         raw_response={
-            "usage_low": raw_low.get("usage_metadata") if isinstance(raw_low, dict) else None,
-            "usage_high": raw_high.get("usage_metadata") if isinstance(raw_high, dict) else None,
-            "off_has_candidates": bool((raw_off.get("candidates") or []) if isinstance(raw_off, dict) else False),
+            "usage_low": raw_low.get("usage_metadata")
+            if isinstance(raw_low, dict)
+            else None,
+            "usage_high": raw_high.get("usage_metadata")
+            if isinstance(raw_high, dict)
+            else None,
+            "off_has_candidates": bool(
+                (raw_off.get("candidates") or [])
+                if isinstance(raw_off, dict)
+                else False
+            ),
         },
         key_observations={
             "openai_low": "ThinkingConfig(include_thoughts=True) — SDK không hỗ trợ thinking_budget",

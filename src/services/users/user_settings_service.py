@@ -4,18 +4,19 @@ Service for managing user conversation settings.
 Handles user-level defaults for context management settings.
 """
 
-from typing import Optional, Dict, Any
+from typing import Any, Dict, Optional
+
+from src.agent.common.conversation_settings import (
+    DEFAULT_CONTEXT_BUFFER_PERCENT,
+    DEFAULT_CONTEXT_TOKEN_LIMIT,
+    DEFAULT_SUMMARIZER_MODEL,
+    DEFAULT_VISION_MODEL,
+    SUPPORTED_MODELS,
+)
 from src.database.postgres.connection import async_db_transaction
 from src.database.postgres.repositories.user_queries import (
     get_user_conversation_settings,
     upsert_user_conversation_settings,
-)
-from src.agent.common.conversation_settings import (
-    DEFAULT_CONTEXT_TOKEN_LIMIT,
-    DEFAULT_CONTEXT_BUFFER_PERCENT,
-    DEFAULT_SUMMARIZER_MODEL,
-    DEFAULT_VISION_MODEL,
-    SUPPORTED_MODELS,
 )
 from src.utils.logger import get_logger
 
@@ -131,4 +132,3 @@ class UserSettingsService:
                 f"Error updating user conversation settings for {user_id}: {str(e)}"
             )
             raise
-

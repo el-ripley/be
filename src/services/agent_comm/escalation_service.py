@@ -14,11 +14,11 @@ from src.database.postgres.repositories import (
     insert_escalation_message,
     update_escalation_status,
 )
-from src.database.postgres.repositories.facebook_queries.messages import (
-    get_conversations_with_details_batch,
-)
 from src.database.postgres.repositories.facebook_queries.comments import (
     get_comments_thread_contexts_batch,
+)
+from src.database.postgres.repositories.facebook_queries.messages import (
+    get_conversations_with_details_batch,
 )
 from src.utils.logger import get_logger
 

@@ -4,10 +4,7 @@ from typing import Any, Dict, List, Optional
 
 import asyncpg
 
-from src.common.clients.openai_embedding_client import (
-    EMBEDDING_MODEL,
-    embed_texts,
-)
+from src.common.clients.openai_embedding_client import EMBEDDING_MODEL, embed_texts
 from src.database.postgres.repositories.agent_queries.agent_responses import (
     insert_openai_response_with_agent,
     update_agent_response_aggregates,
@@ -19,7 +16,9 @@ from src.database.qdrant.playbook_repository import (
 from src.database.qdrant.playbook_repository import (
     search_playbooks as qdrant_search_playbooks,
 )
-from src.database.qdrant.playbook_repository import upsert_playbook as qdrant_upsert_playbook
+from src.database.qdrant.playbook_repository import (
+    upsert_playbook as qdrant_upsert_playbook,
+)
 from src.utils.logger import get_logger
 
 logger = get_logger()

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import asyncio
-from typing import Optional, Dict, Any, List
+from typing import Any, Dict, List, Optional
 
 import httpx
 
@@ -66,11 +66,9 @@ class MediaMirrorService:
         media_id = None
         if media_id_raw is not None:
             media_id = (
-                str(media_id_raw)
-                if hasattr(media_id_raw, "__str__")
-                else media_id_raw
+                str(media_id_raw) if hasattr(media_id_raw, "__str__") else media_id_raw
             )
-        
+
         return {
             "id": media_id,
             "s3_url": asset.get("s3_url"),

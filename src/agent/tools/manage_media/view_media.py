@@ -22,12 +22,13 @@ Note: Images are loaded directly in function_output as array of objects.
 Each image consumes significant context tokens (~200-1000).
 """
 
+import json
+import time
+import uuid
 from typing import Any, Dict, Optional
 from urllib.parse import urlparse
+
 import asyncpg
-import uuid
-import time
-import json
 
 from src.agent.tools.base import BaseTool, ToolCallContext, ToolResult
 from src.api.openai_conversations.schemas import MessageResponse

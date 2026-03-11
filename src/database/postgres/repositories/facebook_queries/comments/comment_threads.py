@@ -1,12 +1,9 @@
 import json
-from typing import Optional, Dict, Any, List
+from typing import Any, Dict, List, Optional
 
 import asyncpg
 
-from src.database.postgres.executor import (
-    execute_async_single,
-    execute_async_query,
-)
+from src.database.postgres.executor import execute_async_query, execute_async_single
 from src.database.postgres.utils import get_current_timestamp
 
 

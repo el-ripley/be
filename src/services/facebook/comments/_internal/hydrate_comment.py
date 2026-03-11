@@ -6,6 +6,7 @@ import json
 from typing import Any, Dict, List, Optional, Tuple
 
 from src.database.postgres.repositories.facebook_queries import get_comment
+
 from .helpers import get_comment_data
 from .models import CommentHydrationPayload
 

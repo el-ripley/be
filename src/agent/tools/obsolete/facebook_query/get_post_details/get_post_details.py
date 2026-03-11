@@ -39,20 +39,24 @@ function_call_output (output_message.function_output):
 """
 
 import json
-import uuid
 import time
+import uuid
 from typing import Any, Dict, Optional
 
 import asyncpg
 
-from src.agent.tools.base import BaseTool, ToolCallContext, ToolResult
-from src.api.openai_conversations.schemas import MessageResponse
-from src.agent.common.metadata_types import MessageMetadata
 from src.agent.common.api_key_resolver_service import get_system_api_key
-from src.services.facebook.posts.post_read_service import PostReadService
+from src.agent.common.metadata_types import MessageMetadata
+from src.agent.tools.base import BaseTool, ToolCallContext, ToolResult
+from src.agent.tools.facebook_query.get_post_details.formatter import (
+    format_post_details,
+)
+from src.agent.tools.facebook_query.get_post_details.multimodal import (
+    MultimodalContentBuilder,
+)
+from src.api.openai_conversations.schemas import MessageResponse
 from src.services.facebook.media import MediaAssetService
-from src.agent.tools.facebook_query.get_post_details.formatter import format_post_details
-from src.agent.tools.facebook_query.get_post_details.multimodal import MultimodalContentBuilder
+from src.services.facebook.posts.post_read_service import PostReadService
 from src.utils.logger import get_logger
 
 logger = get_logger()

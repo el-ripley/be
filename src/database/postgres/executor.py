@@ -5,9 +5,11 @@ This module provides async parameter-safe query execution functions with
 proper error handling and result formatting using asyncpg.
 """
 
-from typing import List, Dict, Any, Optional
-import asyncpg
 import json
+from typing import Any, Dict, List, Optional
+
+import asyncpg
+
 from src.utils.logger import get_logger
 
 logger = get_logger()

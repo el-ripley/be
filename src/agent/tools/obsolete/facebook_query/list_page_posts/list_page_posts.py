@@ -25,8 +25,8 @@ function_call_output (output_message.function_output):
    }
 """
 
-import uuid
 import time
+import uuid
 from typing import Any, Dict
 
 import asyncpg

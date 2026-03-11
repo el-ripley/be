@@ -80,12 +80,7 @@ class PlaybookToolHandler:
         assigned_ids: List[str],
         agent_response_id: str,
         playbook_cache: Dict[str, Dict[str, Any]],
-    ) -> Tuple[
-        Dict[str, Any],
-        Dict[str, Dict[str, Any]],
-        int,
-        List[MessageResponse],
-    ]:
+    ) -> Tuple[Dict[str, Any], Dict[str, Dict[str, Any]], int, List[MessageResponse],]:
         """Execute search_playbooks via SearchPlaybooksTool. Returns (context_output_dict, updated_cache, new_search_count, messages)."""
         tool = _get_tool("search_playbooks")
         if not tool:
@@ -115,8 +110,14 @@ class PlaybookToolHandler:
         if "output_for_llm" in meta:
             normalized = normalize_function_output_to_api_format(meta["output_for_llm"])
         else:
-            normalized = normalize_function_output_to_api_format(meta.get("output_text", ""))
-        ctx_out = {"type": "function_call_output", "call_id": call_id, "output": normalized}
+            normalized = normalize_function_output_to_api_format(
+                meta.get("output_text", "")
+            )
+        ctx_out = {
+            "type": "function_call_output",
+            "call_id": call_id,
+            "output": normalized,
+        }
 
         msg_fc = _make_function_call_message(
             conversation_id, call_id, "search_playbooks", arguments
@@ -166,7 +167,11 @@ class PlaybookToolHandler:
 
         output_text = f"Selected {len(selected_ids)} playbook(s)."
         normalized = normalize_function_output_to_api_format(output_text)
-        ctx_out = {"type": "function_call_output", "call_id": call_id, "output": normalized}
+        ctx_out = {
+            "type": "function_call_output",
+            "call_id": call_id,
+            "output": normalized,
+        }
 
         msg_fc = _make_function_call_message(
             conversation_id, call_id, "select_playbooks", arguments

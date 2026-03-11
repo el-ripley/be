@@ -1,18 +1,19 @@
-from fastapi import APIRouter, Request, Depends, HTTPException
+import asyncpg
+from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from starlette.status import HTTP_302_FOUND
-import asyncpg
+
+from src.database.postgres.connection import get_async_connection_pool
+from src.settings import settings
+from src.utils.logger import get_logger
 
 from .handler import FbHandler
 from .utils import (
     check_and_mark_code_processed,
-    remove_code_from_cache,
-    generate_auth_redirect_url,
     extract_frontend_url_from_state,
+    generate_auth_redirect_url,
+    remove_code_from_cache,
 )
-from src.database.postgres.connection import get_async_connection_pool
-from src.utils.logger import get_logger
-from src.settings import settings
 
 logger = get_logger()
 
@@ -66,9 +67,14 @@ async def facebook_auth_callback(
 
     try:
         # Sign in with Facebook - handler manages complete flow including token creation
-        internal_user_id, user, user_info, pages_data, access_token, refresh_token = (
-            await fb_handler.sign_in_facebook(conn, fb_code)
-        )
+        (
+            internal_user_id,
+            user,
+            user_info,
+            pages_data,
+            access_token,
+            refresh_token,
+        ) = await fb_handler.sign_in_facebook(conn, fb_code)
 
         # Redirect to frontend with tokens in URL parameters
         return RedirectResponse(

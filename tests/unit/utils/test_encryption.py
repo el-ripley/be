@@ -1,9 +1,10 @@
 """Unit tests for EncryptionManager and encrypt/decrypt helpers."""
 
-import pytest
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock, patch
 
-from src.utils.encryption import EncryptionManager, encrypt_api_key, decrypt_api_key
+import pytest
+
+from src.utils.encryption import EncryptionManager, decrypt_api_key, encrypt_api_key
 
 
 def test_encryption_manager_encrypt_decrypt_roundtrip() -> None:
@@ -32,7 +33,9 @@ def test_encryption_manager_wrong_key_decrypt_raises() -> None:
 
 def test_encrypt_api_key_requires_manager() -> None:
     with patch("src.utils.encryption.get_encryption_manager") as get_mgr:
-        get_mgr.side_effect = ValueError("Encryption key required for first initialization")
+        get_mgr.side_effect = ValueError(
+            "Encryption key required for first initialization"
+        )
         with pytest.raises(ValueError):
             encrypt_api_key("key")
 

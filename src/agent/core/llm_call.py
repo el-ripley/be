@@ -1,9 +1,11 @@
-from typing import Optional, Dict, Any, AsyncGenerator, List, Union, Type
-from pydantic import BaseModel
 import json
+from typing import Any, AsyncGenerator, Dict, List, Optional, Type, Union
+
+from httpx import Timeout
 from openai import AsyncOpenAI
 from openai.types.responses import ParsedResponse, ResponseStreamEvent
-from httpx import Timeout
+from pydantic import BaseModel
+
 from src.utils.logger import get_logger
 
 logger = get_logger()

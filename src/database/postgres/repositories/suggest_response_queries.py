@@ -3,17 +3,18 @@ Suggest Response SQL query functions.
 Handles CRUD operations for suggest response agent settings and prompts.
 """
 
-from typing import Optional, Dict, Any, List
-import asyncpg
 import json
+from typing import Any, Dict, List, Optional
+
+import asyncpg
+
 from ..executor import (
-    execute_async_single,
-    execute_async_returning,
-    execute_async_query,
     execute_async_command,
+    execute_async_query,
+    execute_async_returning,
+    execute_async_single,
 )
 from ..utils import generate_uuid, get_current_timestamp_ms
-
 
 # ================================================================
 # SUGGEST RESPONSE AGENT OPERATIONS

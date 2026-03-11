@@ -8,35 +8,34 @@ if TYPE_CHECKING:
         EscalationNotificationTrigger,
     )
 
-from src.agent.core.llm_call import LLM_call
+from src.agent.common.agent_types import AGENT_TYPE_SUGGEST_RESPONSE_AGENT
 from src.agent.common.api_key_resolver_service import get_system_api_key
 from src.agent.common.conversation_settings import (
     get_default_settings,
-    normalize_settings,
     get_reasoning_param,
+    normalize_settings,
 )
+from src.agent.core.llm_call import LLM_call
 from src.agent.suggest_response.context.context_builder import (
     SuggestResponseContextBuilder,
 )
-from src.agent.suggest_response.utils.prompt_logger import log_suggest_response_prompts
+from src.agent.suggest_response.core.iteration_runner import (
+    SuggestResponseIterationRunner,
+)
+from src.agent.suggest_response.core.run_config import LLMResult, PreparedContext
+from src.agent.suggest_response.playbook import PlaybookRetriever
 from src.agent.suggest_response.socket.emitter import SuggestResponseSocketEmitter
 from src.agent.suggest_response.socket.stream_handler import (
     SuggestResponseStreamHandler,
 )
-from src.agent.suggest_response.utils.response_parser import SuggestResponseParser
-from src.agent.suggest_response.utils.persistence import SuggestResponsePersistence
-from src.agent.suggest_response.tools.tool_registry import SuggestResponseToolRegistry
 from src.agent.suggest_response.tools.tool_executor import SuggestResponseToolExecutor
-from src.agent.suggest_response.core.iteration_runner import (
-    SuggestResponseIterationRunner,
-)
-from src.agent.suggest_response.core.run_config import PreparedContext, LLMResult
+from src.agent.suggest_response.tools.tool_registry import SuggestResponseToolRegistry
 from src.agent.suggest_response.utils.message_accumulator import (
     SuggestResponseMessageAccumulator,
 )
-from src.redis_client.redis_suggest_response_cache import RedisSuggestResponseCache
-from src.agent.common.agent_types import AGENT_TYPE_SUGGEST_RESPONSE_AGENT
-from src.agent.suggest_response.playbook import PlaybookRetriever
+from src.agent.suggest_response.utils.persistence import SuggestResponsePersistence
+from src.agent.suggest_response.utils.prompt_logger import log_suggest_response_prompts
+from src.agent.suggest_response.utils.response_parser import SuggestResponseParser
 from src.database.postgres.connection import async_db_transaction
 from src.database.postgres.repositories import (
     create_agent_response,
@@ -50,6 +49,7 @@ from src.database.postgres.repositories.media_assets_queries import (
     get_media_assets_by_ids,
 )
 from src.database.postgres.utils import generate_uuid
+from src.redis_client.redis_suggest_response_cache import RedisSuggestResponseCache
 from src.socket_service import SocketService
 from src.utils.logger import get_logger
 
@@ -294,9 +294,7 @@ class SuggestResponseRunner:
                 prepared.num_suggestions,
             )
             playbook_messages = (
-                playbook_result.accumulated_messages
-                if playbook_result
-                else None
+                playbook_result.accumulated_messages if playbook_result else None
             )
             history_id = await self.persistence.save_result(
                 user_id=user_id,
@@ -341,7 +339,9 @@ class SuggestResponseRunner:
             code = getattr(e, "code", None) or (
                 "MAX_ITERATIONS_EXHAUSTED"
                 if "max_iterations_exhausted" in error_str
-                else "INCOMPLETE" if "incomplete" in error_str else "ERROR"
+                else "INCOMPLETE"
+                if "incomplete" in error_str
+                else "ERROR"
             )
             await self.socket_emitter.emit_run_error(
                 user_id=user_id,

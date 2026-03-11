@@ -12,6 +12,23 @@ import asyncpg
 
 from src.agent.common.conversation_settings import get_reasoning_param
 from src.agent.core.llm_call import LLM_call
+from src.agent.suggest_response.playbook.constants import MAX_ITERATIONS, MAX_SEARCHES
+from src.agent.suggest_response.playbook.helpers import (
+    build_initial_input_messages,
+    format_playbooks_as_system_reminder,
+    input_items_for_api,
+)
+from src.agent.suggest_response.playbook.tool_handler import PlaybookToolHandler
+from src.agent.suggest_response.playbook.tools.tool_definitions import (
+    get_playbook_tool_definitions,
+    get_playbook_tool_definitions_select_only,
+)
+from src.agent.suggest_response.socket.emitter import SuggestResponseSocketEmitter
+from src.agent.suggest_response.socket.stream_handler import (
+    SuggestResponseStreamHandler,
+)
+from src.agent.suggest_response.utils.prompt_logger import log_playbook_retriever_input
+from src.api.openai_conversations.schemas import MessageResponse
 from src.database.postgres.repositories import (
     get_assigned_playbook_ids,
     get_facebook_page_admins_by_user_id,
@@ -19,21 +36,6 @@ from src.database.postgres.repositories import (
 from src.database.postgres.repositories.agent_queries.agent_responses import (
     insert_openai_response_with_agent,
 )
-from src.agent.suggest_response.playbook.constants import MAX_ITERATIONS, MAX_SEARCHES
-from src.agent.suggest_response.playbook.tools.tool_definitions import (
-    get_playbook_tool_definitions,
-    get_playbook_tool_definitions_select_only,
-)
-from src.agent.suggest_response.playbook.helpers import (
-    build_initial_input_messages,
-    format_playbooks_as_system_reminder,
-    input_items_for_api,
-)
-from src.agent.suggest_response.playbook.tool_handler import PlaybookToolHandler
-from src.agent.suggest_response.socket.emitter import SuggestResponseSocketEmitter
-from src.agent.suggest_response.socket.stream_handler import SuggestResponseStreamHandler
-from src.agent.suggest_response.utils.prompt_logger import log_playbook_retriever_input
-from src.api.openai_conversations.schemas import MessageResponse
 from src.utils.logger import get_logger
 
 logger = get_logger()
@@ -59,7 +61,9 @@ class PlaybookRetriever:
         self, socket_emitter: Optional[SuggestResponseSocketEmitter] = None
     ) -> None:
         self.socket_emitter = socket_emitter
-        self.stream_handler = SuggestResponseStreamHandler(socket_emitter or _NoOpEmitter())
+        self.stream_handler = SuggestResponseStreamHandler(
+            socket_emitter or _NoOpEmitter()
+        )
         self.tool_handler = PlaybookToolHandler(socket_emitter)
 
     async def retrieve(
@@ -93,7 +97,9 @@ class PlaybookRetriever:
         Returns:
             PlaybookRetrievalResult with system_reminder (or None) and accumulated_messages for persistence.
         """
-        empty_result = PlaybookRetrievalResult(system_reminder=None, accumulated_messages=[])
+        empty_result = PlaybookRetrievalResult(
+            system_reminder=None, accumulated_messages=[]
+        )
 
         try:
             page_admins = await get_facebook_page_admins_by_user_id(conn, user_id)
@@ -209,21 +215,24 @@ class PlaybookRetriever:
                     )
 
                     if name == "search_playbooks":
-                        ctx_out, playbook_cache, search_count, msgs = (
-                            await self.tool_handler.handle_search(
-                                conn=conn,
-                                user_id=user_id,
-                                conversation_type=conversation_type,
-                                conversation_id=conversation_id,
-                                run_id=run_id,
-                                iteration_index=iteration,
-                                call_id=call_id,
-                                arguments=arguments,
-                                search_count=search_count,
-                                assigned_ids=assigned_ids,
-                                agent_response_id=agent_response_id,
-                                playbook_cache=playbook_cache,
-                            )
+                        (
+                            ctx_out,
+                            playbook_cache,
+                            search_count,
+                            msgs,
+                        ) = await self.tool_handler.handle_search(
+                            conn=conn,
+                            user_id=user_id,
+                            conversation_type=conversation_type,
+                            conversation_id=conversation_id,
+                            run_id=run_id,
+                            iteration_index=iteration,
+                            call_id=call_id,
+                            arguments=arguments,
+                            search_count=search_count,
+                            assigned_ids=assigned_ids,
+                            agent_response_id=agent_response_id,
+                            playbook_cache=playbook_cache,
                         )
                         accumulated_messages.extend(msgs)
                         context.append(ctx_out)
@@ -231,16 +240,18 @@ class PlaybookRetriever:
                             tools = get_playbook_tool_definitions_select_only()
 
                     elif name == "select_playbooks":
-                        selected_ids, ctx_out, msgs = (
-                            await self.tool_handler.handle_select(
-                                user_id=user_id,
-                                conversation_type=conversation_type,
-                                conversation_id=conversation_id,
-                                run_id=run_id,
-                                iteration_index=iteration,
-                                call_id=call_id,
-                                arguments=arguments,
-                            )
+                        (
+                            selected_ids,
+                            ctx_out,
+                            msgs,
+                        ) = await self.tool_handler.handle_select(
+                            user_id=user_id,
+                            conversation_type=conversation_type,
+                            conversation_id=conversation_id,
+                            run_id=run_id,
+                            iteration_index=iteration,
+                            call_id=call_id,
+                            arguments=arguments,
                         )
                         accumulated_messages.extend(msgs)
                         context.append(ctx_out)

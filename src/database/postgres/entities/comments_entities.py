@@ -7,8 +7,8 @@ Posts exist primarily to provide context for comments.
 """
 
 from typing import Optional
-from pydantic import BaseModel, Field
 
+from pydantic import BaseModel, Field
 
 # ================================================================
 # POST ENTITY

@@ -4,22 +4,23 @@ Orchestrates comment processing workflow including tree building, authorship inf
 """
 
 import asyncio
-from typing import Any, Dict, List, Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
 from src.database.postgres.connection import async_db_transaction
-from src.database.postgres.repositories.facebook_queries import get_comment
-from src.utils.logger import get_logger
-from src.services.facebook.auth import FacebookPageService
-from src.services.facebook.users.page_scope_user_service import PageScopeUserService
-from src.services.facebook.posts.post_sync_service import PostSyncService
-from ._internal.comment_service import CommentService
-from .sync.comment_write_service import CommentWriteService
-from .comment_conversation_service import CommentConversationService
-from ._internal.helpers import infer_comment_authorship
-from ._internal.models import CommentEventContext
-from ._internal.hydrate_comment import hydrate_comment_payload
-from ._internal.socket_emitter import emit_comment_event_to_page_admins
 from src.database.postgres.repositories import get_page_admin_suggest_configs_by_page
+from src.database.postgres.repositories.facebook_queries import get_comment
+from src.services.facebook.auth import FacebookPageService
+from src.services.facebook.posts.post_sync_service import PostSyncService
+from src.services.facebook.users.page_scope_user_service import PageScopeUserService
+from src.utils.logger import get_logger
+
+from ._internal.comment_service import CommentService
+from ._internal.helpers import infer_comment_authorship
+from ._internal.hydrate_comment import hydrate_comment_payload
+from ._internal.models import CommentEventContext
+from ._internal.socket_emitter import emit_comment_event_to_page_admins
+from .comment_conversation_service import CommentConversationService
+from .sync.comment_write_service import CommentWriteService
 
 if TYPE_CHECKING:
     from src.socket_service import SocketService

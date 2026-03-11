@@ -1,10 +1,9 @@
 """Redis utility functions and helpers."""
 
-from typing import Any, Dict, List, Optional
 from datetime import datetime
+from typing import Any, Dict, List, Optional
 
 from src.redis_client.redis_client import RedisClient
-
 from src.utils.logger import get_logger
 
 logger = get_logger()

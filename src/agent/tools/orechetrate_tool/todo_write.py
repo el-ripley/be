@@ -5,9 +5,9 @@ the user visibility into the work being done. The agent tracks todo state throug
 conversation history, and the frontend detects tool calls to render the UI.
 """
 
-import uuid
-import time
 import re
+import time
+import uuid
 from typing import Any, Dict, List
 
 import asyncpg

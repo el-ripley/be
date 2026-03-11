@@ -2,18 +2,18 @@ import json
 import time
 import uuid
 from dataclasses import dataclass
-from typing import Any, Dict, List, Tuple, Optional
+from typing import Any, Dict, List, Optional, Tuple
 
 from openai.types.responses import ParsedResponse
 
-from src.api.openai_conversations.schemas import MessageResponse
+from src.agent.common.conversation_settings import get_reasoning_param
 from src.agent.common.metadata_types import MessageMetadata
 from src.agent.general_agent.utils.temp_message_accumulator import (
     TempMessageAccumulator,
 )
-from src.agent.common.conversation_settings import get_reasoning_param
-from src.utils.logger import get_logger
+from src.api.openai_conversations.schemas import MessageResponse
 from src.socket_service import SocketService
+from src.utils.logger import get_logger
 
 logger = get_logger()
 
@@ -102,7 +102,11 @@ class LLMStreamHandler:
 
                     elif event_type == "response.output_item.added":
                         # Needs item dict - use model_dump (infrequent event)
-                        event_dict = event.model_dump(mode="json") if hasattr(event, "model_dump") else {}
+                        event_dict = (
+                            event.model_dump(mode="json")
+                            if hasattr(event, "model_dump")
+                            else {}
+                        )
                         await self._handle_output_item_added(
                             run_config.user_id,
                             run_config.conversation_id,
@@ -209,7 +213,11 @@ class LLMStreamHandler:
 
                     elif event_type == "response.output_item.done":
                         # Needs full item dict - use model_dump (infrequent, once per output item)
-                        event_dict = event.model_dump(mode="json") if hasattr(event, "model_dump") else {}
+                        event_dict = (
+                            event.model_dump(mode="json")
+                            if hasattr(event, "model_dump")
+                            else {}
+                        )
                         await self._handle_output_item_done(
                             run_config.user_id,
                             run_config.conversation_id,
@@ -225,7 +233,9 @@ class LLMStreamHandler:
                         action = getattr(event, "action", None)
                         event_dict = {
                             "item_id": getattr(event, "item_id", None),
-                            "action": action.model_dump(mode="json") if hasattr(action, "model_dump") else (action or {}),
+                            "action": action.model_dump(mode="json")
+                            if hasattr(action, "model_dump")
+                            else (action or {}),
                         }
                         await self._handle_web_search_in_progress(
                             run_config.user_id,
@@ -241,7 +251,9 @@ class LLMStreamHandler:
                         # Lightweight: needs action with query
                         action = getattr(event, "action", None)
                         event_dict = {
-                            "action": action.model_dump(mode="json") if hasattr(action, "model_dump") else (action or {}),
+                            "action": action.model_dump(mode="json")
+                            if hasattr(action, "model_dump")
+                            else (action or {}),
                         }
                         await self._handle_web_search_searching(
                             run_config.user_id,
@@ -265,28 +277,38 @@ class LLMStreamHandler:
 
                     elif event_type == "response.failed":
                         # Needs full response for error details - use model_dump (rare event)
-                        event_dict = event.model_dump(mode="json") if hasattr(event, "model_dump") else {}
-                        stream_status, error_details = (
-                            await self._handle_response_failed(
-                                run_config.user_id,
-                                run_config.conversation_id,
-                                branch_context.current_branch_id,
-                                branch_context.agent_response_id,
-                                event_dict,
-                            )
+                        event_dict = (
+                            event.model_dump(mode="json")
+                            if hasattr(event, "model_dump")
+                            else {}
+                        )
+                        (
+                            stream_status,
+                            error_details,
+                        ) = await self._handle_response_failed(
+                            run_config.user_id,
+                            run_config.conversation_id,
+                            branch_context.current_branch_id,
+                            branch_context.agent_response_id,
+                            event_dict,
                         )
 
                     elif event_type == "response.incomplete":
                         # Needs full response for details - use model_dump (rare event)
-                        event_dict = event.model_dump(mode="json") if hasattr(event, "model_dump") else {}
-                        stream_status, error_details = (
-                            await self._handle_response_incomplete(
-                                run_config.user_id,
-                                run_config.conversation_id,
-                                branch_context.current_branch_id,
-                                branch_context.agent_response_id,
-                                event_dict,
-                            )
+                        event_dict = (
+                            event.model_dump(mode="json")
+                            if hasattr(event, "model_dump")
+                            else {}
+                        )
+                        (
+                            stream_status,
+                            error_details,
+                        ) = await self._handle_response_incomplete(
+                            run_config.user_id,
+                            run_config.conversation_id,
+                            branch_context.current_branch_id,
+                            branch_context.agent_response_id,
+                            event_dict,
                         )
 
                     elif event_type == "response.refusal.delta":
@@ -320,7 +342,11 @@ class LLMStreamHandler:
 
                     elif event_type == "error":
                         # Needs full error info - use model_dump (rare event)
-                        event_dict = event.model_dump(mode="json") if hasattr(event, "model_dump") else {}
+                        event_dict = (
+                            event.model_dump(mode="json")
+                            if hasattr(event, "model_dump")
+                            else {}
+                        )
                         stream_status, error_details = await self._handle_stream_error(
                             run_config.user_id,
                             run_config.conversation_id,

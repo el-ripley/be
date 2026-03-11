@@ -1,24 +1,25 @@
 """Unit tests for exception handlers and ErrorResponse."""
 
-import pytest
 from unittest.mock import MagicMock
+
+import asyncpg
+import jwt
+import pytest
 from fastapi import Request
 from fastapi.exceptions import RequestValidationError
-import jwt
-import asyncpg
 
 from src.middleware.exception_handler import (
-    ErrorResponse,
     BusinessLogicError,
+    ErrorResponse,
     ExternalServiceError,
-    http_exception_handler,
-    validation_exception_handler,
-    jwt_exception_handler,
-    database_exception_handler,
-    general_exception_handler,
     business_logic_exception_handler,
+    database_exception_handler,
     external_service_exception_handler,
+    general_exception_handler,
+    http_exception_handler,
     is_database_exception,
+    jwt_exception_handler,
+    validation_exception_handler,
 )
 
 
@@ -78,7 +79,9 @@ async def test_postgres_error_returns_500(mock_request: Request) -> None:
 
 @pytest.mark.asyncio
 async def test_validation_error_returns_422(mock_request: Request) -> None:
-    exc = RequestValidationError(errors=[{"loc": ("body", "x"), "msg": "Missing", "type": "value_error"}])
+    exc = RequestValidationError(
+        errors=[{"loc": ("body", "x"), "msg": "Missing", "type": "value_error"}]
+    )
     response = await validation_exception_handler(mock_request, exc)
     assert response.status_code == 422
     body = response.body.decode()
@@ -87,7 +90,9 @@ async def test_validation_error_returns_422(mock_request: Request) -> None:
 
 
 @pytest.mark.asyncio
-async def test_general_exception_returns_500_no_stack_leak(mock_request: Request) -> None:
+async def test_general_exception_returns_500_no_stack_leak(
+    mock_request: Request,
+) -> None:
     exc = RuntimeError("Internal failure")
     response = await general_exception_handler(mock_request, exc)
     assert response.status_code == 500
@@ -100,6 +105,7 @@ async def test_general_exception_returns_500_no_stack_leak(mock_request: Request
 @pytest.mark.asyncio
 async def test_http_exception_preserves_status(mock_request: Request) -> None:
     from fastapi import HTTPException
+
     exc = HTTPException(status_code=404, detail="Not found")
     response = await http_exception_handler(mock_request, exc)
     assert response.status_code == 404

@@ -4,11 +4,11 @@ Facebook Post Sync State Repository.
 Tracks per-page progress for syncing posts from Facebook.
 """
 
-from typing import Optional, Dict, Any
+from typing import Any, Dict, Optional
 
 import asyncpg
 
-from src.database.postgres.executor import execute_async_single, execute_async_returning
+from src.database.postgres.executor import execute_async_returning, execute_async_single
 from src.database.postgres.utils import get_current_timestamp
 
 
@@ -151,4 +151,3 @@ async def reset_post_sync_state(
             updated_at
     """
     return await execute_async_returning(conn, query, fan_page_id, current_time)
-

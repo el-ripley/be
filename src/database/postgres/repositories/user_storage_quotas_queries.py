@@ -4,12 +4,11 @@ User Storage Quotas SQL query functions.
 Handles quota tracking for permanent media assets.
 """
 
-from typing import Optional, Dict, Any, Tuple
+from typing import Any, Dict, Optional, Tuple
+
 import asyncpg
-from ..executor import (
-    execute_async_single,
-    execute_async_returning,
-)
+
+from ..executor import execute_async_returning, execute_async_single
 from ..utils import get_current_timestamp_ms
 
 

@@ -3,7 +3,8 @@ Billing queries - Database operations for credit balance and transactions.
 """
 
 from decimal import Decimal
-from typing import Optional, Dict, Any, List
+from typing import Any, Dict, List, Optional
+
 import asyncpg
 
 from src.database.postgres.executor import execute_async_returning, execute_async_single

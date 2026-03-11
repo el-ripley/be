@@ -7,23 +7,22 @@ are not in its definition list.
 
 from typing import Any, Dict, List, Optional
 
-from src.agent.tools.base import BaseTool
-from src.agent.tools.sql_query import SqlQueryTool
-from src.agent.tools.manage_media import ViewMediaTool, ChangeMediaRetentionTool
-
-from src.agent.suggest_response.tools.override_descriptions import (
-    SR_SQL_QUERY_MESSAGES_DESCRIPTION,
-    SR_SQL_QUERY_COMMENTS_DESCRIPTION,
-    SR_VIEW_MEDIA_DESCRIPTION,
+from src.agent.suggest_response.tools.complete_task import (
+    CompleteTaskTool,
+    build_complete_task_definition,
 )
 from src.agent.suggest_response.tools.generate_suggestions import (
     GenerateSuggestionsTool,
     build_generate_suggestions_definition,
 )
-from src.agent.suggest_response.tools.complete_task import (
-    CompleteTaskTool,
-    build_complete_task_definition,
+from src.agent.suggest_response.tools.override_descriptions import (
+    SR_SQL_QUERY_COMMENTS_DESCRIPTION,
+    SR_SQL_QUERY_MESSAGES_DESCRIPTION,
+    SR_VIEW_MEDIA_DESCRIPTION,
 )
+from src.agent.tools.base import BaseTool
+from src.agent.tools.manage_media import ChangeMediaRetentionTool, ViewMediaTool
+from src.agent.tools.sql_query import SqlQueryTool
 
 
 class SuggestResponseToolRegistry:

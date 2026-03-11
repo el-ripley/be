@@ -1,14 +1,15 @@
 from datetime import datetime, timedelta, timezone
 from typing import Dict, Optional, Tuple
-import jwt
+
 import asyncpg
+import jwt
 from fastapi import Request
 
-from src.database.postgres.entities.user_entities import User, Role
+from src.database.postgres.entities.user_entities import Role, User
 from src.database.postgres.repositories.user_queries import (
-    get_user_with_roles,
     create_refresh_token,
     get_refresh_token_by_token,
+    get_user_with_roles,
     revoke_refresh_token,
 )
 from src.database.postgres.utils import get_current_timestamp

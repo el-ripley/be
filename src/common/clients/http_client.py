@@ -1,5 +1,6 @@
-import httpx
 from typing import Any, Dict, Optional, Union
+
+import httpx
 
 
 class HttpClient:

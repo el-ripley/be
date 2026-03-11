@@ -1,9 +1,9 @@
-from fastapi import HTTPException, Depends, Request, Response, status
 import asyncpg
 import jwt
+from fastapi import Depends, HTTPException, Request, Response, status
 
-from src.services.auth_service import AuthService
 from src.database.postgres.connection import get_async_connection_pool
+from src.services.auth_service import AuthService
 from src.utils.logger import get_logger
 
 logger = get_logger()
@@ -66,9 +66,7 @@ async def _attempt_automatic_refresh(
         # Validate new access token to get user_id
         new_token_payload = auth_service.validate_token(new_access_token, "access")
         if not new_token_payload or not new_token_payload.get("sub"):
-            logger.error(
-                "🔄 AUTH MIDDLEWARE: New access token is invalid after refresh"
-            )
+            logger.error("🔄 AUTH MIDDLEWARE: New access token is invalid after refresh")
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Authentication failed",

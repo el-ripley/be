@@ -9,8 +9,8 @@ from src.database.postgres import get_async_connection
 from src.database.postgres.connection import async_db_transaction
 from src.database.postgres.repositories.agent_queries import (
     create_branch_before_message,
-    get_agent_response_id_from_message_id,
     get_agent_response_for_user,
+    get_agent_response_id_from_message_id,
     get_conversation,
     get_conversation_branches,
     get_message,

@@ -1,23 +1,23 @@
 """Iteration runner for suggest_response_agent - single LLM iteration with tool execution."""
 
 import json
-import uuid
 import time
+import uuid
 from dataclasses import dataclass
 from typing import Any, Dict, List, Literal, Optional, Tuple
 
+from src.agent.general_agent.context.function_output_normalizer import (
+    normalize_function_output_to_api_format,
+)
 from src.agent.suggest_response.socket.stream_handler import (
     SuggestResponseStreamHandler,
 )
 from src.agent.suggest_response.tools.tool_executor import SuggestResponseToolExecutor
-from src.agent.suggest_response.utils.message_accumulator import (
-    SuggestResponseMessageAccumulator,
-)
 from src.agent.suggest_response.utils.iteration_warning import (
     SuggestResponseIterationWarningInjector,
 )
-from src.agent.general_agent.context.function_output_normalizer import (
-    normalize_function_output_to_api_format,
+from src.agent.suggest_response.utils.message_accumulator import (
+    SuggestResponseMessageAccumulator,
 )
 from src.api.openai_conversations.schemas import MessageResponse
 from src.redis_client.redis_agent_manager import RedisAgentManager

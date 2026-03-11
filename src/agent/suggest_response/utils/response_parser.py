@@ -1,12 +1,12 @@
 """Response parser for Suggest Response LLM outputs."""
 
 import json
-from typing import Dict, Any, List, Tuple, Optional
+from typing import Any, Dict, List, Optional, Tuple
 
 from src.agent.suggest_response.schemas import (
-    SuggestResponseOutput,
-    MessageSuggestion,
     CommentSuggestion,
+    MessageSuggestion,
+    SuggestResponseOutput,
 )
 from src.utils.logger import get_logger
 

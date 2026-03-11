@@ -12,7 +12,8 @@ Unified event hierarchy:
   run.completed | run.error
 """
 
-from typing import Dict, Any, List, Optional, Literal
+from typing import Any, Dict, List, Literal, Optional
+
 from src.socket_service import SocketService
 
 StepName = Literal["playbook_retrieval", "response_generation"]

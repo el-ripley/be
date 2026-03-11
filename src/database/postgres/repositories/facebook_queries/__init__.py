@@ -12,9 +12,10 @@ Functions are organized into sub-modules for better maintainability:
 - Note: Media assets are now handled by media_assets_queries (unified table)
 """
 
-# Import all functions from sub-modules for backward compatibility
-from .pages import *
-from .messages import *
 from .comments import *
 from .inbox_sync_states import *
+from .messages import *
+
+# Import all functions from sub-modules for backward compatibility
+from .pages import *
 from .reactions import *

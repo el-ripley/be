@@ -6,8 +6,8 @@ and other common database operations.
 """
 
 import time
+from typing import Any, Dict, List, Optional
 from uuid import uuid4
-from typing import Dict, Any, List, Optional
 
 
 def generate_uuid() -> str:

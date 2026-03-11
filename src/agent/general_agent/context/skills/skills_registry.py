@@ -1,7 +1,7 @@
 """Skills registry - load and list available skills."""
 
 from pathlib import Path
-from typing import Optional, List
+from typing import List, Optional
 
 SKILLS_DIR = Path(__file__).parent
 
@@ -43,8 +43,10 @@ def list_available_skills() -> List[str]:
     Returns:
         List of skill names (without .md extension)
     """
-    return sorted([
-        f.stem
-        for f in SKILLS_DIR.glob("*.md")
-        if f.is_file() and not f.name.startswith("_")
-    ])
+    return sorted(
+        [
+            f.stem
+            for f in SKILLS_DIR.glob("*.md")
+            if f.is_file() and not f.name.startswith("_")
+        ]
+    )

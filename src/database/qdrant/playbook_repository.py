@@ -4,10 +4,7 @@ from typing import Any, Dict, List, Optional
 
 from qdrant_client import models as qdrant_models
 
-from src.database.qdrant.connection import (
-    PLAYBOOKS_COLLECTION,
-    get_qdrant_client,
-)
+from src.database.qdrant.connection import PLAYBOOKS_COLLECTION, get_qdrant_client
 
 
 async def upsert_playbook(

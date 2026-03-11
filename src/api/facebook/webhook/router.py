@@ -1,13 +1,13 @@
 import json
-from fastapi import APIRouter, Request, Depends
+
+from fastapi import APIRouter, Depends, Request
 from fastapi.responses import JSONResponse, PlainTextResponse
 
 from src.settings import settings
-
-from .handler import FbWebhookHandler
-from ..auth.utils import verify_fb_signature
-
 from src.utils.logger import get_logger
+
+from ..auth.utils import verify_fb_signature
+from .handler import FbWebhookHandler
 
 logger = get_logger()
 

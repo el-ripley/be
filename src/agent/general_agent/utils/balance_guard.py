@@ -14,11 +14,9 @@ class BalanceGuard:
     def __init__(self, socket_service: SocketService):
         self.socket_service = socket_service
 
-    async def check_can_run(
-        self, user_id: str, conversation_id: str
-    ) -> bool:
+    async def check_can_run(self, user_id: str, conversation_id: str) -> bool:
         """Check if user has sufficient balance. Emits error if not.
-        
+
         Returns:
             True if user can run agent, False otherwise.
         """

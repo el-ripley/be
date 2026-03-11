@@ -109,9 +109,7 @@ class ContextHandler:
             await self.sio.emit("context.response", response_data, room=sid)
 
         except Exception as e:
-            logger.error(
-                f"Error handling get_context for session {sid}: {str(e)}"
-            )
+            logger.error(f"Error handling get_context for session {sid}: {str(e)}")
             await self.sio.emit(
                 "context.error",
                 {"error": f"Internal error: {str(e)}"},

@@ -1,30 +1,32 @@
+import json
+from typing import Any, Dict, List, Optional
+
 from fastapi import (
     APIRouter,
+    Body,
     Depends,
+    File,
+    Form,
     HTTPException,
+    Query,
     Request,
     Response,
-    File,
     UploadFile,
-    Query,
-    Form,
-    Body,
 )
-from typing import List, Optional, Dict, Any
-import json
-from src.api.users.handler import UserHandler, UserFilesHandler
+
+from src.api.users.handler import UserFilesHandler, UserHandler
 from src.api.users.schemas import (
-    UserConversationSettingsUpdate,
-    UserConversationSettingsResponse,
-    FileUploadResponse,
-    MediaItemResponse,
-    ListMediaResponse,
     DeleteMediaResponse,
-    PromptReference,
-    UserMemoryResponse,
+    FileUploadResponse,
+    ListMediaResponse,
+    MediaItemResponse,
     MemoryBlockItem,
+    PromptReference,
+    UserConversationSettingsResponse,
+    UserConversationSettingsUpdate,
+    UserMemoryResponse,
 )
-from src.middleware.auth_middleware import verify_token, get_current_user_id
+from src.middleware.auth_middleware import get_current_user_id, verify_token
 from src.utils.logger import get_logger
 
 logger = get_logger()

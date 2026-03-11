@@ -1,22 +1,29 @@
 """Unit tests for EscalationNotificationTrigger (pure helpers and check_and_notify)."""
 
-import pytest
 from unittest.mock import AsyncMock, patch
 
+import pytest
+
 from src.services.notifications.escalation_trigger import (
-    _sql_touches_escalations,
-    _detect_operation_types,
-    EscalationNotificationTrigger,
+    TYPE_ESCALATION_CLOSED,
     TYPE_ESCALATION_CREATED,
     TYPE_ESCALATION_NEW_MESSAGE,
-    TYPE_ESCALATION_CLOSED,
+    EscalationNotificationTrigger,
+    _detect_operation_types,
+    _sql_touches_escalations,
 )
 
 
 def test_sql_touches_escalations_true() -> None:
-    assert _sql_touches_escalations(["INSERT INTO agent_escalations (id) VALUES (1)"]) is True
+    assert (
+        _sql_touches_escalations(["INSERT INTO agent_escalations (id) VALUES (1)"])
+        is True
+    )
     assert _sql_touches_escalations(["SELECT * FROM agent_escalation_messages"]) is True
-    assert _sql_touches_escalations(["UPDATE agent_escalations SET status = 'closed'"]) is True
+    assert (
+        _sql_touches_escalations(["UPDATE agent_escalations SET status = 'closed'"])
+        is True
+    )
 
 
 def test_sql_touches_escalations_false() -> None:
@@ -30,7 +37,9 @@ def test_detect_operation_types_insert_escalations() -> None:
 
 
 def test_detect_operation_types_insert_messages() -> None:
-    types = _detect_operation_types(["INSERT INTO agent_escalation_messages (id) VALUES (1)"])
+    types = _detect_operation_types(
+        ["INSERT INTO agent_escalation_messages (id) VALUES (1)"]
+    )
     assert TYPE_ESCALATION_NEW_MESSAGE in types
 
 
@@ -42,10 +51,12 @@ def test_detect_operation_types_update_closed() -> None:
 
 
 def test_detect_operation_types_dedupe() -> None:
-    types = _detect_operation_types([
-        "INSERT INTO agent_escalations (id) VALUES (1)",
-        "INSERT INTO agent_escalations (id) VALUES (2)",
-    ])
+    types = _detect_operation_types(
+        [
+            "INSERT INTO agent_escalations (id) VALUES (1)",
+            "INSERT INTO agent_escalations (id) VALUES (2)",
+        ]
+    )
     assert types.count(TYPE_ESCALATION_CREATED) == 1
 
 

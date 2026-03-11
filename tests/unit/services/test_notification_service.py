@@ -1,7 +1,8 @@
 """Unit tests for NotificationService."""
 
-import pytest
 from unittest.mock import AsyncMock, MagicMock, patch
+
+import pytest
 
 from src.services.notifications.notification_service import NotificationService
 
@@ -19,7 +20,9 @@ def notification_service(mock_socket_service: MagicMock) -> NotificationService:
 
 
 @pytest.mark.asyncio
-async def test_create_calls_insert_and_emit(notification_service: NotificationService) -> None:
+async def test_create_calls_insert_and_emit(
+    notification_service: NotificationService,
+) -> None:
     with patch(
         "src.services.notifications.notification_service.async_db_transaction"
     ) as mock_tx:
@@ -46,7 +49,9 @@ async def test_create_calls_insert_and_emit(notification_service: NotificationSe
 
 
 @pytest.mark.asyncio
-async def test_get_unread_count_returns_count(notification_service: NotificationService) -> None:
+async def test_get_unread_count_returns_count(
+    notification_service: NotificationService,
+) -> None:
     with patch(
         "src.services.notifications.notification_service.async_db_transaction"
     ) as mock_tx:
@@ -64,7 +69,9 @@ async def test_get_unread_count_returns_count(notification_service: Notification
 
 
 @pytest.mark.asyncio
-async def test_mark_all_read_calls_repo(notification_service: NotificationService) -> None:
+async def test_mark_all_read_calls_repo(
+    notification_service: NotificationService,
+) -> None:
     with patch(
         "src.services.notifications.notification_service.async_db_transaction"
     ) as mock_tx:

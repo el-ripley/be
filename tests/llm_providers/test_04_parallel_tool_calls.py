@@ -24,12 +24,17 @@ SYSTEM = "You are a helpful assistant."
 
 WEATHER_SCHEMA = {
     "type": "object",
-    "properties": {"city": {"type": "string"}, "unit": {"type": "string", "enum": ["celsius", "fahrenheit"]}},
+    "properties": {
+        "city": {"type": "string"},
+        "unit": {"type": "string", "enum": ["celsius", "fahrenheit"]},
+    },
     "required": ["city"],
 }
 TIME_SCHEMA = {
     "type": "object",
-    "properties": {"timezone": {"type": "string", "description": "City or timezone e.g. Tokyo"}},
+    "properties": {
+        "timezone": {"type": "string", "description": "City or timezone e.g. Tokyo"}
+    },
     "required": ["timezone"],
 }
 
@@ -39,8 +44,16 @@ def run_anthropic() -> None:
 
     client = get_anthropic_client_direct()
     tools = [
-        {"name": "get_weather", "description": "Get current weather for a city", "input_schema": WEATHER_SCHEMA},
-        {"name": "get_time", "description": "Get current time for a timezone or city", "input_schema": TIME_SCHEMA},
+        {
+            "name": "get_weather",
+            "description": "Get current weather for a city",
+            "input_schema": WEATHER_SCHEMA,
+        },
+        {
+            "name": "get_time",
+            "description": "Get current time for a timezone or city",
+            "input_schema": TIME_SCHEMA,
+        },
     ]
     model = get_anthropic_model()
     request_params = {
@@ -56,11 +69,26 @@ def run_anthropic() -> None:
     for block in response.content or []:
         data = block.model_dump() if hasattr(block, "model_dump") else {}
         if data.get("type") == "tool_use":
-            tool_calls.append({"id": data.get("id"), "name": data.get("name"), "input": data.get("input")})
+            tool_calls.append(
+                {
+                    "id": data.get("id"),
+                    "name": data.get("name"),
+                    "input": data.get("input"),
+                }
+            )
 
     # Send both tool results back
     if tool_calls:
-        tool_results = [{"type": "tool_result", "tool_use_id": tc["id"], "content": "25°C, sunny" if tc["name"] == "get_weather" else "3:45 PM JST"} for tc in tool_calls]
+        tool_results = [
+            {
+                "type": "tool_result",
+                "tool_use_id": tc["id"],
+                "content": "25°C, sunny"
+                if tc["name"] == "get_weather"
+                else "3:45 PM JST",
+            }
+            for tc in tool_calls
+        ]
         messages = [
             {"role": "user", "content": PROMPT},
             {"role": "assistant", "content": response.content},
@@ -89,12 +117,16 @@ def run_anthropic() -> None:
         },
         mapping={
             "equivalent_openai_param": "parallel_tool_calls",
-            "differences": ["Anthropic supports multiple tool_use blocks; each has unique id."],
+            "differences": [
+                "Anthropic supports multiple tool_use blocks; each has unique id."
+            ],
             "conversion_needed": "Same as single tool call; collect all tool_use blocks and send all tool_results.",
         },
         model_used=model,
         sdk_version=getattr(anthropic, "__version__", ""),
-        model_in_response=getattr(response2, "model", None) if response2 else getattr(response, "model", None),
+        model_in_response=getattr(response2, "model", None)
+        if response2
+        else getattr(response, "model", None),
     )
     print("Anthropic: OK", "-", len(tool_calls), "tool calls")
 
@@ -107,37 +139,78 @@ def run_gemini() -> None:
     model = get_gemini_model()
     tool = types.Tool(
         function_declarations=[
-            types.FunctionDeclaration(name="get_weather", description="Get current weather for a city", parameters=WEATHER_SCHEMA),
-            types.FunctionDeclaration(name="get_time", description="Get current time for a timezone or city", parameters=TIME_SCHEMA),
+            types.FunctionDeclaration(
+                name="get_weather",
+                description="Get current weather for a city",
+                parameters=WEATHER_SCHEMA,
+            ),
+            types.FunctionDeclaration(
+                name="get_time",
+                description="Get current time for a timezone or city",
+                parameters=TIME_SCHEMA,
+            ),
         ]
     )
     config = types.GenerateContentConfig(system_instruction=SYSTEM, tools=[tool])
-    response = client.models.generate_content(model=model, contents=PROMPT, config=config)
+    response = client.models.generate_content(
+        model=model, contents=PROMPT, config=config
+    )
     raw = serialize_response(response)
     function_calls = []
     if getattr(response, "function_calls", None):
         for fc in response.function_calls:
-            name = getattr(fc, "name", None) or (fc.get("name") if isinstance(fc, dict) else None)
-            func_call = getattr(fc, "function_call", fc) if hasattr(fc, "function_call") else fc
-            args = getattr(func_call, "args", None) if hasattr(func_call, "args") else (func_call.get("args") if isinstance(func_call, dict) else None)
+            name = getattr(fc, "name", None) or (
+                fc.get("name") if isinstance(fc, dict) else None
+            )
+            func_call = (
+                getattr(fc, "function_call", fc) if hasattr(fc, "function_call") else fc
+            )
+            args = (
+                getattr(func_call, "args", None)
+                if hasattr(func_call, "args")
+                else (func_call.get("args") if isinstance(func_call, dict) else None)
+            )
             if name:
                 function_calls.append({"name": name, "args": args})
 
     response2 = None
     if function_calls and response.candidates:
         try:
-            user_content = types.Content(role="user", parts=[types.Part.from_text(text=PROMPT)])
+            user_content = types.Content(
+                role="user", parts=[types.Part.from_text(text=PROMPT)]
+            )
             function_call_content = response.candidates[0].content
-            tool_parts = [types.Part.from_function_response(name=fc["name"], response={"result": "25°C, sunny" if fc["name"] == "get_weather" else "3:45 PM JST"}) for fc in function_calls]
+            tool_parts = [
+                types.Part.from_function_response(
+                    name=fc["name"],
+                    response={
+                        "result": "25°C, sunny"
+                        if fc["name"] == "get_weather"
+                        else "3:45 PM JST"
+                    },
+                )
+                for fc in function_calls
+            ]
             function_response_content = types.Content(role="tool", parts=tool_parts)
-            response2 = client.models.generate_content(model=model, contents=[user_content, function_call_content, function_response_content], config=config)
+            response2 = client.models.generate_content(
+                model=model,
+                contents=[
+                    user_content,
+                    function_call_content,
+                    function_response_content,
+                ],
+                config=config,
+            )
         except Exception:
             response2 = None
 
     save_evidence(
         test_name=TEST_NAME,
         provider="gemini",
-        request_data={"method": "models.generate_content", "params": {"model": model, "tools": [tool], "prompt": PROMPT}},
+        request_data={
+            "method": "models.generate_content",
+            "params": {"model": model, "tools": [tool], "prompt": PROMPT},
+        },
         raw_response={
             "turn1_response": raw,
             "function_calls_count": len(function_calls),
@@ -151,12 +224,16 @@ def run_gemini() -> None:
         },
         mapping={
             "equivalent_openai_param": "parallel_tool_calls",
-            "differences": ["Gemini can return multiple function_call parts; order/match by name."],
+            "differences": [
+                "Gemini can return multiple function_call parts; order/match by name."
+            ],
             "conversion_needed": "Assign synthetic call_ids when converting to unified format for tool_executor.",
         },
         model_used=model,
         sdk_version=getattr(genai, "__version__", "google-genai"),
-        model_in_response=getattr(response2, "model_version", None) if response2 else getattr(response, "model_version", None) or raw.get("model_version"),
+        model_in_response=getattr(response2, "model_version", None)
+        if response2
+        else getattr(response, "model_version", None) or raw.get("model_version"),
     )
     print("Gemini: OK", "-", len(function_calls), "function calls")
 

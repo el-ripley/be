@@ -1,11 +1,12 @@
 """Unit tests for AuthService (sync methods)."""
 
-import pytest
-from unittest.mock import patch
 from datetime import datetime, timedelta, timezone
+from unittest.mock import patch
 
+import pytest
+
+from src.database.postgres.entities.user_entities import Role, User
 from src.services.auth_service import AuthService
-from src.database.postgres.entities.user_entities import User, Role
 
 
 @pytest.fixture

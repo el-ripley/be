@@ -1,9 +1,6 @@
-from .router import comments_router
 from .handler import CommentsHandler
-from .schemas import (
-    CommentInteractionRequest,
-    CommentInteractionResponse,
-)
+from .router import comments_router
+from .schemas import CommentInteractionRequest, CommentInteractionResponse
 
 __all__ = [
     "comments_router",

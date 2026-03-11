@@ -18,19 +18,20 @@ Flow:
 """
 
 import asyncio
-from typing import Any, Dict, List, Optional, TYPE_CHECKING
-
-from src.database.postgres.repositories import get_page_admin_suggest_configs_by_page
+from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
 from src.database.postgres.connection import async_db_transaction
-from src.services.facebook.messages.sync import ConversationSyncService
+from src.database.postgres.repositories import get_page_admin_suggest_configs_by_page
+from src.services.facebook.auth import FacebookPageService
 from src.services.facebook.messages._internal.message_processor import MessageProcessor
 from src.services.facebook.messages._internal.read_receipt_processor import (
     ReadReceiptProcessor,
 )
-from src.services.facebook.auth import FacebookPageService
+from src.services.facebook.messages.sync import (
+    ConversationMessageHistorySync,
+    ConversationSyncService,
+)
 from src.services.facebook.users.page_scope_user_service import PageScopeUserService
-from src.services.facebook.messages.sync import ConversationMessageHistorySync
 from src.utils.logger import get_logger
 
 if TYPE_CHECKING:
@@ -93,9 +94,7 @@ class MessageWebhookHandler:
                 admin.get("user_id") for admin in page_admins if admin.get("user_id")
             ]
         except Exception as e:
-            logger.error(
-                f"❌ Failed to get page admin user_ids for page {page_id}: {e}"
-            )
+            logger.error(f"❌ Failed to get page admin user_ids for page {page_id}: {e}")
             return []
 
     async def process_message_event(

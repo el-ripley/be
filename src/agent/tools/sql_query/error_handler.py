@@ -84,7 +84,10 @@ def enhance_postgres_error(error: asyncpg.PostgresError, sql: str) -> str:
         )
 
     # ON CONFLICT with no matching constraint
-    if "no unique or exclusion constraint matching the on conflict" in error_msg.lower():
+    if (
+        "no unique or exclusion constraint matching the on conflict"
+        in error_msg.lower()
+    ):
         return (
             f"ON CONFLICT not supported on this table: {error_msg}. "
             "The memory_blocks table has NO unique constraints — it is append-only. "

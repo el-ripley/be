@@ -2,9 +2,10 @@
 Billing API schemas.
 """
 
-from pydantic import BaseModel, Field
-from typing import Optional, List
 from decimal import Decimal
+from typing import List, Optional
+
+from pydantic import BaseModel, Field
 
 
 class CreditBalanceResponse(BaseModel):

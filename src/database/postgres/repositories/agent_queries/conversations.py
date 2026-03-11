@@ -7,13 +7,13 @@ from typing import Any, Dict, List, Optional, Tuple
 
 import asyncpg
 
-from src.database.postgres.executor import (
-    execute_async_single,
-    execute_async_query,
-    execute_async_command,
-)
-from src.database.postgres.utils import get_current_timestamp, generate_uuid
 from src.database.postgres.entities import OpenAIConversation
+from src.database.postgres.executor import (
+    execute_async_command,
+    execute_async_query,
+    execute_async_single,
+)
+from src.database.postgres.utils import generate_uuid, get_current_timestamp
 
 
 def _parse_settings_json(settings: Any) -> Optional[Dict[str, Any]]:

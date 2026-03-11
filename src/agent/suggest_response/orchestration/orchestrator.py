@@ -6,23 +6,20 @@ Handles lock/queue/hash management and delegates to runner for agent logic.
 import asyncio
 import uuid
 from dataclasses import dataclass, field
-
-from src.agent.suggest_response.core.runner import (
-    InsufficientBalanceError,
-)
 from typing import Any, Dict, List, Literal, Optional
 
-from src.database.postgres.connection import async_db_transaction
-from src.database.postgres.repositories import is_conversation_blocked
-from src.agent.suggest_response.orchestration.trigger_resolver import (
-    resolve_trigger_type_and_settings,
-)
+from src.agent.suggest_response.core.runner import InsufficientBalanceError
 from src.agent.suggest_response.orchestration.condition_checker import (
     check_trigger_conditions,
 )
 from src.agent.suggest_response.orchestration.graph_api_delivery import (
     deliver_via_graph_api,
 )
+from src.agent.suggest_response.orchestration.trigger_resolver import (
+    resolve_trigger_type_and_settings,
+)
+from src.database.postgres.connection import async_db_transaction
+from src.database.postgres.repositories import is_conversation_blocked
 from src.utils.logger import get_logger
 
 logger = get_logger()
@@ -105,9 +102,9 @@ class SuggestResponseOrchestrator:
                     )
 
             # 1. Balance check (for all trigger types)
-            from src.database.postgres import get_async_connection
             from src.billing.credit_service import can_use_ai, get_balance
             from src.billing.repositories import billing_queries
+            from src.database.postgres import get_async_connection
 
             async with get_async_connection() as conn:
                 if not await can_use_ai(conn, user_id):

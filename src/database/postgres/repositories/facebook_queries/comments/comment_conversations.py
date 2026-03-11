@@ -1,12 +1,12 @@
 import json
-from typing import Optional, Dict, Any, List, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 import asyncpg
 
 from src.database.postgres.executor import (
-    execute_async_single,
-    execute_async_returning,
     execute_async_query,
+    execute_async_returning,
+    execute_async_single,
 )
 from src.database.postgres.utils import get_current_timestamp
 
@@ -133,17 +133,23 @@ async def get_comments_thread_contexts_batch(
         participants = []
         for p in participants_raw:
             if isinstance(p, dict):
-                participants.append({
-                    "facebook_page_scope_user_id": p.get("facebook_page_scope_user_id"),
-                    "name": p.get("name"),
-                    "avatar": p.get("avatar") or p.get("profile_pic"),
-                })
+                participants.append(
+                    {
+                        "facebook_page_scope_user_id": p.get(
+                            "facebook_page_scope_user_id"
+                        ),
+                        "name": p.get("name"),
+                        "avatar": p.get("avatar") or p.get("profile_pic"),
+                    }
+                )
             elif isinstance(p, (list, tuple)) and len(p) >= 2:
-                participants.append({
-                    "facebook_page_scope_user_id": p[0] if p else None,
-                    "name": p[1] if len(p) > 1 else None,
-                    "avatar": p[2] if len(p) > 2 else None,
-                })
+                participants.append(
+                    {
+                        "facebook_page_scope_user_id": p[0] if p else None,
+                        "name": p[1] if len(p) > 1 else None,
+                        "avatar": p[2] if len(p) > 2 else None,
+                    }
+                )
 
         out[fcc_id] = {
             "post": {

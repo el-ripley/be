@@ -1,8 +1,8 @@
 """Trigger suggest response tool - invoke suggest_response agent from general agent."""
 
-import uuid
 import time
-from typing import Any, Dict, TYPE_CHECKING
+import uuid
+from typing import TYPE_CHECKING, Any, Dict
 
 import asyncpg
 
@@ -153,9 +153,8 @@ class TriggerSuggestResponseTool(BaseTool):
         else:
             lines = []
             if raw_result.get("success"):
-                if (
-                    raw_result.get("suggestion_count", 0) == 0
-                    and not raw_result.get("skipped")
+                if raw_result.get("suggestion_count", 0) == 0 and not raw_result.get(
+                    "skipped"
                 ):
                     lines.append("**Task completed** — no customer reply needed.")
                 if raw_result.get("suggestions"):

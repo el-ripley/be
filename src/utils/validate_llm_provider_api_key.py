@@ -4,7 +4,9 @@ Only supports OpenAI for BYOK (Bring Your Own Key)
 """
 
 import time
+
 import openai
+
 from src.utils.logger import get_logger
 
 logger = get_logger()

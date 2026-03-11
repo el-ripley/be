@@ -3,25 +3,28 @@ Suggest Response API Router.
 """
 
 from typing import Optional
+
 from fastapi import APIRouter, Depends, HTTPException, Request, status
+
 from src.middleware.auth_middleware import get_current_user_id
-from src.utils.logger import get_logger
 from src.services.facebook.auth import FacebookPermissionService
+from src.utils.logger import get_logger
+
 from .handler import SuggestResponseHandler
 from .schemas import (
-    AgentSettingsUpdate,
     AgentSettingsResponse,
+    AgentSettingsUpdate,
     AssignedPlaybooksResponse,
-    PageAdminSuggestConfigUpdate,
-    PageAdminSuggestConfigResponse,
-    PageMemoryResponse,
-    UserMemoryResponse,
     GenerateSuggestionsRequest,
     GenerateSuggestionsResponse,
-    SuggestResponseHistoryResponse,
+    PageAdminSuggestConfigResponse,
+    PageAdminSuggestConfigUpdate,
+    PageMemoryResponse,
     SuggestResponseHistoryListResponse,
+    SuggestResponseHistoryResponse,
     SuggestResponseMessageListResponse,
     UpdateSuggestResponseHistoryRequest,
+    UserMemoryResponse,
 )
 
 logger = get_logger()
@@ -371,15 +374,18 @@ async def generate_suggestions(
                 )
 
         # Get conversation details and check permissions (single transaction)
+        import re
+
         from src.database.postgres.connection import async_db_transaction
+        from src.database.postgres.repositories.facebook_queries.comments.comment_conversations import (
+            get_conversation_by_id as get_comment_conversation_by_id,
+        )
+        from src.database.postgres.repositories.facebook_queries.comments.comment_conversations import (
+            get_conversation_by_root_comment_id,
+        )
         from src.database.postgres.repositories.facebook_queries.messages.conversations import (
             get_conversation_metadata_with_media,
         )
-        from src.database.postgres.repositories.facebook_queries.comments.comment_conversations import (
-            get_conversation_by_id as get_comment_conversation_by_id,
-            get_conversation_by_root_comment_id,
-        )
-        import re
 
         async with async_db_transaction() as conn:
             if request.conversation_type == "messages":

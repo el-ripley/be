@@ -68,29 +68,29 @@ SuggestResponse Agent uses the formatter directly with output_mode="humes_images
 (not through this tool), so it gets human_message with image URLs.
 """
 
-import uuid
 import time
+import uuid
 from typing import Any, Dict, Optional
 
 import asyncpg
 
+from src.agent.common.api_key_resolver_service import get_system_api_key
+from src.agent.common.metadata_types import MessageMetadata
+from src.agent.tools.base import ToolCallContext, ToolResult
 from src.agent.tools.facebook_query.get_inbox_or_comment_thread.base import (
-    FacebookBaseTool,
     FACEBOOK_COMMENT_IMAGE_CONTEXT,
     FACEBOOK_CONVERSATION_IMAGE_CONTEXT,
+    FacebookBaseTool,
     get_facebook_comment_system_reminder,
     get_facebook_conversation_system_reminder,
 )
-from src.agent.tools.base import ToolCallContext, ToolResult
-from src.agent.common.metadata_types import MessageMetadata
-from src.agent.common.api_key_resolver_service import get_system_api_key
-from src.api.openai_conversations.schemas import MessageResponse
-from src.services.facebook.messages.message_read_service import MessageReadService
-from src.services.facebook.comments.comment_read_service import CommentReadService
-from src.services.facebook.media import MediaAssetService
 from src.agent.tools.facebook_query.get_inbox_or_comment_thread.facebook_formatter import (
     FacebookContentFormatter,
 )
+from src.api.openai_conversations.schemas import MessageResponse
+from src.services.facebook.comments.comment_read_service import CommentReadService
+from src.services.facebook.media import MediaAssetService
+from src.services.facebook.messages.message_read_service import MessageReadService
 from src.utils.logger import get_logger
 
 logger = get_logger()
@@ -307,13 +307,15 @@ class GetInboxOrCommentThreadTool(FacebookBaseTool):
         has_next_page = False
 
         if normalized_type == "conv_messages":
-            fb_data, total_count, has_next_page = (
-                await self._message_read_service.get_conversation_messages_paginated(
-                    conn=conn,
-                    conversation_id=item_id,
-                    page=target_page,
-                    page_size=page_size,
-                )
+            (
+                fb_data,
+                total_count,
+                has_next_page,
+            ) = await self._message_read_service.get_conversation_messages_paginated(
+                conn=conn,
+                conversation_id=item_id,
+                page=target_page,
+                page_size=page_size,
             )
             if fb_data:
                 # Ensure media assets are populated
@@ -343,13 +345,15 @@ class GetInboxOrCommentThreadTool(FacebookBaseTool):
                     fb_data = formatted_result
 
         elif normalized_type == "conv_comments":
-            fb_data, total_count, has_next_page = (
-                await self._comment_read_service.get_comment_thread_paginated(
-                    conn=conn,
-                    root_comment_id=item_id,
-                    page=target_page,
-                    page_size=page_size,
-                )
+            (
+                fb_data,
+                total_count,
+                has_next_page,
+            ) = await self._comment_read_service.get_comment_thread_paginated(
+                conn=conn,
+                root_comment_id=item_id,
+                page=target_page,
+                page_size=page_size,
             )
             if fb_data:
                 # Ensure media assets are populated

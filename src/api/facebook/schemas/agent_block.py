@@ -10,9 +10,9 @@ class AgentBlockResponse(BaseModel):
 
     id: Optional[str] = None
     is_blocked: bool
-    blocked_by: Optional[str] = (
-        None  # 'suggest_response_agent' | 'general_agent' | 'user'
-    )
+    blocked_by: Optional[
+        str
+    ] = None  # 'suggest_response_agent' | 'general_agent' | 'user'
     reason: Optional[str] = None
     created_at: Optional[int] = None
 

@@ -3,18 +3,19 @@ Facebook Handler - Clean production version
 Handles Facebook authentication and user management flows
 """
 
-from typing import Tuple, Dict, Any, List, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Dict, List, Tuple
+
 import asyncpg
 
 if TYPE_CHECKING:
     from src.database.postgres.entities.user_entities import User
 
-from src.utils.logger import get_logger
 from src.common.clients.facebook_graph_client import FacebookGraphClient
-from src.services.users.user_service import UserService
-from src.services.facebook.auth import FacebookAuthService
 from src.services.auth_service import AuthService
+from src.services.facebook.auth import FacebookAuthService
+from src.services.users.user_service import UserService
 from src.settings import settings
+from src.utils.logger import get_logger
 
 logger = get_logger()
 
@@ -71,10 +72,11 @@ class FbHandler:
             facebook_user_id = user_info["id"]  # ASID
 
             # 1. Ensure user exists and get User object
-            internal_user_id, user = (
-                await self.user_service.ensure_user_with_facebook_profile(
-                    facebook_user_id, user_info
-                )
+            (
+                internal_user_id,
+                user,
+            ) = await self.user_service.ensure_user_with_facebook_profile(
+                facebook_user_id, user_info
             )
 
             # 2. Get user's pages for syncing
@@ -87,9 +89,10 @@ class FbHandler:
             )
 
             # 4. Create token pair using auth service
-            access_token, refresh_token = (
-                await self.auth_service.create_token_pair_for_user(conn, user)
-            )
+            (
+                access_token,
+                refresh_token,
+            ) = await self.auth_service.create_token_pair_for_user(conn, user)
 
             return (
                 internal_user_id,

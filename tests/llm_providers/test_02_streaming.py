@@ -34,7 +34,10 @@ def run_anthropic() -> None:
         "system": SYSTEM,
         "messages": [{"role": "user", "content": PROMPT}],
     }
-    def _safe_event_data(ev):  # avoid event.model_dump() to prevent Pydantic union serialization warnings
+
+    def _safe_event_data(
+        ev,
+    ):  # avoid event.model_dump() to prevent Pydantic union serialization warnings
         out = {"type": getattr(ev, "type", type(ev).__name__)}
         if hasattr(ev, "content_block") and ev.content_block is not None:
             cb = ev.content_block
@@ -64,13 +67,17 @@ def run_anthropic() -> None:
         final_message = stream.get_final_message()
 
     event_types_seen = list({e["type"] for e in events})
-    delta_location = "content_block_delta.delta.text (text_delta)" if any(
-        e.get("type") == "content_block_delta" for e in events
-    ) else "see events"
+    delta_location = (
+        "content_block_delta.delta.text (text_delta)"
+        if any(e.get("type") == "content_block_delta" for e in events)
+        else "see events"
+    )
 
     with warnings.catch_warnings():
         warnings.simplefilter("ignore", UserWarning)
-        final_message_serialized = serialize_response(final_message) if final_message else None
+        final_message_serialized = (
+            serialize_response(final_message) if final_message else None
+        )
 
     save_evidence(
         test_name=TEST_NAME,
@@ -105,7 +112,9 @@ def run_anthropic() -> None:
         },
         model_used=get_anthropic_model(),
         sdk_version=getattr(anthropic, "__version__", ""),
-        model_in_response=getattr(final_message, "model", None) if final_message else None,
+        model_in_response=getattr(final_message, "model", None)
+        if final_message
+        else None,
     )
     print("Anthropic: OK", "-", len(events), "events", "-", event_types_seen)
 
@@ -124,7 +133,9 @@ def run_gemini() -> None:
         config=types.GenerateContentConfig(system_instruction=SYSTEM),
     ):
         chunk_data = {"text": getattr(chunk, "text", None)}
-        chunks.append(serialize_response(chunk) if hasattr(chunk, "model_dump") else chunk_data)
+        chunks.append(
+            serialize_response(chunk) if hasattr(chunk, "model_dump") else chunk_data
+        )
     event_types_seen = ["GenerateContentChunk"] * len(chunks) if chunks else []
 
     save_evidence(
@@ -140,7 +151,9 @@ def run_gemini() -> None:
             "event_types": event_types_seen,
         },
         key_observations={
-            "event_types_complete_list": list(set(event_types_seen)) if event_types_seen else [],
+            "event_types_complete_list": list(set(event_types_seen))
+            if event_types_seen
+            else [],
             "event_ordering": "Iteration of GenerateContentChunk; no named event types like Anthropic",
             "delta_format_location": "chunk.text (each chunk is partial text)",
             "final_response_method": "Accumulate chunk.text or use last chunk; no explicit get_final",

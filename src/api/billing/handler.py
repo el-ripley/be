@@ -2,19 +2,20 @@
 Billing API Handler.
 """
 
-from typing import Dict, Any, Optional
 from decimal import Decimal
+from typing import Any, Dict, Optional
+
 from fastapi import HTTPException
 
-from src.billing.repositories import billing_queries
-from src.billing.stripe.service import StripeService
-from src.billing.stripe.webhook_handler import StripeWebhookHandler
-from src.billing.sepay.service import SePayService
-from src.billing.sepay.webhook_handler import SePayWebhookHandler
+from src.agent.common.constants import OPENAI_MODEL_PRICING
 from src.billing.polar.service import PolarService
 from src.billing.polar.webhook_handler import PolarWebhookHandler
+from src.billing.repositories import billing_queries
+from src.billing.sepay.service import SePayService
+from src.billing.sepay.webhook_handler import SePayWebhookHandler
+from src.billing.stripe.service import StripeService
+from src.billing.stripe.webhook_handler import StripeWebhookHandler
 from src.database.postgres.connection import async_db_transaction
-from src.agent.common.constants import OPENAI_MODEL_PRICING
 from src.utils.logger import get_logger
 
 logger = get_logger()
@@ -37,6 +38,7 @@ class BillingHandler:
             from src.services.notifications.payment_trigger import (
                 PaymentNotificationTrigger,
             )
+
             self.payment_trigger = PaymentNotificationTrigger(notification_service)
         else:
             self.payment_trigger = None

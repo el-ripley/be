@@ -13,11 +13,11 @@ from src.database.postgres.repositories.facebook_queries.comments import (
     get_page_info_by_root_comment_id,
     get_post_info_by_root_comment_id,
 )
-from src.database.postgres.repositories.facebook_queries.comments.comment_posts import (
-    get_post_by_id,
-)
 from src.database.postgres.repositories.facebook_queries.comments.comment_conversations import (
     list_conversations_for_pages,
+)
+from src.database.postgres.repositories.facebook_queries.comments.comment_posts import (
+    get_post_by_id,
 )
 from src.utils.logger import get_logger
 

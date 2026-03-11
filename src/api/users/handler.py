@@ -2,14 +2,16 @@
 Handlers for user operations including user info, settings, and file uploads.
 """
 
-from typing import Dict, Any, List, Optional
+from typing import Any, Dict, List, Optional
+
 from fastapi import HTTPException, UploadFile
-from src.utils.logger import get_logger
-from src.services.users.user_service import UserService
-from src.services.auth_service import AuthService
-from src.services.users.user_settings_service import UserSettingsService
-from src.services.users.user_files_service import UserFilesService
+
 from src.api.users.schemas import FileUploadResponse
+from src.services.auth_service import AuthService
+from src.services.users.user_files_service import UserFilesService
+from src.services.users.user_service import UserService
+from src.services.users.user_settings_service import UserSettingsService
+from src.utils.logger import get_logger
 
 logger = get_logger()
 

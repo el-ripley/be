@@ -5,13 +5,11 @@ Handles building payloads and emitting events to page admins via SocketService.
 """
 
 import json
-from typing import Dict, Any, List, Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
-from .socket_schemas import (
-    SocketConversationPayload,
-    SocketMessagePayload,
-)
 from src.utils.logger import get_logger
+
+from .socket_schemas import SocketConversationPayload, SocketMessagePayload
 
 if TYPE_CHECKING:
     from src.socket_service import SocketService

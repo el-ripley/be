@@ -5,17 +5,16 @@ Handles CRUD and state management for Facebook Messenger conversations.
 """
 
 import json
-from typing import Optional, Dict, Any, List, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 import asyncpg
 
 from src.database.postgres.executor import (
-    execute_async_returning,
     execute_async_query,
+    execute_async_returning,
     execute_async_single,
 )
 from src.database.postgres.utils import get_current_timestamp
-
 
 # ================================================================
 # CONVERSATION RETRIEVAL

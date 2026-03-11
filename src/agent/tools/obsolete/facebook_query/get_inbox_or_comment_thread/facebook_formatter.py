@@ -1,9 +1,5 @@
 from typing import Any, Dict, List, Optional
 
-from src.utils.logger import get_logger
-from src.services.facebook.media import MediaAssetService
-
-from .multimodal import MultimodalContentBuilder
 from src.agent.utils import (
     ensure_dict,
     ensure_list,
@@ -11,6 +7,10 @@ from src.agent.utils import (
     format_timestamp,
     safe_timestamp,
 )
+from src.services.facebook.media import MediaAssetService
+from src.utils.logger import get_logger
+
+from .multimodal import MultimodalContentBuilder
 
 logger = get_logger()
 

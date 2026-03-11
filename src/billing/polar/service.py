@@ -36,7 +36,9 @@ class PolarService:
             checkout_url (str): URL to redirect user to Polar Checkout
         """
         if not self._access_token or not self._product_id:
-            raise ValueError("Polar is not configured (POLAR_ACCESS_TOKEN, POLAR_PRODUCT_ID)")
+            raise ValueError(
+                "Polar is not configured (POLAR_ACCESS_TOKEN, POLAR_PRODUCT_ID)"
+            )
 
         polar_kw: dict = {"access_token": self._access_token}
         if self._server == "sandbox":

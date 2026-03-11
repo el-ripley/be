@@ -1,19 +1,18 @@
 """Task tool - spawn Explore subagent for complex information gathering tasks."""
 
-import uuid
 import time
+import uuid
 from typing import Any, Dict
 
 import asyncpg
 
-from src.agent.tools.base import BaseTool, ToolCallContext, ToolResult
 from src.agent.general_agent.subagent.subagent_runner import (
-    SubAgentRunner,
     SubAgentContext,
     SubAgentResult,
+    SubAgentRunner,
 )
+from src.agent.tools.base import BaseTool, ToolCallContext, ToolResult
 from src.api.openai_conversations.schemas import MessageResponse
-
 
 TASK_TOOL_DESCRIPTION = """Spawn a specialized Explore subagent to gather information from Facebook data and databases.
 

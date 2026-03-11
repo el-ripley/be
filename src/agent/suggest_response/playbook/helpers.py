@@ -98,9 +98,7 @@ def build_initial_input_messages(
         page_memory=page_memory,
         user_memory=user_memory,
     )
-    result: List[Dict[str, Any]] = [
-        {"role": "system", "content": system_prompt}
-    ]
+    result: List[Dict[str, Any]] = [{"role": "system", "content": system_prompt}]
     for msg in input_messages:
         if msg.get("role") == "system":
             continue

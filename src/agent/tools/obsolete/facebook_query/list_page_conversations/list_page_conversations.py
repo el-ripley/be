@@ -24,9 +24,9 @@ function_call_output (output_message.function_output):
    }
 """
 
-import uuid
-import time
 import json
+import time
+import uuid
 from typing import Any, Dict
 
 import asyncpg
@@ -146,14 +146,16 @@ class ListPageConversationsTool(BaseTool):
         limit = arguments.get("limit", 20)
         offset = arguments.get("offset", 0)
 
-        conversations, total_count, has_more = (
-            await self._read_service.list_inbox_conversations(
-                conn,
-                page_id,
-                limit=limit,
-                offset=offset,
-                filter_type=filter_type,
-            )
+        (
+            conversations,
+            total_count,
+            has_more,
+        ) = await self._read_service.list_inbox_conversations(
+            conn,
+            page_id,
+            limit=limit,
+            offset=offset,
+            filter_type=filter_type,
         )
 
         # Format conversations for output

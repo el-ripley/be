@@ -1,8 +1,8 @@
 """Pydantic schemas for Facebook posts API."""
 
-from typing import Optional, Literal, List
-from pydantic import BaseModel, Field
+from typing import List, Literal, Optional
 
+from pydantic import BaseModel, Field
 
 # ============================================================================
 # POSTS LISTING

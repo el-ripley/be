@@ -3,22 +3,22 @@ Service for generating image descriptions using vision model.
 Uses gpt-5-nano by default (configurable like summarize agent).
 """
 
-from typing import Optional, Dict, Any, List
 import asyncio
 import time
+from typing import Any, Dict, List, Optional
 
 import asyncpg
 
-from src.agent.core.llm_call import LLM_call
 from src.agent.common.agent_types import AGENT_TYPE_MEDIA_DESCRIPTION_AGENT
 from src.agent.common.conversation_settings import (
     DEFAULT_VISION_MODEL,
     get_effective_context_settings,
 )
+from src.agent.core.llm_call import LLM_call
 from src.database.postgres.repositories.agent_queries import (
     create_agent_response,
-    insert_openai_response_with_agent,
     finalize_agent_response,
+    insert_openai_response_with_agent,
 )
 from src.settings import settings
 from src.utils.logger import get_logger

@@ -1,7 +1,8 @@
-from typing import Optional, Dict, Any, List, TypedDict
+from typing import Any, Dict, List, Optional, TypedDict
+from urllib.parse import urlencode
+
 from src.common.clients.http_client import HttpClient
 from src.utils import get_logger
-from urllib.parse import urlencode
 
 
 class FacebookAPIError(Exception):
@@ -185,7 +186,10 @@ class FacebookGraphPageClient:
             "Content-Type": "application/json",
         }
 
-        payload: Dict[str, Any] = {"recipient": {"id": user_id}, "message": {"text": message}}
+        payload: Dict[str, Any] = {
+            "recipient": {"id": user_id},
+            "message": {"text": message},
+        }
 
         # Add any metadata if provided
         if metadata:

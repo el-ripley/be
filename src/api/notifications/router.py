@@ -5,12 +5,9 @@ from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException, Request
 
 from src.middleware.auth_middleware import get_current_user_id
+
 from .handler import NotificationHandler
-from .schemas import (
-    NotificationItem,
-    NotificationListResponse,
-    UnreadCountResponse,
-)
+from .schemas import NotificationItem, NotificationListResponse, UnreadCountResponse
 
 router = APIRouter(prefix="/notifications", tags=["Notifications"])
 

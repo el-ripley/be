@@ -64,7 +64,9 @@ def run_anthropic() -> None:
             inp = data.get("input")
             if isinstance(inp, dict):
                 parsed = inp
-                output_location = "content[].type==tool_use, name==structured_response, input (dict)"
+                output_location = (
+                    "content[].type==tool_use, name==structured_response, input (dict)"
+                )
             break
 
     save_evidence(
@@ -83,14 +85,18 @@ def run_anthropic() -> None:
         },
         mapping={
             "equivalent_openai_param": "responses.parse(text_format= schema)",
-            "differences": ["Anthropic: tool-as-structured-output; OpenAI: native parse() with schema"],
+            "differences": [
+                "Anthropic: tool-as-structured-output; OpenAI: native parse() with schema"
+            ],
             "conversion_needed": "For parse()-like use: create synthetic tool, tool_choice that tool, then read tool_use.input.",
         },
         model_used=model,
         sdk_version=getattr(anthropic, "__version__", ""),
         model_in_response=getattr(response, "model", None),
     )
-    print("Anthropic: OK", "-", "parsed keys:", list(parsed.keys()) if parsed else "N/A")
+    print(
+        "Anthropic: OK", "-", "parsed keys:", list(parsed.keys()) if parsed else "N/A"
+    )
 
 
 def run_gemini() -> None:
@@ -104,7 +110,9 @@ def run_gemini() -> None:
         response_mime_type="application/json",
         response_schema=TARGET_SCHEMA,
     )
-    response = client.models.generate_content(model=model, contents=PROMPT, config=config)
+    response = client.models.generate_content(
+        model=model, contents=PROMPT, config=config
+    )
     raw = serialize_response(response)
     text = getattr(response, "text", None) or ""
     parsed = None
@@ -121,7 +129,14 @@ def run_gemini() -> None:
         provider="gemini",
         request_data={
             "method": "generate_content",
-            "params": {"model": model, "config": {"response_mime_type": "application/json", "response_schema": TARGET_SCHEMA}, "prompt": PROMPT},
+            "params": {
+                "model": model,
+                "config": {
+                    "response_mime_type": "application/json",
+                    "response_schema": TARGET_SCHEMA,
+                },
+                "prompt": PROMPT,
+            },
         },
         raw_response={
             "response": raw,
@@ -136,14 +151,22 @@ def run_gemini() -> None:
         },
         mapping={
             "equivalent_openai_param": "responses.parse(text_format= schema)",
-            "differences": ["Gemini: native JSON mode; OpenAI: parse() returns parsed object"],
+            "differences": [
+                "Gemini: native JSON mode; OpenAI: parse() returns parsed object"
+            ],
             "conversion_needed": "Parse response.text as JSON; similar to OpenAI parse() output.",
         },
         model_used=model,
         sdk_version=getattr(genai, "__version__", "google-genai"),
-        model_in_response=getattr(response, "model_version", None) or raw.get("model_version"),
+        model_in_response=getattr(response, "model_version", None)
+        or raw.get("model_version"),
     )
-    print("Gemini: OK", "-", "parsed keys:", list(parsed.keys()) if isinstance(parsed, dict) else "N/A")
+    print(
+        "Gemini: OK",
+        "-",
+        "parsed keys:",
+        list(parsed.keys()) if isinstance(parsed, dict) else "N/A",
+    )
 
 
 def main() -> None:

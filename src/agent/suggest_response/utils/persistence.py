@@ -1,24 +1,21 @@
 """Persistence service for Suggest Response results."""
 
 import json
-from typing import Any, Dict, List, Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
 from src.agent.common.agent_types import AGENT_TYPE_SUGGEST_RESPONSE_AGENT
 from src.api.openai_conversations.schemas import MessageResponse
 from src.database.postgres.connection import async_db_transaction
 from src.database.postgres.repositories import (
     create_agent_response,
-    insert_openai_response_with_agent,
-    finalize_agent_response,
     create_suggest_response_history,
     create_suggest_response_message,
+    finalize_agent_response,
+    insert_openai_response_with_agent,
 )
 
 if TYPE_CHECKING:
-    from src.agent.suggest_response.core.run_config import (
-        PreparedContext,
-        LLMResult,
-    )
+    from src.agent.suggest_response.core.run_config import LLMResult, PreparedContext
 
 
 class SuggestResponsePersistence:

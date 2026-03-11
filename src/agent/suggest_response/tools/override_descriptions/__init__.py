@@ -1,10 +1,10 @@
 """Tool description overrides for suggest_response_agent."""
 
 from .tool_descriptions import (
-    SR_SQL_QUERY_MESSAGES_DESCRIPTION,
-    SR_SQL_QUERY_COMMENTS_DESCRIPTION,
-    SR_VIEW_MEDIA_DESCRIPTION,
     SR_MANAGE_PLAYBOOK_DESCRIPTION,
+    SR_SQL_QUERY_COMMENTS_DESCRIPTION,
+    SR_SQL_QUERY_MESSAGES_DESCRIPTION,
+    SR_VIEW_MEDIA_DESCRIPTION,
 )
 
 __all__ = [

@@ -4,16 +4,16 @@ Transforms raw DB data to match API schema format for frontend consistency.
 """
 
 import json
-from typing import Dict, Any, Optional, List
 from datetime import datetime
+from typing import Any, Dict, List, Optional
 
 from src.api.facebook.comments.schemas import (
     Comment,
-    CommentThreadSummary,
     CommentSocketEventData,
+    CommentThreadSummary,
+    ConversationParticipant,
     PageInfo,
     PostInfo,
-    ConversationParticipant,
 )
 from src.utils.logger import get_logger
 

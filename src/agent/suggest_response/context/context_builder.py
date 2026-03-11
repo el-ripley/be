@@ -1,24 +1,23 @@
 """Context builder for Suggest Response Agent."""
 
-from datetime import datetime
-from typing import Dict, Any, Optional, List, Tuple
-import asyncpg
 import json
+from datetime import datetime
+from typing import Any, Dict, List, Optional, Tuple
 
-from src.services.facebook.messages.message_read_service import MessageReadService
-from src.services.facebook.comments.comment_read_service import CommentReadService
-from src.services.facebook.media import MediaAssetService
+import asyncpg
+
+from src.agent.common.api_key_resolver_service import get_system_api_key
 from src.agent.suggest_response.context.formatter import FacebookContentFormatter
+from src.agent.suggest_response.context.prompts.prompt_loader import build_system_prompt
 from src.database.postgres.repositories import (
     get_active_page_prompt_with_media,
     get_active_page_scope_user_prompt_with_media,
-    get_escalations_for_context,
     get_escalation_list_minimal,
+    get_escalations_for_context,
 )
-from src.agent.suggest_response.context.prompts.prompt_loader import (
-    build_system_prompt,
-)
-from src.agent.common.api_key_resolver_service import get_system_api_key
+from src.services.facebook.comments.comment_read_service import CommentReadService
+from src.services.facebook.media import MediaAssetService
+from src.services.facebook.messages.message_read_service import MessageReadService
 from src.utils.logger import get_logger
 
 logger = get_logger()
@@ -116,7 +115,9 @@ class SuggestResponseContextBuilder:
         )
 
         # System message = build dynamic system prompt with page_memory + escalation_list + conversation_info
-        page_memory_prompt = await self._build_page_memory_prompt(conn, page_prompt, owner_user_id)
+        page_memory_prompt = await self._build_page_memory_prompt(
+            conn, page_prompt, owner_user_id
+        )
         escalation_list_prompt = await self._build_escalation_list_prompt(
             conn, "comments", conversation_id, fan_page_id, owner_user_id
         )
@@ -187,10 +188,16 @@ class SuggestResponseContextBuilder:
             )
 
         # System message = build dynamic system prompt with page_memory + user_memory + conversation_info + escalation_list
-        page_memory_prompt = await self._build_page_memory_prompt(conn, page_prompt, owner_user_id)
-        user_memory_prompt = await self._build_user_memory_prompt(conn, page_scope_user_prompt)
+        page_memory_prompt = await self._build_page_memory_prompt(
+            conn, page_prompt, owner_user_id
+        )
+        user_memory_prompt = await self._build_user_memory_prompt(
+            conn, page_scope_user_prompt
+        )
         conversation_info = turn_data.get("conversation_info", "")
-        conversation_info_prompt = conversation_info.strip() if conversation_info else ""
+        conversation_info_prompt = (
+            conversation_info.strip() if conversation_info else ""
+        )
         escalation_list_prompt = await self._build_escalation_list_prompt(
             conn, "messages", conversation_id, fan_page_id, owner_user_id
         )
@@ -226,14 +233,20 @@ class SuggestResponseContextBuilder:
             if hint_prompt:
                 trailing_parts.append(hint_prompt)
             trailing_parts.append("[Empty conversation — no customer messages yet.]")
-            input_messages.append({"role": "user", "content": self._content_blocks(trailing_parts)})
+            input_messages.append(
+                {"role": "user", "content": self._content_blocks(trailing_parts)}
+            )
         else:
             # Add all turns except the last one (pure dialogue, each message = separate block)
             for turn in turns[:-1]:
-                input_messages.append({
-                    "role": turn["role"],
-                    "content": self._content_blocks(turn["content_parts"], role=turn["role"]),
-                })
+                input_messages.append(
+                    {
+                        "role": turn["role"],
+                        "content": self._content_blocks(
+                            turn["content_parts"], role=turn["role"]
+                        ),
+                    }
+                )
 
             last_turn = turns[-1]
             if last_turn["role"] == "user":
@@ -249,12 +262,18 @@ class SuggestResponseContextBuilder:
                 if hint_prompt:
                     last_parts.append(hint_prompt)
                 last_parts.extend(last_turn["content_parts"])
-                input_messages.append({"role": "user", "content": self._content_blocks(last_parts)})
+                input_messages.append(
+                    {"role": "user", "content": self._content_blocks(last_parts)}
+                )
             else:
-                input_messages.append({
-                    "role": last_turn["role"],
-                    "content": self._content_blocks(last_turn["content_parts"], role="assistant"),
-                })
+                input_messages.append(
+                    {
+                        "role": last_turn["role"],
+                        "content": self._content_blocks(
+                            last_turn["content_parts"], role="assistant"
+                        ),
+                    }
+                )
                 trailing_parts: List[str] = []
                 if escalation_prompt:
                     trailing_parts.append(escalation_prompt)
@@ -264,7 +283,9 @@ class SuggestResponseContextBuilder:
                     trailing_parts.append(hint_prompt)
                 if not trailing_parts:
                     trailing_parts.append("[No new customer activity.]")
-                input_messages.append({"role": "user", "content": self._content_blocks(trailing_parts)})
+                input_messages.append(
+                    {"role": "user", "content": self._content_blocks(trailing_parts)}
+                )
 
         metadata = self._extract_metadata(
             "messages", conversation_id, fb_data, page_prompt, page_scope_user_prompt
@@ -297,13 +318,15 @@ class SuggestResponseContextBuilder:
             if not root_comment_id:
                 return None, None
 
-            fb_data, total_count, has_next_page = (
-                await self.comment_read_service.get_comment_thread_paginated(
-                    conn=conn,
-                    root_comment_id=root_comment_id,
-                    page=1,
-                    page_size=50,
-                )
+            (
+                fb_data,
+                total_count,
+                has_next_page,
+            ) = await self.comment_read_service.get_comment_thread_paginated(
+                conn=conn,
+                root_comment_id=root_comment_id,
+                page=1,
+                page_size=50,
             )
             if fb_data:
                 await self.media_service.ensure_comment_assets(
@@ -337,13 +360,15 @@ class SuggestResponseContextBuilder:
         try:
             system_api_key = get_system_api_key()
 
-            fb_data, total_count, has_next_page = (
-                await self.message_read_service.get_conversation_messages_paginated(
-                    conn=conn,
-                    conversation_id=conversation_id,
-                    page=1,
-                    page_size=50,
-                )
+            (
+                fb_data,
+                total_count,
+                has_next_page,
+            ) = await self.message_read_service.get_conversation_messages_paginated(
+                conn=conn,
+                conversation_id=conversation_id,
+                page=1,
+                page_size=50,
             )
             if fb_data:
                 await self.media_service.ensure_conversation_assets(
@@ -533,7 +558,9 @@ class SuggestResponseContextBuilder:
             return ""
 
         # Check if page memory contains images (media_id references)
-        has_memory_images = 'media_id="' in page_memory_prompt if page_memory_prompt else False
+        has_memory_images = (
+            'media_id="' in page_memory_prompt if page_memory_prompt else False
+        )
         if not has_memory_images:
             return ""
 

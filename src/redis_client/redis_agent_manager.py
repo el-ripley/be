@@ -1,9 +1,10 @@
 """Aggregates Redis state handling (temp context, locks)."""
 
 from src.utils.logger import get_logger
-from .redis_client import RedisClient
-from .redis_agent_temp_context import RedisAgentTempContextMixin
+
 from .redis_agent_lock import RedisAgentLockMixin
+from .redis_agent_temp_context import RedisAgentTempContextMixin
+from .redis_client import RedisClient
 
 logger = get_logger()
 

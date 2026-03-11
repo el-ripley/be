@@ -79,7 +79,9 @@ def run_12a_anthropic() -> None:
             "stop_reason_value": (
                 str(stop_reason)
                 if stop_reason
-                else "N/A (exception)" if error_msg else "N/A"
+                else "N/A (exception)"
+                if error_msg
+                else "N/A"
             ),
             "partial_content_accessible": bool(content_preview),
             "streaming_behavior": "See 12e for stream with low max_tokens",

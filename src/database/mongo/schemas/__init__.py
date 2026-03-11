@@ -5,7 +5,7 @@ This module defines document schemas for MongoDB collections,
 focusing on rich document data like user profiles and analytics.
 """
 
-from .webhook_event_schema import WebhookEventSchema, WebhookEventData
+from .webhook_event_schema import WebhookEventData, WebhookEventSchema
 
 __all__ = [
     # Webhook event schemas

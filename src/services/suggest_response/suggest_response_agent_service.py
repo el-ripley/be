@@ -5,18 +5,16 @@ Handles business logic for suggest response agent settings.
 Reuses conversation_settings.py for settings validation and normalization.
 """
 
-from typing import Dict, Any, Optional
 import json
-from src.database.postgres.connection import async_db_transaction
-from src.database.postgres.repositories import (
-    get_agent_settings,
-    upsert_agent_settings,
-)
+from typing import Any, Dict, Optional
+
 from src.agent.common.conversation_settings import (
-    validate_settings,
-    normalize_settings,
     get_default_settings,
+    normalize_settings,
+    validate_settings,
 )
+from src.database.postgres.connection import async_db_transaction
+from src.database.postgres.repositories import get_agent_settings, upsert_agent_settings
 from src.utils.logger import get_logger
 
 logger = get_logger()

@@ -2,8 +2,8 @@
 
 import json
 import re
-import uuid
 import time
+import uuid
 from typing import TYPE_CHECKING, Any, Dict, Optional
 
 from src.agent.tools.base import ToolCallContext
@@ -12,8 +12,9 @@ if TYPE_CHECKING:
     from src.services.notifications.escalation_trigger import (
         EscalationNotificationTrigger,
     )
-from src.agent.suggest_response.tools.tool_registry import SuggestResponseToolRegistry
+
 from src.agent.suggest_response.socket.emitter import SuggestResponseSocketEmitter
+from src.agent.suggest_response.tools.tool_registry import SuggestResponseToolRegistry
 from src.agent.suggest_response.utils.message_accumulator import (
     SuggestResponseMessageAccumulator,
 )

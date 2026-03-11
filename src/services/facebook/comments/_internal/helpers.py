@@ -1,4 +1,5 @@
-from typing import Any, Dict, Optional, List
+from typing import Any, Dict, List, Optional
+
 from src.common.clients.facebook_graph_page_client import FacebookGraphPageClient
 from src.services.facebook._core.helpers import execute_graph_client_with_random_tokens
 

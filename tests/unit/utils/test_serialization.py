@@ -1,7 +1,7 @@
 """Unit tests for to_serializable."""
 
-from uuid import UUID
 from dataclasses import dataclass
+from uuid import UUID
 
 import pytest
 from pydantic import BaseModel
@@ -20,7 +20,9 @@ def test_uuid() -> None:
 
 def test_dict_with_uuid_value() -> None:
     u = UUID("550e8400-e29b-41d4-a716-446655440000")
-    assert to_serializable({"key": u}) == {"key": "550e8400-e29b-41d4-a716-446655440000"}
+    assert to_serializable({"key": u}) == {
+        "key": "550e8400-e29b-41d4-a716-446655440000"
+    }
 
 
 def test_list_with_uuid() -> None:

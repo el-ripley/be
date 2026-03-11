@@ -32,15 +32,16 @@ function_call_output (output_message.function_output):
    }
 """
 
-import uuid
-import time
 import asyncio
+import time
+import uuid
 from typing import Any, Dict
 
 import asyncpg
 
 from src.agent.tools.base import BaseTool, ToolCallContext, ToolResult
 from src.api.openai_conversations.schemas import MessageResponse
+from src.common.s3_client import get_s3_uploader
 from src.database.postgres.repositories.media_assets_queries import (
     get_media_assets_by_ids,
     update_media_retention_and_location,
@@ -49,7 +50,6 @@ from src.database.postgres.repositories.user_storage_quotas_queries import (
     check_quota_limit,
     create_or_update_user_storage_quota,
 )
-from src.common.s3_client import get_s3_uploader
 from src.database.postgres.utils import get_current_timestamp_ms
 from src.utils.logger import get_logger
 

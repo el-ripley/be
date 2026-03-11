@@ -4,7 +4,8 @@ User Media Service.
 Handles media description updates and media retrieval for users.
 """
 
-from typing import Optional, Dict, Any, List
+from typing import Any, Dict, List, Optional
+
 from src.database.postgres.connection import async_db_transaction
 from src.database.postgres.repositories.media_assets_queries import (
     get_media_asset_by_id,
@@ -190,15 +191,15 @@ class UserMediaService:
             Dict with deleted_count and details
         """
         try:
+            from src.common.s3_client import get_s3_uploader
             from src.database.postgres.repositories.media_assets_queries import (
-                get_media_assets_by_ids,
                 delete_media_assets_by_ids,
+                get_media_assets_by_ids,
                 get_media_assets_for_quota_update,
             )
             from src.database.postgres.repositories.user_storage_quotas_queries import (
                 create_or_update_user_storage_quota,
             )
-            from src.common.s3_client import get_s3_uploader
 
             async with async_db_transaction() as conn:
                 # Validate ownership
@@ -306,15 +307,15 @@ class UserMediaService:
             ValueError: If media not found or not owned by user
         """
         try:
+            from src.common.s3_client import get_s3_uploader
             from src.database.postgres.repositories.media_assets_queries import (
-                get_media_asset_by_id,
                 create_media_asset,
+                get_media_asset_by_id,
             )
             from src.database.postgres.repositories.user_storage_quotas_queries import (
                 check_quota_limit,
                 create_or_update_user_storage_quota,
             )
-            from src.common.s3_client import get_s3_uploader
 
             async with async_db_transaction() as conn:
                 # 1. Query original media_assets record

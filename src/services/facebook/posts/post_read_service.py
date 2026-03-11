@@ -4,6 +4,8 @@ from typing import Any, Dict, List, Optional, Tuple
 
 from src.database.postgres.repositories.facebook_queries.comments.comment_posts import (
     get_post_by_id,
+)
+from src.database.postgres.repositories.facebook_queries.comments.comment_posts import (
     list_posts_by_page as query_list_posts_by_page,
 )
 from src.database.postgres.repositories.facebook_queries.reactions import (

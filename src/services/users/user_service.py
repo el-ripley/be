@@ -1,22 +1,23 @@
-from typing import Dict, Any, Tuple, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Dict, Tuple
+
 import asyncpg
 
 if TYPE_CHECKING:
     from src.database.postgres.entities.user_entities import User
 
-from src.services.auth_service import AuthService
 from src.database.postgres.connection import async_db_transaction
 from src.database.postgres.repositories.facebook_queries import (
-    get_facebook_app_scope_user_by_id,
     create_facebook_app_scope_user,
+    get_facebook_app_scope_user_by_id,
     update_facebook_app_scope_user,
 )
 from src.database.postgres.repositories.user_queries import (
-    create_user,
     assign_role_to_user_by_name,
+    create_user,
     get_comprehensive_user_info,
     get_user_with_roles,
 )
+from src.services.auth_service import AuthService
 from src.utils.logger import get_logger
 
 logger = get_logger()
@@ -33,7 +34,7 @@ class UserService:
         Get or create user by Facebook ASID.
         Returns: (internal_user_id, User object with roles)
         """
-        from src.database.postgres.entities.user_entities import User, Role
+        from src.database.postgres.entities.user_entities import Role, User
 
         async with async_db_transaction() as conn:
             # Check if FacebookAppScopeUser exists
@@ -131,8 +132,9 @@ class UserService:
         await initialize_user_credits(conn, internal_user_id)
 
         # Create balance record with $0 to prevent auto-creation with $3 default
-        from src.billing.repositories import billing_queries
         from decimal import Decimal
+
+        from src.billing.repositories import billing_queries
 
         await billing_queries.get_or_create_user_credit_balance(
             conn, internal_user_id, Decimal("0")

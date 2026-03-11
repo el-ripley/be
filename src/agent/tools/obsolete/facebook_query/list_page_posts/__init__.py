@@ -3,4 +3,3 @@
 from .list_page_posts import ListPagePostsTool
 
 __all__ = ["ListPagePostsTool"]
-

@@ -4,16 +4,17 @@ Read receipt processing service for Facebook webhook events.
 Handles read receipt events and updates message read state.
 """
 
-from typing import Dict, Any, List, Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
 from src.database.postgres.repositories.facebook_queries import (
     mark_page_messages_seen_by_user,
 )
-from src.services.facebook.messages.sync import ConversationSyncService
-from .socket_emitter import SocketEmitter
 from src.services.facebook.auth import FacebookPageService
+from src.services.facebook.messages.sync import ConversationSyncService
 from src.services.facebook.users.page_scope_user_service import PageScopeUserService
 from src.utils.logger import get_logger
+
+from .socket_emitter import SocketEmitter
 
 if TYPE_CHECKING:
     from src.socket_service import SocketService

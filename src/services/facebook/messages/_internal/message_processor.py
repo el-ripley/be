@@ -6,25 +6,22 @@ and socket emissions.
 """
 
 import json
-from typing import Dict, Any, List, Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
 from src.database.postgres.repositories.facebook_queries import (
     create_message,
     get_conversation_by_participants,
-    update_conversation_after_message,
     update_conversation_ad_context,
+    update_conversation_after_message,
 )
-from .attachment_parser import (
-    parse_attachments,
-    build_entry_point,
-    merge_entry_point,
-)
-from src.services.facebook.messages.sync import ConversationSyncService
-from .socket_emitter import SocketEmitter
 from src.services.facebook.auth import FacebookPageService
-from src.services.facebook.users.page_scope_user_service import PageScopeUserService
+from src.services.facebook.messages.sync import ConversationSyncService
 from src.services.facebook.posts.post_sync_service import PostSyncService
+from src.services.facebook.users.page_scope_user_service import PageScopeUserService
 from src.utils.logger import get_logger
+
+from .attachment_parser import build_entry_point, merge_entry_point, parse_attachments
+from .socket_emitter import SocketEmitter
 
 if TYPE_CHECKING:
     from src.socket_service import SocketService
@@ -81,7 +78,9 @@ class MessageProcessor:
         metadata_raw = message_data.get("metadata")
         referral = referral or message_data.get("referral")
         reply_to = message_data.get("reply_to")
-        reply_to_message_id = reply_to.get("mid") if isinstance(reply_to, dict) and reply_to else None
+        reply_to_message_id = (
+            reply_to.get("mid") if isinstance(reply_to, dict) and reply_to else None
+        )
 
         # Parse metadata for persistence (e.g. {"sent_by": "ai_agent", "history_id": "..."} from echo)
         message_metadata: Optional[Dict[str, Any]] = None

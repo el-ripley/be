@@ -5,6 +5,7 @@ from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException, Request
 
 from src.middleware.auth_middleware import get_current_user_id
+
 from .handler import EscalationHandler
 from .schemas import (
     EscalationDetailResponse,

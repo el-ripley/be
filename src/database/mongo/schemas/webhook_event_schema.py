@@ -5,9 +5,10 @@ This schema defines the structure for storing raw Facebook webhook events
 for analysis and processing.
 """
 
-from datetime import datetime
-from typing import Dict, Any, Optional, List
 from dataclasses import dataclass
+from datetime import datetime
+from typing import Any, Dict, List, Optional
+
 from bson import ObjectId
 
 

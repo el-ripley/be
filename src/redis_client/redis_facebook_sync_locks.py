@@ -12,6 +12,7 @@ Redis keys:
 """
 
 from typing import Optional
+
 from src.redis_client.redis_client import RedisClient
 from src.utils.logger import get_logger
 

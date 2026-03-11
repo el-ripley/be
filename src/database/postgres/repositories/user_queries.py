@@ -5,15 +5,16 @@ Basic CRUD operations for users and roles.
 More complex queries will be added as needed based on business requirements.
 """
 
-from typing import Optional, Dict, Any
+from typing import Any, Dict, Optional
+
 import asyncpg
+
 from ..executor import (
-    execute_async_single,
-    execute_async_returning,
     execute_async_query,
+    execute_async_returning,
+    execute_async_single,
 )
 from ..utils import generate_uuid, get_current_timestamp, get_current_timestamp_ms
-
 
 # ================================================================
 # USER OPERATIONS

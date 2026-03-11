@@ -1,8 +1,8 @@
 """Suggest Response module."""
 
-from .core.runner import SuggestResponseRunner, InsufficientBalanceError
-from .schemas import MessageSuggestion, CommentSuggestion, SuggestResponseOutput
+from .core.runner import InsufficientBalanceError, SuggestResponseRunner
 from .orchestration.orchestrator import SuggestResponseOrchestrator
+from .schemas import CommentSuggestion, MessageSuggestion, SuggestResponseOutput
 
 __all__ = [
     "SuggestResponseRunner",

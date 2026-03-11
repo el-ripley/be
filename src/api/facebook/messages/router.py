@@ -2,17 +2,18 @@ from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Request, Response
 
-from .handler import MessagesHandler
-from .schemas import (
-    MarkAsReadRequest,
-    ConversationResponse,
-    ConversationsListResponse,
-    SendMessageRequest,
-    SendMessageResponse,
-    MessagesListResponse,
-)
 from src.api.facebook.schemas import AgentBlockResponse, AgentBlockUpsertRequest
 from src.middleware.auth_middleware import get_current_user_id
+
+from .handler import MessagesHandler
+from .schemas import (
+    ConversationResponse,
+    ConversationsListResponse,
+    MarkAsReadRequest,
+    MessagesListResponse,
+    SendMessageRequest,
+    SendMessageResponse,
+)
 
 router = APIRouter(prefix="/messages", tags=["Facebook Messages"])
 

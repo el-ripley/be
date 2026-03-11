@@ -3,7 +3,7 @@ import hashlib
 import hmac
 import time
 from typing import Optional
-from urllib.parse import urlparse, unquote
+from urllib.parse import unquote, urlparse
 
 from src.settings import settings
 from src.utils.logger import get_logger

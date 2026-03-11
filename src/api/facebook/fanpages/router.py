@@ -1,6 +1,7 @@
 import json
 from typing import List
-from fastapi import APIRouter, Depends, HTTPException, Request, Query
+
+from fastapi import APIRouter, Depends, HTTPException, Query, Request
 
 from src.middleware.auth_middleware import get_current_user_id
 from src.services.facebook.auth import FacebookPageService
@@ -8,9 +9,9 @@ from src.services.facebook.users.page_scope_user_service import PageScopeUserSer
 
 from .schemas import (
     PageItem,
-    PagesListResponse,
     PageScopeUserItem,
     PageScopeUsersResponse,
+    PagesListResponse,
 )
 
 router = APIRouter(prefix="/pages", tags=["Facebook Pages"])

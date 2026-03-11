@@ -1,7 +1,8 @@
 from typing import Optional
 
-from fastapi import APIRouter, Depends, HTTPException, status, Request, Response
+from fastapi import APIRouter, Depends, HTTPException, Request, Response, status
 
+from src.api.facebook.schemas import AgentBlockResponse, AgentBlockUpsertRequest
 from src.middleware.auth_middleware import get_current_user_id
 from src.utils.logger import get_logger
 
@@ -11,12 +12,11 @@ from .schemas import (
     CommentInteractionResponse,
     CommentThreadListResponse,
     CommentThreadResponse,
-    UpdateCommentMarkAsReadRequest,
-    UpdateCommentMarkAsReadResponse,
     SendMessageToCommenterRequest,
     SendMessageToCommenterResponse,
+    UpdateCommentMarkAsReadRequest,
+    UpdateCommentMarkAsReadResponse,
 )
-from src.api.facebook.schemas import AgentBlockResponse, AgentBlockUpsertRequest
 
 logger = get_logger()
 

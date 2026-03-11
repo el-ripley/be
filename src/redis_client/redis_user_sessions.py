@@ -4,6 +4,7 @@ import json
 from typing import List, Optional
 
 from src.utils.logger import get_logger
+
 from .redis_client import RedisClient
 
 logger = get_logger()

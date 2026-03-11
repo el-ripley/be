@@ -35,15 +35,15 @@ function_call_output (output_message.function_output):
    }
 """
 
-import uuid
 import time
+import uuid
 from typing import Any, Dict
 
 import asyncpg
 
+from src.agent.common.api_key_resolver_service import get_system_api_key
 from src.agent.tools.base import BaseTool, ToolCallContext, ToolResult
 from src.api.openai_conversations.schemas import MessageResponse
-from src.agent.common.api_key_resolver_service import get_system_api_key
 from src.services.facebook.media.entity_media_service import EntityMediaService
 from src.utils.logger import get_logger
 

@@ -1,4 +1,5 @@
-from typing import Dict, Any, List, Callable, Awaitable, Optional
+from typing import Any, Awaitable, Callable, Dict, List, Optional
+
 from src.common.clients.facebook_graph_page_client import FacebookGraphPageClient
 from src.utils.logger import get_logger
 

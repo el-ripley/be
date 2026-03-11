@@ -11,8 +11,7 @@ Architecture:
 """
 
 # Database-specific imports
-from . import postgres
-from . import mongo
+from . import mongo, postgres
 
 # Future database imports
 # from . import redis

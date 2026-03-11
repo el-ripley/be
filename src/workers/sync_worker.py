@@ -7,11 +7,11 @@ Processes sync jobs from Redis queue without blocking the main web server.
 import asyncio
 import signal
 import sys
-from typing import Dict, Any
+from typing import Any, Dict
 
-from src.redis_client.redis_client import RedisClient
-from src.redis_client.redis_job_queue import RedisJobQueue, JobStatus
 from src.database.postgres.connection import get_async_connection
+from src.redis_client.redis_client import RedisClient
+from src.redis_client.redis_job_queue import JobStatus, RedisJobQueue
 from src.utils.logger import get_logger
 
 # Note: Services are imported lazily in _init_services() to avoid circular imports
@@ -51,17 +51,12 @@ class SyncWorker:
         from src.services.facebook.auth import FacebookPageService
 
         # noinspection PyUnresolvedReferences
-        from src.services.facebook.users.page_scope_user_service import (
-            PageScopeUserService,
-        )
-
-        # noinspection PyUnresolvedReferences
-        from src.services.facebook.posts.post_sync_service import PostSyncService
-
-        # noinspection PyUnresolvedReferences
         from src.services.facebook.comments.sync.comment_sync_service import (
             CommentSyncService,
         )
+
+        # noinspection PyUnresolvedReferences
+        from src.services.facebook.full_sync_service import FullSyncService
 
         # noinspection PyUnresolvedReferences
         from src.services.facebook.messages.sync.inbox_sync_service import (
@@ -69,7 +64,12 @@ class SyncWorker:
         )
 
         # noinspection PyUnresolvedReferences
-        from src.services.facebook.full_sync_service import FullSyncService
+        from src.services.facebook.posts.post_sync_service import PostSyncService
+
+        # noinspection PyUnresolvedReferences
+        from src.services.facebook.users.page_scope_user_service import (
+            PageScopeUserService,
+        )
 
         page_service = FacebookPageService()
         page_scope_user_service = PageScopeUserService()

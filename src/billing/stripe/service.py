@@ -4,6 +4,7 @@ Stripe Service - Customer and checkout session management.
 
 import os
 from typing import Optional
+
 import asyncpg
 import stripe
 

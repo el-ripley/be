@@ -1,4 +1,5 @@
-from typing import Dict, Any
+from typing import Any, Dict
+
 from src.common.clients.http_client import HttpClient
 from src.utils import get_logger
 

@@ -98,11 +98,10 @@ class MessageConverter:
             )
 
         elif msg_type == "function_call_output":
-            from src.agent.utils import stringify_json_payload
-
             from src.agent.general_agent.context.function_output_normalizer import (
                 normalize_function_output_to_api_format,
             )
+            from src.agent.utils import stringify_json_payload
 
             output_payload = self._get_effective_value(
                 msg, "function_output", "modified_function_output"

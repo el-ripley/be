@@ -31,20 +31,20 @@ function_call_output (output_message.function_output):
    }
 """
 
-import uuid
 import time
+import uuid
 from typing import Any, Dict
 
 import asyncpg
 
+from src.agent.common.api_key_resolver_service import get_system_api_key
 from src.agent.tools.base import BaseTool, ToolCallContext, ToolResult
 from src.api.openai_conversations.schemas import MessageResponse
-from src.agent.common.api_key_resolver_service import get_system_api_key
-from src.services.media.media_description_service import MediaDescriptionService
 from src.database.postgres.repositories.media_assets_queries import (
     get_media_assets_by_ids,
     update_media_description_by_ai,
 )
+from src.services.media.media_description_service import MediaDescriptionService
 from src.utils.logger import get_logger
 
 logger = get_logger()

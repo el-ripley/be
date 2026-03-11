@@ -7,12 +7,13 @@ and proper logging.
 """
 
 import traceback
-from typing import Dict, Any, Optional
-from fastapi import Request, HTTPException, status
-from fastapi.responses import JSONResponse
-from fastapi.exceptions import RequestValidationError
-import jwt
+from typing import Any, Dict, Optional
+
 import asyncpg
+import jwt
+from fastapi import HTTPException, Request, status
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import JSONResponse
 
 from src.utils.logger import get_logger
 

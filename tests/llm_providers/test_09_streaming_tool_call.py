@@ -21,14 +21,24 @@ from tests.llm_providers.utils import (
 TEST_NAME = "09_streaming_tool_call"
 PROMPT = "What's the weather in Hanoi?"
 SYSTEM = "You are a helpful assistant."
-WEATHER_SCHEMA = {"type": "object", "properties": {"city": {"type": "string"}}, "required": ["city"]}
+WEATHER_SCHEMA = {
+    "type": "object",
+    "properties": {"city": {"type": "string"}},
+    "required": ["city"],
+}
 
 
 def run_anthropic() -> None:
     import anthropic
 
     client = get_anthropic_client_direct()
-    tools = [{"name": "get_weather", "description": "Get current weather for a city", "input_schema": WEATHER_SCHEMA}]
+    tools = [
+        {
+            "name": "get_weather",
+            "description": "Get current weather for a city",
+            "input_schema": WEATHER_SCHEMA,
+        }
+    ]
     model = get_anthropic_model()
     request_params = {
         "model": model,
@@ -46,11 +56,18 @@ def run_anthropic() -> None:
             if not variant and isinstance(data, dict) and len(data) == 1:
                 variant = next(iter(data.keys()))
             variant = variant or type(event).__name__
-            events.append({"type": variant, "data": data if isinstance(data, dict) else str(event)})
+            events.append(
+                {
+                    "type": variant,
+                    "data": data if isinstance(data, dict) else str(event),
+                }
+            )
         final_message = stream.get_final_message()
 
     event_types = [e["type"] for e in events]
-    tool_call_complete_signal = "content_block_stop (for tool_use block) or message_stop"
+    tool_call_complete_signal = (
+        "content_block_stop (for tool_use block) or message_stop"
+    )
 
     save_evidence(
         test_name=TEST_NAME,
@@ -60,7 +77,9 @@ def run_anthropic() -> None:
             "events": events,
             "event_count": len(events),
             "event_types": event_types,
-            "final_message": serialize_response(final_message) if final_message else None,
+            "final_message": serialize_response(final_message)
+            if final_message
+            else None,
         },
         key_observations={
             "event_sequence_with_tool_call": event_types,
@@ -69,12 +88,16 @@ def run_anthropic() -> None:
         },
         mapping={
             "equivalent_openai_param": "stream() with tools; events include response.output_item.added (function_call)",
-            "differences": ["Anthropic stream events named differently; final message same as non-stream for tool_use"],
+            "differences": [
+                "Anthropic stream events named differently; final message same as non-stream for tool_use"
+            ],
             "conversion_needed": "Map stream events to normalized types; on tool_use complete, same as non-stream tool execution.",
         },
         model_used=model,
         sdk_version=getattr(anthropic, "__version__", ""),
-        model_in_response=getattr(final_message, "model", None) if final_message else None,
+        model_in_response=getattr(final_message, "model", None)
+        if final_message
+        else None,
     )
     print("Anthropic: OK", "-", len(events), "events", "-", event_types[:15])
 
@@ -87,18 +110,34 @@ def run_gemini() -> None:
     model = get_gemini_model()
     tool = types.Tool(
         function_declarations=[
-            types.FunctionDeclaration(name="get_weather", description="Get current weather for a city", parameters=WEATHER_SCHEMA),
+            types.FunctionDeclaration(
+                name="get_weather",
+                description="Get current weather for a city",
+                parameters=WEATHER_SCHEMA,
+            ),
         ]
     )
     config = types.GenerateContentConfig(system_instruction=SYSTEM, tools=[tool])
     chunks = []
     response = None
     try:
-        for chunk in client.models.generate_content_stream(model=model, contents=PROMPT, config=config):
-            chunks.append(serialize_response(chunk) if hasattr(chunk, "model_dump") else {"text": getattr(chunk, "text", None)})
+        for chunk in client.models.generate_content_stream(
+            model=model, contents=PROMPT, config=config
+        ):
+            chunks.append(
+                serialize_response(chunk)
+                if hasattr(chunk, "model_dump")
+                else {"text": getattr(chunk, "text", None)}
+            )
     except TypeError:
-        response = client.models.generate_content(model=model, contents=PROMPT, config=config)
-        chunks = [serialize_response(response) if hasattr(response, "model_dump") else {"text": getattr(response, "text", None)}]
+        response = client.models.generate_content(
+            model=model, contents=PROMPT, config=config
+        )
+        chunks = [
+            serialize_response(response)
+            if hasattr(response, "model_dump")
+            else {"text": getattr(response, "text", None)}
+        ]
 
     model_in_response = getattr(response, "model_version", None) if response else None
     if model_in_response is None and chunks and isinstance(chunks[0], dict):
@@ -107,7 +146,10 @@ def run_gemini() -> None:
     save_evidence(
         test_name=TEST_NAME,
         provider="gemini",
-        request_data={"method": "models.generate_content_stream", "params": {"model": model, "tools": [tool], "prompt": PROMPT}},
+        request_data={
+            "method": "models.generate_content_stream",
+            "params": {"model": model, "tools": [tool], "prompt": PROMPT},
+        },
         raw_response={
             "chunks": chunks,
             "chunk_count": len(chunks),
@@ -119,7 +161,9 @@ def run_gemini() -> None:
         },
         mapping={
             "equivalent_openai_param": "Stream chunks; final chunk or accumulation may have function_call",
-            "differences": ["Gemini streams chunks; tool call appears in chunk when generated"],
+            "differences": [
+                "Gemini streams chunks; tool call appears in chunk when generated"
+            ],
             "conversion_needed": "Accumulate chunks; when function_call present, execute and send response.",
         },
         model_used=model,

@@ -212,11 +212,11 @@ class GenerateSuggestionsTool(BaseTool):
         Raises:
             MediaValidationError: With details of dead media if any are found.
         """
+        from src.common.s3_client import get_s3_uploader
         from src.database.postgres.connection import async_db_transaction
         from src.database.postgres.repositories.media_assets_queries import (
             get_media_assets_by_ids,
         )
-        from src.common.s3_client import get_s3_uploader
 
         dead_media: List[str] = []
 

@@ -16,11 +16,11 @@ def create_explore_registry(sync_job_manager=None) -> ToolRegistry:
     6. sql_query
     """
     from src.agent.tools.manage_media import (
-        ViewMediaTool,
         DescribeMediaTool,
         MirrorAndDescribeEntityMediaTool,
+        ViewMediaTool,
     )
-    from src.agent.tools.orechetrate_tool import TodoWriteTool, GetSkillTool
+    from src.agent.tools.orechetrate_tool import GetSkillTool, TodoWriteTool
     from src.agent.tools.sql_query import SqlQueryTool
 
     registry = ToolRegistry()

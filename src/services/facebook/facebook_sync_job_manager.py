@@ -12,11 +12,11 @@ LOCK LIFECYCLE:
 """
 
 import asyncio
-from typing import Dict, Any, Optional
 from enum import Enum
+from typing import Any, Dict, Optional
 
-from src.redis_client.redis_job_queue import RedisJobQueue
 from src.redis_client.redis_facebook_sync_locks import RedisFacebookSyncLocks
+from src.redis_client.redis_job_queue import RedisJobQueue
 from src.utils.logger import get_logger
 
 logger = get_logger()

@@ -3,15 +3,16 @@ Media Assets SQL query functions.
 Handles CRUD operations for media_assets table (user uploads and Facebook mirrors).
 """
 
-from typing import Optional, Dict, Any, List, Tuple
+from typing import Any, Dict, List, Optional, Tuple
+
 import asyncpg
+
 from ..executor import (
-    execute_async_returning,
     execute_async_query,
+    execute_async_returning,
     execute_async_single,
 )
 from ..utils import generate_uuid, get_current_timestamp_ms
-
 
 # ================================================================
 # MEDIA ASSETS OPERATIONS

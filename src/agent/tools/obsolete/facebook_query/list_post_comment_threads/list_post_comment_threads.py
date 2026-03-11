@@ -26,9 +26,9 @@ function_call_output (output_message.function_output):
    }
 """
 
-import uuid
-import time
 import json
+import time
+import uuid
 from typing import Any, Dict
 
 import asyncpg
@@ -156,15 +156,17 @@ class ListPostCommentThreadsTool(BaseTool):
         limit = arguments.get("limit", 20)
         offset = arguments.get("offset", 0)
 
-        threads, total_count, has_more = (
-            await self._read_service.list_comment_threads_by_post(
-                conn,
-                post_id,
-                limit=limit,
-                offset=offset,
-                filter_type=filter_type,
-                sort_by=sort_by,
-            )
+        (
+            threads,
+            total_count,
+            has_more,
+        ) = await self._read_service.list_comment_threads_by_post(
+            conn,
+            post_id,
+            limit=limit,
+            offset=offset,
+            filter_type=filter_type,
+            sort_by=sort_by,
         )
 
         # Format threads for output

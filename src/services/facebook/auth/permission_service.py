@@ -1,4 +1,5 @@
-from typing import Dict, Any, List, Optional
+from typing import Any, Dict, List, Optional
+
 from src.database.postgres.connection import async_db_transaction
 from src.database.postgres.repositories.facebook_queries import get_comment
 from src.utils.logger import get_logger

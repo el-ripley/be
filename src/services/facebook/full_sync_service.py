@@ -5,13 +5,13 @@ Orchestrates full sync process for posts and comments.
 Syncs ALL posts first, then syncs comments for newest posts without comments.
 """
 
-from typing import Dict, Any
+from typing import Any, Dict
 
-from src.services.facebook.posts.post_sync_service import PostSyncService
-from src.services.facebook.comments.sync.comment_sync_service import CommentSyncService
 from src.database.postgres.repositories.facebook_queries.post_comment_sync_states import (
     get_posts_needing_comment_sync,
 )
+from src.services.facebook.comments.sync.comment_sync_service import CommentSyncService
+from src.services.facebook.posts.post_sync_service import PostSyncService
 from src.utils.logger import get_logger
 
 logger = get_logger()

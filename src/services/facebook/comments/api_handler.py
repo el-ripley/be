@@ -1,6 +1,7 @@
 import json
-from typing import Dict, Any, Optional, Tuple, List, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Dict, List, Optional, Tuple
 
+from src.common.clients.facebook_graph_page_client import FacebookGraphPageClient
 from src.database.postgres.connection import async_db_transaction
 from src.database.postgres.repositories.facebook_queries import (
     get_comment,
@@ -8,19 +9,18 @@ from src.database.postgres.repositories.facebook_queries import (
     get_post_by_id,
 )
 from src.database.postgres.repositories.facebook_queries.comments.comment_conversations import (
+    get_conversation_by_root_comment_id,
+    get_conversation_with_unread_count,
     list_conversations_for_pages,
     list_thread_comments,
-    get_conversation_by_root_comment_id,
     mark_all_comments_as_seen,
     update_conversation_mark_as_read,
-    get_conversation_with_unread_count,
 )
-from src.common.clients.facebook_graph_page_client import FacebookGraphPageClient
-from src.utils.logger import get_logger
 from src.services.facebook.auth import FacebookPageService, FacebookPermissionService
 from src.services.facebook.comments._internal.immediate_emit import (
     process_outgoing_comment_reply,
 )
+from src.utils.logger import get_logger
 
 if TYPE_CHECKING:
     from src.socket_service import SocketService
@@ -189,10 +189,8 @@ class CommentAPIHandler:
                 ):
                     try:
                         async with async_db_transaction() as conn:
-                            page_admins = (
-                                await self.page_service.get_facebook_page_admins_by_page_id(
-                                    conn, comment_info["fan_page_id"]
-                                )
+                            page_admins = await self.page_service.get_facebook_page_admins_by_page_id(
+                                conn, comment_info["fan_page_id"]
                             )
                             await process_outgoing_comment_reply(
                                 conn,
@@ -238,9 +236,7 @@ class CommentAPIHandler:
                 "new_comment_id": None,
             }
         except Exception as e:
-            logger.error(
-                f"❌ Failed to {action} comment {comment_info['id']}: {str(e)}"
-            )
+            logger.error(f"❌ Failed to {action} comment {comment_info['id']}: {str(e)}")
             return {
                 "success": False,
                 "message": f"Lỗi khi {action} comment: {str(e)}",
@@ -259,10 +255,11 @@ class CommentAPIHandler:
         This only updates the mark_as_read flag, not the page_seen_at timestamps.
         """
         try:
-            has_permission, page_id = (
-                await self.permission_service.check_user_comment_permission(
-                    user_id, root_comment_id
-                )
+            (
+                has_permission,
+                page_id,
+            ) = await self.permission_service.check_user_comment_permission(
+                user_id, root_comment_id
             )
 
             if not has_permission:
@@ -326,10 +323,11 @@ class CommentAPIHandler:
         Mark all user comments in a conversation as seen by setting page_seen_at.
         """
         try:
-            has_permission, page_id = (
-                await self.permission_service.check_user_comment_permission(
-                    user_id, root_comment_id
-                )
+            (
+                has_permission,
+                page_id,
+            ) = await self.permission_service.check_user_comment_permission(
+                user_id, root_comment_id
             )
 
             if not has_permission:
@@ -432,10 +430,11 @@ class CommentAPIHandler:
                     raise ValueError("Không tìm thấy thông tin page")
 
                 # Check user permission for this comment's page
-                has_permission, _ = (
-                    await self.permission_service.check_user_comment_permission(
-                        user_id, comment_id
-                    )
+                (
+                    has_permission,
+                    _,
+                ) = await self.permission_service.check_user_comment_permission(
+                    user_id, comment_id
                 )
 
                 if not has_permission:
@@ -672,10 +671,11 @@ class CommentAPIHandler:
     ) -> Dict[str, Any]:
         """Get conversation comments with cursor pagination."""
         try:
-            has_permission, page_id = (
-                await self.permission_service.check_user_comment_permission(
-                    user_id, root_comment_id
-                )
+            (
+                has_permission,
+                page_id,
+            ) = await self.permission_service.check_user_comment_permission(
+                user_id, root_comment_id
             )
 
             if not has_permission:
@@ -745,10 +745,11 @@ class CommentAPIHandler:
         Used by agent-block and other conversation-scoped operations.
         Returns dict with keys: conversation_id, fan_page_id.
         """
-        has_permission, _page_id = (
-            await self.permission_service.check_user_comment_permission(
-                user_id, root_comment_id
-            )
+        (
+            has_permission,
+            _page_id,
+        ) = await self.permission_service.check_user_comment_permission(
+            user_id, root_comment_id
         )
         if not has_permission:
             raise PermissionError("Bạn không có quyền truy cập comment thread này")

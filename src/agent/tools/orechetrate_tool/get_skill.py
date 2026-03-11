@@ -11,14 +11,18 @@ function_call_output (output_message.function_output):
    }
 """
 
-import uuid
 import time
+import uuid
 from typing import Any, Dict
 
 import asyncpg
 
+from src.agent.general_agent.context.skills import (
+    list_available_skills,
+    load_skill,
+    load_triggers,
+)
 from src.agent.tools.base import BaseTool, ToolCallContext, ToolResult
-from src.agent.general_agent.context.skills import load_skill, load_triggers, list_available_skills
 from src.api.openai_conversations.schemas import MessageResponse
 from src.utils.logger import get_logger
 

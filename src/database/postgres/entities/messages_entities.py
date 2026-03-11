@@ -5,9 +5,9 @@ Pure database entity representations for Facebook Messenger conversations.
 These models represent the complete structure of database records.
 """
 
-from typing import Optional, Dict, Any
-from pydantic import BaseModel, Field
+from typing import Any, Dict, Optional
 
+from pydantic import BaseModel, Field
 
 # ================================================================
 # MESSAGE ENTITY

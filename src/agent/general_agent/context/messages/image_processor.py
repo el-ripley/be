@@ -2,14 +2,13 @@ from typing import Any, Dict, List, Optional, Tuple
 
 import asyncpg
 
-from src.api.openai_conversations.schemas import MessageResponse
 from src.agent.utils import (
     ensure_content_items,
     looks_like_content_list,
     replace_expired_images_with_map,
 )
+from src.api.openai_conversations.schemas import MessageResponse
 from src.utils.logger import get_logger
-
 
 logger = get_logger()
 

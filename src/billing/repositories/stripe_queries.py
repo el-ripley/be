@@ -2,9 +2,10 @@
 Stripe queries - Database operations for Stripe integration.
 """
 
-from typing import Optional, Dict, Any
-import asyncpg
 import json
+from typing import Any, Dict, Optional
+
+import asyncpg
 
 from src.database.postgres.executor import execute_async_returning, execute_async_single
 from src.database.postgres.utils import generate_uuid, get_current_timestamp

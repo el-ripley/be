@@ -1,34 +1,31 @@
 from dataclasses import dataclass
-from typing import Optional, Dict, Any, List
+from typing import Any, Dict, List, Optional
 
-from src.database.postgres.connection import async_db_transaction, get_async_connection
-from src.agent.tools.registry import create_default_registry
-from src.agent.core.llm_call import LLM_call
-from src.agent.general_agent.context.manager import AgentContextManager
-from src.agent.general_agent.llm_stream_handler import LLMStreamHandler
-from src.agent.general_agent.tool_executor import ToolExecutor
-from src.agent.general_agent.utils.balance_guard import BalanceGuard
-from src.agent.general_agent.stop_handler import StopHandler
-from src.agent.general_agent.core.iteration_runner import IterationRunner
-from src.agent.general_agent.resume_handler import ResumeHandler
 from src.agent.common.agent_types import AGENT_TYPE_GENERAL_AGENT
 from src.agent.common.api_key_resolver_service import get_system_api_key
 from src.agent.common.conversation_settings import (
     get_default_settings,
-    normalize_settings,
     get_effective_context_settings,
+    normalize_settings,
 )
-from src.database.postgres.repositories.agent_queries import (
-    get_conversation_settings,
-)
-
-from src.socket_service import SocketService
-from src.utils.logger import get_logger
-from src.api.openai_conversations.schemas import MessageResponse
+from src.agent.core.llm_call import LLM_call
+from src.agent.general_agent.context.manager import AgentContextManager
+from src.agent.general_agent.core.iteration_runner import IterationRunner
 from src.agent.general_agent.core.run_config import RunConfig
+from src.agent.general_agent.llm_stream_handler import LLMStreamHandler
+from src.agent.general_agent.resume_handler import ResumeHandler
+from src.agent.general_agent.stop_handler import StopHandler
 from src.agent.general_agent.summarization.summarization_orchestrator import (
     SummarizationOrchestrator,
 )
+from src.agent.general_agent.tool_executor import ToolExecutor
+from src.agent.general_agent.utils.balance_guard import BalanceGuard
+from src.agent.tools.registry import create_default_registry
+from src.api.openai_conversations.schemas import MessageResponse
+from src.database.postgres.connection import async_db_transaction, get_async_connection
+from src.database.postgres.repositories.agent_queries import get_conversation_settings
+from src.socket_service import SocketService
+from src.utils.logger import get_logger
 
 logger = get_logger()
 
@@ -357,19 +354,20 @@ class AgentRunner:
 
             # Prepare context for resume inside a DB transaction
             async with async_db_transaction() as conn:
-                branch_id, user_message_model = (
-                    await self.resume_handler.prepare_resume_context(
-                        conn=conn,
-                        user_id=user_id,
-                        conversation_id=conversation_id,
-                        agent_response_id=agent_response_id,
-                        answers=answers,
-                        text=text or "",
-                        call_id=call_id,
-                        image_urls=image_urls,
-                        active_tab=active_tab,
-                        max_iteration=iteration_limit,
-                    )
+                (
+                    branch_id,
+                    user_message_model,
+                ) = await self.resume_handler.prepare_resume_context(
+                    conn=conn,
+                    user_id=user_id,
+                    conversation_id=conversation_id,
+                    agent_response_id=agent_response_id,
+                    answers=answers,
+                    text=text or "",
+                    call_id=call_id,
+                    image_urls=image_urls,
+                    active_tab=active_tab,
+                    max_iteration=iteration_limit,
                 )
 
                 if not branch_id:

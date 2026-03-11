@@ -4,10 +4,11 @@ Polar Webhook Handler - Process Polar webhook events (order.created, order.paid)
 
 from decimal import Decimal
 from typing import Any, Dict, Optional
+
 import asyncpg
 
-from src.billing.repositories import polar_queries
 from src.billing.credit_service import add_credits
+from src.billing.repositories import polar_queries
 from src.database.postgres.utils import get_current_timestamp
 from src.utils.logger import get_logger
 
@@ -90,7 +91,8 @@ class PolarWebhookHandler:
 
     def _get_amount_cents_from_order(self, order: Dict[str, Any]) -> Optional[int]:
         """Get order amount in cents for credits: subtotal (before tax), not total.
-        Polar: subtotal_amount = before tax; total_amount = after tax. We credit subtotal."""
+        Polar: subtotal_amount = before tax; total_amount = after tax. We credit subtotal.
+        """
         subtotal = order.get("subtotal_amount")
         if subtotal is not None:
             return int(subtotal)
@@ -111,7 +113,9 @@ class PolarWebhookHandler:
             logger.warning("order.created: order missing id")
             return None
 
-        existing = await polar_queries.get_polar_payment_by_order_id(conn, str(order_id))
+        existing = await polar_queries.get_polar_payment_by_order_id(
+            conn, str(order_id)
+        )
         if existing:
             return None
 
@@ -128,7 +132,9 @@ class PolarWebhookHandler:
         payment_data = {
             "user_id": user_id,
             "polar_order_id": str(order_id),
-            "polar_product_id": str(order["product_id"]) if order.get("product_id") else None,
+            "polar_product_id": str(order["product_id"])
+            if order.get("product_id")
+            else None,
             "polar_customer_id": None,
             "amount_usd": float(amount_usd),
             "credits_usd": float(amount_usd),
@@ -172,7 +178,9 @@ class PolarWebhookHandler:
                 payment_data = {
                     "user_id": user_id,
                     "polar_order_id": order_id,
-                    "polar_product_id": str(order["product_id"]) if order.get("product_id") else None,
+                    "polar_product_id": str(order["product_id"])
+                    if order.get("product_id")
+                    else None,
                     "polar_customer_id": None,
                     "amount_usd": float(amount_usd),
                     "credits_usd": float(amount_usd),
@@ -211,7 +219,9 @@ class PolarWebhookHandler:
             source_id=payment_id,
             description=description,
         )
-        logger.info(f"Added {credits_usd} credits to user {user_id} (Polar order {order_id})")
+        logger.info(
+            f"Added {credits_usd} credits to user {user_id} (Polar order {order_id})"
+        )
         return {
             "user_id": user_id,
             "credits_usd": credits_usd,

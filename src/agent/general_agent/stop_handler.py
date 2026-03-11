@@ -1,14 +1,13 @@
 """Stop handler for managing agent stop signals."""
 
-from src.database.postgres.connection import async_db_transaction
-from src.database.postgres.repositories.agent_queries import stop_agent_response
-from src.socket_service import SocketService
-from src.agent.general_agent.core.run_config import RunConfig
-
-
 # Forward declaration for BranchContext to avoid circular import
 # BranchContext is defined in agent_runner.py
 from typing import TYPE_CHECKING
+
+from src.agent.general_agent.core.run_config import RunConfig
+from src.database.postgres.connection import async_db_transaction
+from src.database.postgres.repositories.agent_queries import stop_agent_response
+from src.socket_service import SocketService
 
 if TYPE_CHECKING:
     from src.agent.general_agent.core.agent_runner import BranchContext

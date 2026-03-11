@@ -1,16 +1,16 @@
-from .router import router as messages_router
 from .handler import MessagesHandler
+from .router import router as messages_router
 from .schemas import (
-    MarkAsReadRequest,
-    ConversationResponse,
     ConversationData,
-    LatestMessageData,
     ConversationItem,
+    ConversationResponse,
     ConversationsListResponse,
-    SendMessageRequest,
-    SendMessageResponse,
+    LatestMessageData,
+    MarkAsReadRequest,
     MessageItem,
     MessagesListResponse,
+    SendMessageRequest,
+    SendMessageResponse,
 )
 
 __all__ = [

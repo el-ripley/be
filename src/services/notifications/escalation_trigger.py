@@ -8,7 +8,10 @@ from typing import Any, Dict, List, Optional
 
 from src.database.postgres.connection import async_db_transaction
 from src.database.postgres.executor import execute_async_single
-from src.database.postgres.repositories import get_escalation_by_id, get_escalations_with_filters
+from src.database.postgres.repositories import (
+    get_escalation_by_id,
+    get_escalations_with_filters,
+)
 from src.services.notifications.notification_service import NotificationService
 from src.utils.logger import get_logger
 
@@ -40,11 +43,18 @@ def _detect_operation_types(sql_statements: List[str]) -> List[str]:
     types: List[str] = []
     for sql in sql_statements:
         sql_lower = sql.lower()
-        if TABLE_ESCALATIONS.lower() not in sql_lower and TABLE_MESSAGES.lower() not in sql_lower:
+        if (
+            TABLE_ESCALATIONS.lower() not in sql_lower
+            and TABLE_MESSAGES.lower() not in sql_lower
+        ):
             continue
         if "insert" in sql_lower and TABLE_ESCALATIONS.lower() in sql_lower:
             types.append(TYPE_ESCALATION_CREATED)
-        if "update" in sql_lower and TABLE_ESCALATIONS.lower() in sql_lower and "closed" in sql_lower:
+        if (
+            "update" in sql_lower
+            and TABLE_ESCALATIONS.lower() in sql_lower
+            and "closed" in sql_lower
+        ):
             types.append(TYPE_ESCALATION_CLOSED)
         if "insert" in sql_lower and TABLE_MESSAGES.lower() in sql_lower:
             types.append(TYPE_ESCALATION_NEW_MESSAGE)
@@ -139,7 +149,9 @@ async def _get_escalation_with_latest_message(
                 ORDER BY m.created_at DESC
                 LIMIT 1
             """
-            row = await execute_async_single(conn, q, owner_user_id, fan_page_id, conversation_id)
+            row = await execute_async_single(
+                conn, q, owner_user_id, fan_page_id, conversation_id
+            )
         else:
             q = """
                 SELECT e.id, e.subject, e.priority
@@ -151,7 +163,9 @@ async def _get_escalation_with_latest_message(
                 ORDER BY m.created_at DESC
                 LIMIT 1
             """
-            row = await execute_async_single(conn, q, owner_user_id, fan_page_id, conversation_id)
+            row = await execute_async_single(
+                conn, q, owner_user_id, fan_page_id, conversation_id
+            )
         if not row:
             return None
         return await get_escalation_by_id(conn, str(row["id"]))

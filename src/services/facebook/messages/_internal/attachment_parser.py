@@ -6,7 +6,7 @@ and entry point data from referrals.
 """
 
 import copy
-from typing import Dict, Any, List, Optional
+from typing import Any, Dict, List, Optional
 
 
 class AttachmentParser:

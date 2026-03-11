@@ -4,18 +4,19 @@ Suggest Response History Service.
 Handles business logic for suggest response history records.
 """
 
-from typing import Dict, Any, Optional, List
+from typing import Any, Dict, List, Optional
+
 from src.database.postgres.connection import async_db_transaction
 from src.database.postgres.repositories import (
-    get_suggest_response_history_by_id,
-    get_suggest_response_history_by_conversation,
-    get_suggest_response_history_by_page,
     count_suggest_response_history_by_conversation,
     count_suggest_response_history_by_page,
-    update_suggest_response_history,
-    get_suggest_response_history_with_filters,
     count_suggest_response_history_with_filters,
+    get_suggest_response_history_by_conversation,
+    get_suggest_response_history_by_id,
+    get_suggest_response_history_by_page,
+    get_suggest_response_history_with_filters,
     get_suggest_response_messages_by_history,
+    update_suggest_response_history,
 )
 from src.utils.logger import get_logger
 

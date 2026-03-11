@@ -1,19 +1,19 @@
 import json
-from typing import Dict, Any, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
+from src.common.clients.facebook_graph_page_client import (
+    FacebookAPIError,
+    FacebookGraphPageClient,
+)
 from src.database.postgres.connection import async_db_transaction
 from src.database.postgres.repositories.facebook_queries.messages import (
-    mark_conversation_messages_as_seen,
-    update_conversation_mark_as_read,
     get_conversation_with_details,
     list_conversations_by_page_ids,
     list_messages_by_conversation_id,
+    mark_conversation_messages_as_seen,
+    update_conversation_mark_as_read,
 )
 from src.services.facebook.auth import FacebookPageService, FacebookPermissionService
-from src.common.clients.facebook_graph_page_client import (
-    FacebookGraphPageClient,
-    FacebookAPIError,
-)
 from src.utils.logger import get_logger
 
 logger = get_logger()
@@ -218,10 +218,12 @@ class MessageAPIHandler:
                     }
 
                 cursor_tuple = self._decode_conversation_cursor(cursor)
-                rows, has_more, next_cursor_tuple = (
-                    await list_conversations_by_page_ids(
-                        conn, page_ids, limit, cursor_tuple
-                    )
+                (
+                    rows,
+                    has_more,
+                    next_cursor_tuple,
+                ) = await list_conversations_by_page_ids(
+                    conn, page_ids, limit, cursor_tuple
                 )
 
                 # Transform flat results into nested conversation + latest_message structure
@@ -519,10 +521,12 @@ class MessageAPIHandler:
 
                 limit = max(1, min(limit, 100))
                 cursor_tuple = self._decode_message_cursor(cursor)
-                rows, has_more, next_cursor_tuple = (
-                    await list_messages_by_conversation_id(
-                        conn, conversation_id, limit, cursor_tuple
-                    )
+                (
+                    rows,
+                    has_more,
+                    next_cursor_tuple,
+                ) = await list_messages_by_conversation_id(
+                    conn, conversation_id, limit, cursor_tuple
                 )
 
                 items: List[Dict[str, Any]] = []

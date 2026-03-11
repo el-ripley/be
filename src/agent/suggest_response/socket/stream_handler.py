@@ -4,7 +4,7 @@ import json
 import time
 import uuid
 from dataclasses import dataclass
-from typing import Dict, Any, List, Optional
+from typing import Any, Dict, List, Optional
 
 from openai.types.responses import ParsedResponse
 

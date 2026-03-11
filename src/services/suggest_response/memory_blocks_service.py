@@ -4,15 +4,16 @@ Memory Blocks Service.
 Handles business logic for suggest_response memory blocks operations.
 """
 
-from typing import Dict, Any, Optional, List
+from typing import Any, Dict, List, Optional
+
 from src.database.postgres.connection import async_db_transaction
-from src.database.postgres.repositories.suggest_response_queries import (
-    get_active_page_prompt,
-    create_page_prompt,
-    get_active_page_scope_user_prompt,
-    create_page_scope_user_prompt,
-)
 from src.database.postgres.repositories import memory_blocks_queries
+from src.database.postgres.repositories.suggest_response_queries import (
+    create_page_prompt,
+    create_page_scope_user_prompt,
+    get_active_page_prompt,
+    get_active_page_scope_user_prompt,
+)
 from src.utils.logger import get_logger
 
 logger = get_logger()

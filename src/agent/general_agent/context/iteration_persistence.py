@@ -11,7 +11,6 @@ from src.database.postgres.repositories.agent_queries import (
 )
 from src.utils.logger import get_logger
 
-
 logger = get_logger()
 
 

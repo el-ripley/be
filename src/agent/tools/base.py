@@ -2,15 +2,16 @@
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
-from typing import Any, Dict, List, Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Dict, List, Optional
+
 import asyncpg
 
 if TYPE_CHECKING:
-    from src.socket_service import SocketService
     from src.agent.general_agent.context.manager import AgentContextManager
     from src.agent.general_agent.utils.temp_message_accumulator import (
         TempMessageAccumulator,
     )
+    from src.socket_service import SocketService
 
 
 @dataclass

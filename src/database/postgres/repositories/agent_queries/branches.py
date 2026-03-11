@@ -9,34 +9,35 @@ from uuid import UUID
 import asyncpg
 
 from src.database.postgres.executor import (
-    execute_async_single,
-    execute_async_query,
     execute_async_command,
+    execute_async_query,
+    execute_async_single,
 )
 from src.database.postgres.utils import generate_uuid, get_current_timestamp
+
 from .conversations import get_user_conversation_count_for_title
 from .messages import _decode_json_fields
 
 
 def _sanitize_for_postgres(value: Any) -> Any:
     """Remove null characters (\u0000) that PostgreSQL text columns cannot store.
-    
+
     PostgreSQL raises "unsupported Unicode escape sequence" for \u0000.
     This recursively sanitizes strings in dicts, lists, and plain strings.
     """
     if value is None:
         return None
-    
+
     if isinstance(value, str):
         # Remove null characters - PostgreSQL cannot store \u0000 in text
         return value.replace("\x00", "").replace("\\u0000", "")
-    
+
     if isinstance(value, dict):
         return {k: _sanitize_for_postgres(v) for k, v in value.items()}
-    
+
     if isinstance(value, list):
         return [_sanitize_for_postgres(item) for item in value]
-    
+
     return value
 
 

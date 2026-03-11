@@ -1,14 +1,14 @@
-from typing import Dict, Any, Optional
+from typing import Any, Dict, Optional
 
-from src.utils.logger import get_logger
 from src.database.postgres.repositories.facebook_queries import (
     create_comment,
+    ensure_comment_exists,
+    get_comment,
+    soft_delete_comment,
     update_comment,
     update_comment_visibility,
-    soft_delete_comment,
-    get_comment,
-    ensure_comment_exists,
 )
+from src.utils.logger import get_logger
 
 logger = get_logger()
 

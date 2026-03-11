@@ -5,24 +5,24 @@ Syncs Facebook comment trees for posts into Postgres.
 """
 
 import asyncio
-from typing import Dict, Any, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 from src.common.clients.facebook_graph_page_client import FacebookGraphPageClient
+from src.database.postgres.connection import get_async_connection
 from src.database.postgres.repositories.facebook_queries.post_comment_sync_states import (
     get_comment_sync_state,
-    upsert_comment_sync_state,
     reset_comment_sync_state,
+    upsert_comment_sync_state,
 )
+from src.services.facebook._core.helpers import execute_graph_client_with_random_tokens
 from src.services.facebook.auth import FacebookPageService
-from src.services.facebook.users.page_scope_user_service import PageScopeUserService
 from src.services.facebook.comments.comment_conversation_service import (
     CommentConversationService,
 )
 from src.services.facebook.comments.sync.comment_write_service import (
     CommentWriteService,
 )
-from src.services.facebook._core.helpers import execute_graph_client_with_random_tokens
-from src.database.postgres.connection import get_async_connection
+from src.services.facebook.users.page_scope_user_service import PageScopeUserService
 from src.utils.logger import get_logger
 
 logger = get_logger()

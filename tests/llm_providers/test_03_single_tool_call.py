@@ -72,12 +72,18 @@ def run_anthropic() -> None:
     ]
     if tool_use_id and tool_name:
         tool_result_content = "25°C, sunny"
-        messages.append({
-            "role": "user",
-            "content": [
-                {"type": "tool_result", "tool_use_id": tool_use_id, "content": tool_result_content}
-            ],
-        })
+        messages.append(
+            {
+                "role": "user",
+                "content": [
+                    {
+                        "type": "tool_result",
+                        "tool_use_id": tool_use_id,
+                        "content": tool_result_content,
+                    }
+                ],
+            }
+        )
         response2 = client.messages.create(
             model=model,
             max_tokens=1024,
@@ -124,9 +130,19 @@ def run_anthropic() -> None:
         },
         model_used=model,
         sdk_version=getattr(anthropic, "__version__", ""),
-        model_in_response=getattr(response2, "model", None) if response2 else getattr(response, "model", None),
+        model_in_response=getattr(response2, "model", None)
+        if response2
+        else getattr(response, "model", None),
     )
-    print("Anthropic: OK", "-", "tool_use_id:", tool_use_id, "-", "final:", final_text[:50] if final_text else "N/A")
+    print(
+        "Anthropic: OK",
+        "-",
+        "tool_use_id:",
+        tool_use_id,
+        "-",
+        "final:",
+        final_text[:50] if final_text else "N/A",
+    )
 
 
 def run_gemini() -> None:
@@ -145,29 +161,45 @@ def run_gemini() -> None:
         ]
     )
     config = types.GenerateContentConfig(system_instruction=SYSTEM, tools=[tool])
-    response = client.models.generate_content(model=model, contents=PROMPT, config=config)
+    response = client.models.generate_content(
+        model=model, contents=PROMPT, config=config
+    )
     raw = serialize_response(response)
     func_name = None
     func_args = None
     if getattr(response, "function_calls", None):
         fc = response.function_calls[0]
-        func_name = getattr(fc, "name", None) or (fc.get("name") if isinstance(fc, dict) else None)
-        func_call = getattr(fc, "function_call", fc) if hasattr(fc, "function_call") else fc
-        func_args = getattr(func_call, "args", None) if hasattr(func_call, "args") else (func_call.get("args") if isinstance(func_call, dict) else None)
+        func_name = getattr(fc, "name", None) or (
+            fc.get("name") if isinstance(fc, dict) else None
+        )
+        func_call = (
+            getattr(fc, "function_call", fc) if hasattr(fc, "function_call") else fc
+        )
+        func_args = (
+            getattr(func_call, "args", None)
+            if hasattr(func_call, "args")
+            else (func_call.get("args") if isinstance(func_call, dict) else None)
+        )
 
     response2 = None
     final_text = ""
     if func_name and response.candidates:
         try:
-            user_content = types.Content(role="user", parts=[types.Part.from_text(text=PROMPT)])
+            user_content = types.Content(
+                role="user", parts=[types.Part.from_text(text=PROMPT)]
+            )
             function_call_content = response.candidates[0].content
             function_response_part = types.Part.from_function_response(
                 name=func_name,
                 response={"temperature": "25°C", "condition": "sunny"},
             )
-            function_response_content = types.Content(role="tool", parts=[function_response_part])
+            function_response_content = types.Content(
+                role="tool", parts=[function_response_part]
+            )
             contents = [user_content, function_call_content, function_response_content]
-            response2 = client.models.generate_content(model=model, contents=contents, config=config)
+            response2 = client.models.generate_content(
+                model=model, contents=contents, config=config
+            )
             final_text = getattr(response2, "text", "") or ""
         except Exception as e:
             response2 = type("Resp", (), {"text": str(e), "candidates": []})()
@@ -175,7 +207,10 @@ def run_gemini() -> None:
     save_evidence(
         test_name=TEST_NAME,
         provider="gemini",
-        request_data={"method": "models.generate_content", "params": {"model": model, "tools": [tool], "prompt": PROMPT}},
+        request_data={
+            "method": "models.generate_content",
+            "params": {"model": model, "tools": [tool], "prompt": PROMPT},
+        },
         raw_response={
             "turn1_response": raw,
             "function_call_name": func_name,
@@ -200,9 +235,18 @@ def run_gemini() -> None:
         },
         model_used=model,
         sdk_version=getattr(genai, "__version__", "google-genai"),
-        model_in_response=getattr(response, "model_version", None) or raw.get("model_version"),
+        model_in_response=getattr(response, "model_version", None)
+        or raw.get("model_version"),
     )
-    print("Gemini: OK", "-", "func:", func_name, "-", "final:", final_text[:50] if final_text else "N/A")
+    print(
+        "Gemini: OK",
+        "-",
+        "func:",
+        func_name,
+        "-",
+        "final:",
+        final_text[:50] if final_text else "N/A",
+    )
 
 
 def main() -> None:

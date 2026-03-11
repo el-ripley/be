@@ -1,27 +1,27 @@
 """Preview suggest response context tool - preview full context that suggest_response_agent receives."""
 
-import uuid
 import time
+import uuid
 from typing import Any, Dict, List, Optional
 
 import asyncpg
 
-from src.agent.tools.base import BaseTool, ToolCallContext, ToolResult
-from src.api.openai_conversations.schemas import MessageResponse
-from src.services.suggest_response.memory_blocks_service import MemoryBlocksService
-from src.agent.suggest_response.context.prompts.prompt_loader import (
-    load_static_suggest_response_system_prompt,
-)
 from src.agent.suggest_response.context.context_builder import (
     SuggestResponseContextBuilder,
 )
+from src.agent.suggest_response.context.prompts.prompt_loader import (
+    load_static_suggest_response_system_prompt,
+)
+from src.agent.tools.base import BaseTool, ToolCallContext, ToolResult
+from src.agent.tools.preview_context.example_data import (
+    EXAMPLE_COMMENTS_CONVERSATION,
+    EXAMPLE_MESSAGES_CONVERSATION,
+)
+from src.api.openai_conversations.schemas import MessageResponse
 from src.database.postgres.repositories.facebook_queries.messages.conversations import (
     get_conversation_with_details,
 )
-from src.agent.tools.preview_context.example_data import (
-    EXAMPLE_MESSAGES_CONVERSATION,
-    EXAMPLE_COMMENTS_CONVERSATION,
-)
+from src.services.suggest_response.memory_blocks_service import MemoryBlocksService
 from src.utils.logger import get_logger
 
 logger = get_logger()
@@ -336,9 +336,7 @@ class PreviewSuggestResponseContextTool(BaseTool):
             else:
                 # Messages: example shown as user/assistant turns
                 conv_data = EXAMPLE_MESSAGES_CONVERSATION
-                parts.append(
-                    f"<UserMessage>\n{conv_data}\n</UserMessage>"
-                )
+                parts.append(f"<UserMessage>\n{conv_data}\n</UserMessage>")
 
         full_context = "\n\n".join(parts)
         return {

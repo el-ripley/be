@@ -6,7 +6,8 @@ model configuration (model, reasoning, verbosity).
 """
 
 import re
-from typing import Dict, Any, Optional
+from typing import Any, Dict, Optional
+
 import asyncpg
 
 # Supported models

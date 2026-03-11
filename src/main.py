@@ -1,70 +1,74 @@
-from contextlib import asynccontextmanager
-from fastapi import FastAPI, HTTPException, Request
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.exceptions import RequestValidationError
-import uvicorn
-import socketio
-import jwt
-import asyncpg
 import warnings
+from contextlib import asynccontextmanager
+
+import asyncpg
+import jwt
+import socketio
+import uvicorn
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.exceptions import RequestValidationError
+from fastapi.middleware.cors import CORSMiddleware
 
 from src.agent.general_agent import AgentRunner
 from src.agent.general_agent.context.manager import AgentContextManager
-from src.settings import settings, AppEnvironment
-from src.utils.logger import get_logger
-from src.api.facebook import FbHandler, FbWebhookHandler, comments_router
-from src.api.facebook.router import router as fb_router
-from src.api.users.handler import UserHandler, UserFilesHandler
 from src.api.auth.router import router as auth_router
-from src.api.users.router import router as users_router
-from src.api.openai_conversations.router import router as openai_conversations_router
-from src.api.suggest_response.router import router as suggest_response_router
 from src.api.billing.router import router as billing_router
 from src.api.escalations.router import router as escalations_router
+from src.api.facebook import FbHandler, FbWebhookHandler, comments_router
+from src.api.facebook.router import router as fb_router
 from src.api.notifications.router import router as notifications_router
+from src.api.openai_conversations.router import router as openai_conversations_router
 from src.api.suggest_response.handler import SuggestResponseHandler
+from src.api.suggest_response.router import router as suggest_response_router
+from src.api.users.handler import UserFilesHandler, UserHandler
+from src.api.users.router import router as users_router
+from src.middleware.exception_handler import (
+    BusinessLogicError,
+    ExternalServiceError,
+    business_logic_exception_handler,
+    database_exception_handler,
+    external_service_exception_handler,
+    general_exception_handler,
+    http_exception_handler,
+    jwt_exception_handler,
+    validation_exception_handler,
+)
+from src.redis_client.redis_agent_manager import RedisAgentManager
+from src.redis_client.redis_client import RedisClient
+from src.redis_client.redis_suggest_response_cache import RedisSuggestResponseCache
+from src.redis_client.redis_user_sessions import RedisUserSessions
+from src.services.auth_service import AuthService
+from src.services.facebook.auth import (
+    FacebookAuthService,
+    FacebookPageService,
+    FacebookPermissionService,
+)
+from src.services.facebook.comments._internal.comment_service import CommentService
+from src.services.facebook.comments.api_handler import CommentAPIHandler
+from src.services.facebook.comments.comment_conversation_service import (
+    CommentConversationService,
+)
+from src.services.facebook.comments.sync.comment_sync_service import CommentSyncService
+from src.services.facebook.comments.sync.comment_write_service import (
+    CommentWriteService,
+)
+from src.services.facebook.comments.webhook_handler import CommentWebhookHandler
+from src.services.facebook.full_sync_service import FullSyncService
+from src.services.facebook.messages.api_handler import MessageAPIHandler
+from src.services.facebook.messages.sync.inbox_sync_service import InboxSyncService
+from src.services.facebook.messages.webhook_handler import MessageWebhookHandler
+from src.services.facebook.posts.post_sync_service import PostSyncService
+from src.services.facebook.users.page_scope_user_service import PageScopeUserService
 from src.services.suggest_response.suggest_response_agent_service import (
     SuggestResponseAgentService,
 )
 from src.services.suggest_response.suggest_response_prompts_service import (
     SuggestResponsePromptsService,
 )
-from src.services.auth_service import AuthService
 from src.services.users.user_service import UserService
-from src.services.facebook.auth import FacebookAuthService, FacebookPageService
-from src.services.facebook.users.page_scope_user_service import PageScopeUserService
-from src.services.facebook.auth import FacebookPermissionService
-from src.services.facebook.comments._internal.comment_service import CommentService
-from src.services.facebook.comments.sync.comment_write_service import (
-    CommentWriteService,
-)
-from src.services.facebook.comments.comment_conversation_service import (
-    CommentConversationService,
-)
-from src.services.facebook.comments.webhook_handler import CommentWebhookHandler
-from src.services.facebook.comments.api_handler import CommentAPIHandler
-from src.services.facebook.messages.webhook_handler import MessageWebhookHandler
-from src.services.facebook.messages.api_handler import MessageAPIHandler
-from src.services.facebook.messages.sync.inbox_sync_service import InboxSyncService
-from src.services.facebook.posts.post_sync_service import PostSyncService
-from src.services.facebook.comments.sync.comment_sync_service import CommentSyncService
-from src.services.facebook.full_sync_service import FullSyncService
+from src.settings import AppEnvironment, settings
 from src.socket_service import SocketService
-from src.redis_client.redis_client import RedisClient
-from src.redis_client.redis_agent_manager import RedisAgentManager
-from src.redis_client.redis_user_sessions import RedisUserSessions
-from src.redis_client.redis_suggest_response_cache import RedisSuggestResponseCache
-from src.middleware.exception_handler import (
-    http_exception_handler,
-    validation_exception_handler,
-    jwt_exception_handler,
-    database_exception_handler,
-    general_exception_handler,
-    business_logic_exception_handler,
-    external_service_exception_handler,
-    BusinessLogicError,
-    ExternalServiceError,
-)
+from src.utils.logger import get_logger
 
 logger = get_logger()
 
@@ -204,11 +208,16 @@ async def lifespan(app: FastAPI):
 
     # Billing handler (uses notification_service for payment.credits_added notifications)
     from src.api.billing.handler import BillingHandler
-    app.state.billing_handler = BillingHandler(notification_service=notification_service)
+
+    app.state.billing_handler = BillingHandler(
+        notification_service=notification_service
+    )
 
     # Initialize Suggest Response services (before agent_runner - needed for trigger_suggest_response tool)
-    from src.agent.suggest_response import SuggestResponseRunner
-    from src.agent.suggest_response import SuggestResponseOrchestrator
+    from src.agent.suggest_response import (
+        SuggestResponseOrchestrator,
+        SuggestResponseRunner,
+    )
 
     suggest_response_runner = SuggestResponseRunner(
         socket_service,

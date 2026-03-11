@@ -2,16 +2,17 @@
 Authentication router with token refresh and logout endpoints.
 """
 
-from fastapi import APIRouter, Request, HTTPException, Depends, status
-from typing import Dict, Any
-import asyncpg
+from typing import Any, Dict
 
-from src.services.auth_service import AuthService
+import asyncpg
+from fastapi import APIRouter, Depends, HTTPException, Request, status
+
 from src.database.postgres.connection import get_async_connection_pool
 from src.database.postgres.repositories.user_queries import (
     revoke_all_refresh_tokens_by_user_id,
 )
-from src.middleware.auth_middleware import get_current_user_id, get_auth_service
+from src.middleware.auth_middleware import get_auth_service, get_current_user_id
+from src.services.auth_service import AuthService
 from src.utils.logger import get_logger
 
 logger = get_logger()

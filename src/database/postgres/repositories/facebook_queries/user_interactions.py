@@ -1,6 +1,6 @@
 """Queries for user interaction history."""
 
-from typing import List, Dict, Any, Tuple
+from typing import Any, Dict, List, Tuple
 
 import asyncpg
 

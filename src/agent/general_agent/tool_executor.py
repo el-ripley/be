@@ -1,21 +1,21 @@
 """Slim tool executor - orchestration only."""
 
 import json
-import traceback
 import re
+import traceback
 from typing import Any, Dict, Optional
 
 import asyncpg
 
-from src.agent.tools.base import ToolCallContext
-from src.agent.tools.registry import ToolRegistry
+from src.agent.general_agent.context.manager import AgentContextManager
 from src.agent.general_agent.utils.temp_message_accumulator import (
     TempMessageAccumulator,
 )
+from src.agent.tools.base import ToolCallContext
+from src.agent.tools.registry import ToolRegistry
 from src.api.openai_conversations.schemas import MessageResponse
-from src.socket_service import SocketService
-from src.agent.general_agent.context.manager import AgentContextManager
 from src.database.postgres.connection import async_db_savepoint
+from src.socket_service import SocketService
 from src.utils.logger import get_logger
 
 logger = get_logger()
@@ -51,8 +51,8 @@ def _create_error_output(
     error_details: Dict[str, Any] = None,
 ) -> MessageResponse:
     """Create an error function_call_output message."""
-    import uuid
     import time
+    import uuid
 
     # Use structured error_details if provided, otherwise create simple error dict
     if error_details:

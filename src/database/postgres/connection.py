@@ -5,10 +5,11 @@ This module handles database connections using asyncpg with async connection poo
 providing async transaction context managers for high-performance database operations.
 """
 
-import asyncpg
-from contextlib import asynccontextmanager
-from typing import Optional, AsyncGenerator
 import asyncio
+from contextlib import asynccontextmanager
+from typing import AsyncGenerator, Optional
+
+import asyncpg
 
 from src.settings import settings
 from src.utils.logger import get_logger

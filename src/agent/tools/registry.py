@@ -40,27 +40,25 @@ def create_default_registry(
         context_manager: Optional AgentContextManager for task tool (required if task tool is needed).
         suggest_response_orchestrator: Optional SuggestResponseOrchestrator for trigger_suggest_response tool.
     """
-    from src.agent.tools.sync import (
-        ManagePagePostsSyncTool,
-        ManagePostCommentsSyncTool,
-        ManagePageInboxSyncTool,
-    )
-    from src.agent.tools.preview_context import (
-        PreviewSuggestResponseContextTool,
-    )
     from src.agent.tools.manage_media import (
-        DescribeMediaTool,
-        ViewMediaTool,
-        MirrorAndDescribeEntityMediaTool,
         ChangeMediaRetentionTool,
+        DescribeMediaTool,
+        MirrorAndDescribeEntityMediaTool,
+        ViewMediaTool,
     )
+    from src.agent.tools.manage_playbook import ManagePlaybookTool
     from src.agent.tools.orechetrate_tool import (
         AskUserQuestionTool,
-        TodoWriteTool,
         GetSkillTool,
+        TodoWriteTool,
     )
+    from src.agent.tools.preview_context import PreviewSuggestResponseContextTool
     from src.agent.tools.sql_query import SqlQueryTool
-    from src.agent.tools.manage_playbook import ManagePlaybookTool
+    from src.agent.tools.sync import (
+        ManagePageInboxSyncTool,
+        ManagePagePostsSyncTool,
+        ManagePostCommentsSyncTool,
+    )
 
     registry = ToolRegistry()
     registry.register(ManagePagePostsSyncTool(sync_job_manager=sync_job_manager))
@@ -85,8 +83,8 @@ def create_default_registry(
 
     # task tool (requires SubAgentRunner, only register if dependencies provided)
     if socket_service and context_manager:
-        from src.agent.tools.orechetrate_tool import TaskTool
         from src.agent.general_agent.subagent.subagent_runner import SubAgentRunner
+        from src.agent.tools.orechetrate_tool import TaskTool
 
         subagent_runner = SubAgentRunner(
             socket_service=socket_service,

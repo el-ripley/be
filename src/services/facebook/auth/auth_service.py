@@ -1,10 +1,11 @@
-from typing import Dict, Any, List
+from typing import Any, Dict, List
+
+from src.common.clients.facebook_graph_client import FacebookGraphClient
 from src.database.postgres.connection import async_db_transaction
 from src.database.postgres.repositories.facebook_queries import (
-    create_fan_page,
     create_facebook_page_admin,
+    create_fan_page,
 )
-from src.common.clients.facebook_graph_client import FacebookGraphClient
 from src.utils.logger import get_logger
 
 logger = get_logger()

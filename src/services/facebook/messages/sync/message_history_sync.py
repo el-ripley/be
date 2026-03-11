@@ -8,20 +8,20 @@ for a specific conversation.
 import asyncio
 import re
 from datetime import datetime
-from typing import Dict, Any, List, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 
 from src.common.clients.facebook_graph_page_client import FacebookGraphPageClient
+from src.database.postgres.connection import get_async_connection
 from src.database.postgres.repositories.facebook_queries import (
-    create_message,
     batch_create_messages,
+    create_message,
 )
 from src.database.postgres.repositories.facebook_queries.messages.conversations import (
     refresh_conversation_latest_message,
 )
-from src.database.postgres.connection import get_async_connection
 from src.services.facebook._core.helpers import execute_graph_client_with_random_tokens
-from src.services.facebook.messages._internal.attachment_parser import parse_attachments
 from src.services.facebook.auth import FacebookPageService
+from src.services.facebook.messages._internal.attachment_parser import parse_attachments
 from src.utils.logger import get_logger
 
 logger = get_logger()

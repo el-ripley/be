@@ -4,21 +4,21 @@ Suggest Response API Handler.
 Thin layer bridging FastAPI endpoints to service layer.
 """
 
-from typing import Dict, Any, Optional
+from typing import Any, Dict, Optional
+
 from fastapi import HTTPException, status
-from src.utils.logger import get_logger
+
+from src.services.suggest_response.memory_blocks_service import MemoryBlocksService
 from src.services.suggest_response.suggest_response_agent_service import (
     SuggestResponseAgentService,
-)
-from src.services.suggest_response.suggest_response_prompts_service import (
-    SuggestResponsePromptsService,
 )
 from src.services.suggest_response.suggest_response_history_service import (
     SuggestResponseHistoryService,
 )
-from src.services.suggest_response.memory_blocks_service import (
-    MemoryBlocksService,
+from src.services.suggest_response.suggest_response_prompts_service import (
+    SuggestResponsePromptsService,
 )
+from src.utils.logger import get_logger
 
 logger = get_logger()
 
@@ -74,9 +74,7 @@ class SuggestResponseHandler:
         Returns:
             HTTPException: Appropriate HTTP exception
         """
-        from src.agent.suggest_response.core.runner import (
-            InsufficientBalanceError,
-        )
+        from src.agent.suggest_response.core.runner import InsufficientBalanceError
 
         if isinstance(error, InsufficientBalanceError):
             # Insufficient balance is intentional block, not an error
@@ -406,9 +404,9 @@ class SuggestResponseHandler:
         try:
             from src.database.postgres.connection import async_db_transaction
             from src.database.postgres.repositories import (
+                get_facebook_page_admins_by_user_id,
                 get_page_admin_suggest_config,
                 upsert_page_admin_suggest_config,
-                get_facebook_page_admins_by_user_id,
             )
 
             _default_settings = {
@@ -459,9 +457,9 @@ class SuggestResponseHandler:
         try:
             from src.database.postgres.connection import async_db_transaction
             from src.database.postgres.repositories import (
+                get_facebook_page_admins_by_user_id,
                 get_page_admin_suggest_config,
                 upsert_page_admin_suggest_config,
-                get_facebook_page_admins_by_user_id,
             )
 
             async with async_db_transaction() as conn:

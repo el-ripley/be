@@ -10,8 +10,9 @@ import asyncpg
 from src.agent.common.agent_types import AGENT_TYPE_GENERAL_AGENT
 from src.database.postgres.executor import execute_async_returning, execute_async_single
 from src.database.postgres.utils import generate_uuid, get_current_timestamp
-from .pricing import calculate_cost
+
 from .branches import _normalize_json_payload, _sanitize_for_postgres
+from .pricing import calculate_cost
 
 
 async def create_agent_response(

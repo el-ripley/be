@@ -5,7 +5,7 @@ Handles realtime conversation sync: fetching from Facebook API when needed
 and syncing message history.
 """
 
-from typing import Dict, Any, List, Optional
+from typing import Any, Dict, List, Optional
 
 from src.common.clients.facebook_graph_page_client import FacebookGraphPageClient
 from src.database.postgres.repositories.facebook_queries.messages.conversations import (

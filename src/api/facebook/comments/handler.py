@@ -1,13 +1,15 @@
 from typing import Any, Dict, Optional
+
 from src.services.facebook.comments.api_handler import CommentAPIHandler
 from src.utils.logger import get_logger
+
 from .schemas import (
     CommentInteractionRequest,
     CommentInteractionResponse,
-    UpdateCommentMarkAsReadRequest,
-    UpdateCommentMarkAsReadResponse,
     SendMessageToCommenterRequest,
     SendMessageToCommenterResponse,
+    UpdateCommentMarkAsReadRequest,
+    UpdateCommentMarkAsReadResponse,
 )
 
 logger = get_logger()

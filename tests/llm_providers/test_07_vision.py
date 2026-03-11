@@ -83,7 +83,11 @@ def run_anthropic() -> None:
                     {"type": "text", "text": PROMPT},
                     {
                         "type": "image",
-                        "source": {"type": "base64", "media_type": media_type, "data": f"<{len(img_b64)} chars base64>"},
+                        "source": {
+                            "type": "base64",
+                            "media_type": media_type,
+                            "data": f"<{len(img_b64)} chars base64>",
+                        },
                     },
                 ],
             }
@@ -181,7 +185,8 @@ def run_gemini() -> None:
         },
         model_used=model,
         sdk_version=getattr(genai, "__version__", "google-genai"),
-        model_in_response=getattr(response, "model_version", None) or (raw.get("model_version") if isinstance(raw, dict) else None),
+        model_in_response=getattr(response, "model_version", None)
+        or (raw.get("model_version") if isinstance(raw, dict) else None),
     )
     print("Gemini: OK", "-", "text len:", len(text))
 

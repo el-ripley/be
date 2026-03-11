@@ -1,8 +1,8 @@
 """Pydantic schemas for Facebook sync API."""
 
-from typing import Optional, Literal
-from pydantic import BaseModel, Field
+from typing import Literal, Optional
 
+from pydantic import BaseModel, Field
 
 # ============================================================================
 # POSTS SYNC

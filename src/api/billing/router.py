@@ -2,25 +2,26 @@
 Billing API Router.
 """
 
-from fastapi import APIRouter, Request, Depends, HTTPException, status
-from typing import Dict, Any
+import os
+from typing import Any, Dict
+
+import stripe
+from fastapi import APIRouter, Depends, HTTPException, Request, status
 
 from src.api.billing.handler import BillingHandler
 from src.api.billing.schemas import (
+    CheckoutResponse,
     CreditBalanceResponse,
     CreditTransactionsResponse,
-    TopupCheckoutRequest,
-    PolarCheckoutRequest,
-    CheckoutResponse,
     ModelListResponse,
-    SePayWebhookRequest,
+    PolarCheckoutRequest,
     SePayTopupInfoResponse,
+    SePayWebhookRequest,
+    TopupCheckoutRequest,
 )
 from src.middleware.auth_middleware import get_current_user_id
 from src.settings import settings
 from src.utils.logger import get_logger
-import stripe
-import os
 
 logger = get_logger()
 
@@ -106,7 +107,7 @@ async def polar_webhook(
     headers = {k: v for k, v in request.headers.items()}
 
     try:
-        from polar_sdk.webhooks import validate_event, WebhookVerificationError
+        from polar_sdk.webhooks import WebhookVerificationError, validate_event
     except ImportError:
         logger.error("polar_sdk not installed")
         raise HTTPException(
@@ -156,9 +157,7 @@ async def polar_webhook(
         raise
     except Exception as e:
         logger.error(f"Polar webhook error: {e}")
-        raise HTTPException(
-            status_code=500, detail="Failed to process webhook"
-        )
+        raise HTTPException(status_code=500, detail="Failed to process webhook")
 
 
 @router.get("/models", response_model=ModelListResponse)

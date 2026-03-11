@@ -7,25 +7,26 @@ Handles both batch sync and realtime sync operations.
 
 import asyncio
 from datetime import datetime
-from typing import Dict, Any, List, Optional, Tuple
-from src.database.postgres.repositories.facebook_queries.post_sync_states import (
-    get_post_sync_state,
-    upsert_post_sync_state,
-    reset_post_sync_state,
-)
+from typing import Any, Dict, List, Optional, Tuple
+
+from src.common.clients.facebook_graph_page_client import FacebookGraphPageClient
+from src.database.postgres.connection import get_async_connection
 from src.database.postgres.repositories.facebook_queries.comments.comment_posts import (
     create_post,
     get_post_by_id,
+)
+from src.database.postgres.repositories.facebook_queries.post_sync_states import (
+    get_post_sync_state,
+    reset_post_sync_state,
+    upsert_post_sync_state,
 )
 from src.database.postgres.repositories.facebook_queries.reactions import (
     upsert_post_reactions,
 )
 from src.database.postgres.utils import get_current_timestamp
-from src.common.clients.facebook_graph_page_client import FacebookGraphPageClient
+from src.services.facebook._core.helpers import execute_graph_client_with_random_tokens
 from src.services.facebook.auth import FacebookPageService
 from src.services.facebook.users.page_scope_user_service import PageScopeUserService
-from src.services.facebook._core.helpers import execute_graph_client_with_random_tokens
-from src.database.postgres.connection import get_async_connection
 from src.utils.logger import get_logger
 
 logger = get_logger()

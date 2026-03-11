@@ -1,17 +1,17 @@
 from .router import router
 from .schemas import (
-    PostsSyncRequest,
-    PostsSyncResult,
-    SyncStatusResponse,
     CommentsSyncRequest,
     CommentsSyncResult,
     CommentSyncStatusResponse,
-    InboxSyncRequest,
-    InboxSyncResult,
-    InboxSyncStatusResponse,
     FullSyncRequest,
     FullSyncResult,
     FullSyncStatusResponse,
+    InboxSyncRequest,
+    InboxSyncResult,
+    InboxSyncStatusResponse,
+    PostsSyncRequest,
+    PostsSyncResult,
+    SyncStatusResponse,
 )
 
 __all__ = [

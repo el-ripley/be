@@ -3,7 +3,6 @@ from typing import Any, Dict, List, Optional, Tuple
 from src.redis_client.redis_agent_manager import RedisAgentManager
 from src.utils.logger import get_logger
 
-
 logger = get_logger()
 
 

@@ -6,31 +6,31 @@ FastAPI routes for OpenAI conversation management endpoints.
 
 from typing import Optional
 
-from fastapi import APIRouter, Depends, Request, status, Query
+from fastapi import APIRouter, Depends, Query, Request, status
 
-from src.middleware.auth_middleware import get_current_user_id
+from src.api.openai_conversations.handler import (
+    create_conversation_handler,
+    get_conversation_branches_handler,
+    get_conversation_detail_handler,
+    get_conversation_messages_handler,
+    get_conversations_handler,
+    get_subagent_messages_handler,
+    update_branch_name_handler,
+    update_conversation_handler,
+    update_conversation_settings_handler,
+)
 from src.api.openai_conversations.schemas import (
-    CreateConversationRequest,
-    ConversationResponse,
-    ConversationDetailResponse,
-    ConversationsCursorResponse,
-    MessagesCursorResponse,
     BranchResponse,
+    ConversationDetailResponse,
+    ConversationResponse,
+    ConversationsCursorResponse,
+    CreateConversationRequest,
+    MessagesCursorResponse,
     UpdateBranchNameRequest,
     UpdateConversationRequest,
     UpdateConversationSettingsRequest,
 )
-from src.api.openai_conversations.handler import (
-    create_conversation_handler,
-    get_conversations_handler,
-    get_conversation_detail_handler,
-    get_conversation_messages_handler,
-    update_conversation_handler,
-    update_conversation_settings_handler,
-    get_conversation_branches_handler,
-    update_branch_name_handler,
-    get_subagent_messages_handler,
-)
+from src.middleware.auth_middleware import get_current_user_id
 
 router = APIRouter(prefix="/openai", tags=["OpenAI Conversations"])
 

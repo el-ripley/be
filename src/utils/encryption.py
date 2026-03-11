@@ -5,9 +5,11 @@ Used for encrypting API keys in BYOK (Bring Your Own Key) system.
 
 import base64
 from typing import Optional
+
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
+
 from src.utils.logger import get_logger
 
 logger = get_logger()

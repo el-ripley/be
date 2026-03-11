@@ -1,44 +1,43 @@
 """SubAgentRunner for context isolation."""
 
+import time
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional, Tuple
 
 import asyncpg
 
-from src.agent.general_agent.tool_executor import ToolExecutor
-from src.agent.general_agent.core.run_config import RunConfig
-from src.agent.general_agent.core.agent_runner import BranchContext
+from src.agent.common.agent_types import AGENT_TYPE_SUBAGENT_EXPLORE
+from src.agent.common.api_key_resolver_service import get_system_api_key
+from src.agent.common.conversation_settings import (
+    get_default_settings,
+    get_effective_context_settings,
+    normalize_settings,
+)
+from src.agent.core.llm_call import LLM_call
 from src.agent.general_agent.context.manager import AgentContextManager
-from src.agent.general_agent.subagent.registry import create_explore_registry
+from src.agent.general_agent.core.agent_runner import BranchContext
+from src.agent.general_agent.core.run_config import RunConfig
 from src.agent.general_agent.subagent.prompts import EXPLORE_SYSTEM_PROMPT
+from src.agent.general_agent.subagent.registry import create_explore_registry
 from src.agent.general_agent.subagent.subagent_iteration_runner import (
     SubAgentIterationRunner,
 )
-from src.agent.common.conversation_settings import (
-    get_default_settings,
-    normalize_settings,
-    get_effective_context_settings,
-)
-from src.agent.core.llm_call import LLM_call
-from src.agent.common.agent_types import AGENT_TYPE_SUBAGENT_EXPLORE
-from src.agent.common.api_key_resolver_service import get_system_api_key
+from src.agent.general_agent.tool_executor import ToolExecutor
 from src.api.openai_conversations.schemas import MessageResponse
-from src.database.postgres.utils import generate_uuid
-from src.database.postgres.repositories.agent_queries import get_conversation_settings
-from src.database.postgres.connection import get_async_connection
-import time
-from src.database.postgres.connection import async_db_transaction
+from src.billing.credit_service import deduct_credits_after_agent
+from src.database.postgres.connection import async_db_transaction, get_async_connection
+from src.database.postgres.entities.agent_entities import OpenAIConversation
 from src.database.postgres.repositories.agent_queries import (
     create_agent_response,
-    get_conversation,
-    finalize_agent_response,
     create_subagent_conversation,
+    finalize_agent_response,
+    get_conversation,
+    get_conversation_settings,
     stop_agent_response,
 )
-from src.billing.credit_service import deduct_credits_after_agent
+from src.database.postgres.utils import generate_uuid
 from src.socket_service import SocketService
 from src.utils.logger import get_logger
-from src.database.postgres.entities.agent_entities import OpenAIConversation
 
 logger = get_logger()
 
@@ -145,22 +144,25 @@ class SubAgentRunner:
 
         try:
             # Initialize execution: conversation, agent_response, branch, temp_context
-            conversation, agent_response_id, branch_id = (
-                await self._initialize_execution(
-                    ctx=ctx,
-                    prompt=prompt,
-                    resume_conversation_id=resume_conversation_id,
-                )
+            (
+                conversation,
+                agent_response_id,
+                branch_id,
+            ) = await self._initialize_execution(
+                ctx=ctx,
+                prompt=prompt,
+                resume_conversation_id=resume_conversation_id,
             )
 
             # Prepare execution context: run_config and branch_context
-            run_config, branch_context = (
-                await self._prepare_run_config_and_branch_context(
-                    ctx=ctx,
-                    conversation_id=str(conversation.id),
-                    branch_id=branch_id,
-                    agent_response_id=agent_response_id,
-                )
+            (
+                run_config,
+                branch_context,
+            ) = await self._prepare_run_config_and_branch_context(
+                ctx=ctx,
+                conversation_id=str(conversation.id),
+                branch_id=branch_id,
+                agent_response_id=agent_response_id,
             )
 
             subagent_metadata = SubAgentMetadata(
@@ -170,15 +172,17 @@ class SubAgentRunner:
             )
 
             tools = self.registry.get_all_definitions()
-            turns_used, total_tokens, final_content = (
-                await self._iterate_agent_responses(
-                    run_config=run_config,
-                    branch_context=branch_context,
-                    tools=tools,
-                    subagent_metadata=subagent_metadata,
-                    parent_agent_response_id=ctx.parent_agent_response_id,
-                    max_turns=max_turns,
-                )
+            (
+                turns_used,
+                total_tokens,
+                final_content,
+            ) = await self._iterate_agent_responses(
+                run_config=run_config,
+                branch_context=branch_context,
+                tools=tools,
+                subagent_metadata=subagent_metadata,
+                parent_agent_response_id=ctx.parent_agent_response_id,
+                max_turns=max_turns,
             )
 
             await self._finalize_and_deduct(agent_response_id)

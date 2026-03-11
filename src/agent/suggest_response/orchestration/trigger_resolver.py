@@ -78,7 +78,9 @@ async def resolve_trigger_type_and_settings(
             num_suggestions = 3
 
         trigger_type = "user" if trigger_source == "api_manual" else "auto"
-        trigger_action = "operator_request" if trigger_source == "api_manual" else "routine_check"
+        trigger_action = (
+            "operator_request" if trigger_source == "api_manual" else "routine_check"
+        )
         return TriggerResolution(
             trigger_type=trigger_type,
             trigger_action=trigger_action,

@@ -42,10 +42,12 @@ class MessageReadService:
             fb_data contains raw conversation data ready for formatting
         """
         try:
-            messages_list, total_count, has_next_page = (
-                await list_messages_by_conversation_id_paginated(
-                    conn, conversation_id, page=page, page_size=page_size
-                )
+            (
+                messages_list,
+                total_count,
+                has_next_page,
+            ) = await list_messages_by_conversation_id_paginated(
+                conn, conversation_id, page=page, page_size=page_size
             )
 
             if not messages_list:

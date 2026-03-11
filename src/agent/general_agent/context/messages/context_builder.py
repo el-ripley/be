@@ -2,21 +2,20 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 
 import asyncpg
 
+from src.agent.general_agent.context.messages.system_prompt import BASE_SYSTEM_PROMPT
+from src.agent.general_agent.context.messages.system_prompt_builder import (
+    SystemPromptBuilder,
+)
 from src.api.openai_conversations.schemas import MessageResponse
 from src.database.postgres.connection import get_async_connection
 from src.database.postgres.repositories.agent_queries import (
     get_all_branch_messages,
     get_conversation,
 )
-from src.agent.general_agent.context.messages.system_prompt import BASE_SYSTEM_PROMPT
-from src.agent.general_agent.context.messages.system_prompt_builder import (
-    SystemPromptBuilder,
-)
 from src.utils.logger import get_logger
 
 from .image_processor import ImageProcessor
 from .message_converter import MessageConverter, OpenAIMessageItem
-
 
 logger = get_logger()
 
@@ -80,14 +79,14 @@ class ContextBuilder:
 
         # Build system prompt with live data if user_id and conn provided
         if user_id and conn:
+            from src.agent.common.conversation_settings import (
+                get_default_settings,
+                normalize_settings,
+            )
+            from src.agent.utils import ensure_content_items
             from src.database.postgres.repositories.agent_queries import (
                 get_conversation_settings,
             )
-            from src.agent.common.conversation_settings import (
-                normalize_settings,
-                get_default_settings,
-            )
-            from src.agent.utils import ensure_content_items
 
             # Get model name from conversation settings
             conversation_settings = await get_conversation_settings(
@@ -160,7 +159,9 @@ class ContextBuilder:
         # Call IDs that have a matching function_call_output in this branch (API requires every function_call to be followed by its output)
         call_ids_with_output: set = set()
         for m in branch_messages:
-            if getattr(m, "type", None) == "function_call_output" and getattr(m, "call_id", None):
+            if getattr(m, "type", None) == "function_call_output" and getattr(
+                m, "call_id", None
+            ):
                 call_ids_with_output.add(m.call_id)
 
         # Batch collect all image URLs from all messages for efficient querying
@@ -172,9 +173,10 @@ class ContextBuilder:
         expiration_map: Dict[str, Optional[int]] = {}
         media_id_map: Dict[str, Optional[str]] = {}
         if conn and all_image_urls:
-            expiration_map, media_id_map = (
-                await ImageProcessor.batch_query_media_assets(conn, all_image_urls)
-            )
+            (
+                expiration_map,
+                media_id_map,
+            ) = await ImageProcessor.batch_query_media_assets(conn, all_image_urls)
 
         # Process each message with shared expiration map and media_id map
         for msg in branch_messages:
@@ -182,7 +184,9 @@ class ContextBuilder:
                 continue
 
             # Skip function_call messages that have no matching function_call_output (e.g. sql_query before ask_user_question when agent went to waiting_for_user)
-            if getattr(msg, "type", None) == "function_call" and getattr(msg, "call_id", None):
+            if getattr(msg, "type", None) == "function_call" and getattr(
+                msg, "call_id", None
+            ):
                 if msg.call_id not in call_ids_with_output:
                     continue
 

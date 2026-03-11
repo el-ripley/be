@@ -4,10 +4,11 @@ OpenAI Conversations API schemas.
 Request and response models for OpenAI conversation management endpoints.
 """
 
-from pydantic import BaseModel, Field
-from typing import Optional, Any, List, Dict
-from src.common.types import PaginatedResponse
+from typing import Any, Dict, List, Optional
 
+from pydantic import BaseModel, Field
+
+from src.common.types import PaginatedResponse
 
 # ================================================================
 # CONVERSATION SCHEMAS

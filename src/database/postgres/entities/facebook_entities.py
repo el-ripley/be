@@ -5,9 +5,9 @@ Pure database entity representations for Facebook integration tables.
 These models represent the complete structure of Facebook-related database records.
 """
 
-from typing import Optional, Dict, Any
-from pydantic import BaseModel, Field
+from typing import Any, Dict, Optional
 
+from pydantic import BaseModel, Field
 
 # ================================================================
 # FACEBOOK APP SCOPE USER ENTITY (ASID)

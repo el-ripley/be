@@ -1,17 +1,16 @@
 import json
-from typing import Dict, Any, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
-from src.utils.logger import get_logger
 from src.database.postgres.repositories.facebook_queries.comments.comment_conversations import (
-    get_conversation_by_root_comment_id,
     create_conversation,
+    get_conversation_by_root_comment_id,
+    get_conversation_with_unread_count,
+    get_latest_comment_in_conversation,
     update_conversation,
     upsert_conversation_entry,
-    get_latest_comment_in_conversation,
-    get_conversation_with_unread_count,
 )
 from src.database.postgres.utils import get_current_timestamp
-
+from src.utils.logger import get_logger
 
 logger = get_logger()
 

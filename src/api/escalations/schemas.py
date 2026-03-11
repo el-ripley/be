@@ -4,7 +4,6 @@ from typing import Any, Dict, List, Literal, Optional, Union
 
 from pydantic import BaseModel, Field
 
-
 # --- Thread context (for list preview) ---
 
 
@@ -96,11 +95,11 @@ class EscalationItem(BaseModel):
     created_at: Optional[int] = None
     updated_at: Optional[int] = None
     suggest_response_history_id: Optional[str] = None
-    thread_context: Optional[Union[MessagesThreadContext, CommentsThreadContext]] = (
-        Field(
-            None,
-            description="Thread context for UI preview: user_info+page for messages, post+participants+page for comments",
-        )
+    thread_context: Optional[
+        Union[MessagesThreadContext, CommentsThreadContext]
+    ] = Field(
+        None,
+        description="Thread context for UI preview: user_info+page for messages, post+participants+page for comments",
     )
 
     class Config:

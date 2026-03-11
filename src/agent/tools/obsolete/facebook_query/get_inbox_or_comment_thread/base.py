@@ -2,9 +2,8 @@
 
 from typing import Any, Dict, Optional
 
-from src.agent.tools.base import BaseTool
 from src.agent.common.metadata_types import MessageMetadata
-
+from src.agent.tools.base import BaseTool
 
 FACEBOOK_CONVERSATION_IMAGE_CONTEXT = "Conversation images indexed by type and index:"
 FACEBOOK_COMMENT_IMAGE_CONTEXT = "Comment images indexed by type and index:"
@@ -97,7 +96,7 @@ class FacebookBaseTool(BaseTool):
         include_content_in_output: bool = False,
     ) -> str:
         """Create a natural language summary for the Facebook tool result.
-        
+
         Args:
             tool_result: The raw tool result dict
             tool_args: The tool arguments
@@ -142,9 +141,7 @@ class FacebookBaseTool(BaseTool):
             )
             if error_message:
                 summary_text += f" Error: {error_message}."
-            summary_text += (
-                " No content generated because data was unavailable."
-            )
+            summary_text += " No content generated because data was unavailable."
         else:
             summary_text = f"Fetched {readable_type} ({readable_id}) successfully."
 

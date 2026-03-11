@@ -1,21 +1,20 @@
 """Resume handler for resuming agent after user answers a question."""
 
 import json
-from typing import Dict, List, Any, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 import asyncpg
 
-from src.database.postgres.repositories.agent_queries import (
-    get_branch_messages,
-    get_agent_response_for_user,
-)
+from src.agent.general_agent.context.manager import AgentContextManager
 from src.agent.tools.base import ToolCallContext
 from src.agent.tools.registry import ToolRegistry
-from src.agent.general_agent.context.manager import AgentContextManager
 from src.api.openai_conversations.schemas import MessageResponse
+from src.database.postgres.repositories.agent_queries import (
+    get_agent_response_for_user,
+    get_branch_messages,
+)
 from src.socket_service import SocketService
 from src.utils.logger import get_logger
-
 
 logger = get_logger()
 

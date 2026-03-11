@@ -4,7 +4,7 @@ MongoDB index setup for webhook events collection.
 This script sets up recommended indexes for efficient querying of webhook events.
 """
 
-from src.database.mongo import get_async_mongo_connection, AsyncCollectionHelper
+from src.database.mongo import AsyncCollectionHelper, get_async_mongo_connection
 from src.database.mongo.schemas.webhook_event_schema import WebhookEventSchema
 from src.utils.logger import get_logger
 

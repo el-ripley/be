@@ -14,7 +14,7 @@ Flow:
     delegate to service layer
 """
 
-from typing import Dict, Any, Optional, Callable, Awaitable
+from typing import Any, Awaitable, Callable, Dict, Optional
 
 from src.services.facebook.comments.webhook_handler import CommentWebhookHandler
 from src.services.facebook.messages.webhook_handler import MessageWebhookHandler

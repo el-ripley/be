@@ -7,8 +7,8 @@ from typing import Any, Dict, Optional, Sequence
 
 import asyncpg
 
-from src.database.postgres.executor import execute_async_single
 from src.database.postgres.entities import OpenAIMessage
+from src.database.postgres.executor import execute_async_single
 
 
 def _decode_json_fields(data: Dict[str, Any], fields: Sequence[str]) -> None:

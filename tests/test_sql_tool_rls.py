@@ -8,12 +8,12 @@ import asyncio
 import sys
 from pathlib import Path
 
-from src.agent.tools.sql_query import SqlQueryTool
 from src.agent.tools.base import ToolCallContext
+from src.agent.tools.sql_query import SqlQueryTool
 from src.database.postgres.connection import (
     get_async_connection,
-    startup_async_database,
     shutdown_async_database,
+    startup_async_database,
 )
 from src.utils.logger import get_logger
 
@@ -46,12 +46,27 @@ DANGEROUS_QUERIES = [
         "DML: UPDATE posts",
     ),
     ("UPDATE comments SET message = 'hacked'", "DML: UPDATE comments"),
-    ("INSERT INTO fan_pages (id, name) VALUES ('x', 'y')", "DML: INSERT into fan_pages"),
-    ("INSERT INTO posts (id, fan_page_id, message) VALUES ('x', 'y', 'z')", "DML: INSERT into posts"),
+    (
+        "INSERT INTO fan_pages (id, name) VALUES ('x', 'y')",
+        "DML: INSERT into fan_pages",
+    ),
+    (
+        "INSERT INTO posts (id, fan_page_id, message) VALUES ('x', 'y', 'z')",
+        "DML: INSERT into posts",
+    ),
     # Group 3: DELETE on Memory Container Tables - Expect DENIED (only memory_blocks allows DELETE)
-    ("DELETE FROM page_memory WHERE id = '00000000-0000-0000-0000-000000000000'", "MEMORY: DELETE from page_memory"),
-    ("DELETE FROM page_scope_user_memory WHERE id = '00000000-0000-0000-0000-000000000000'", "MEMORY: DELETE from page_scope_user_memory"),
-    ("DELETE FROM user_memory WHERE id = '00000000-0000-0000-0000-000000000000'", "MEMORY: DELETE from user_memory"),
+    (
+        "DELETE FROM page_memory WHERE id = '00000000-0000-0000-0000-000000000000'",
+        "MEMORY: DELETE from page_memory",
+    ),
+    (
+        "DELETE FROM page_scope_user_memory WHERE id = '00000000-0000-0000-0000-000000000000'",
+        "MEMORY: DELETE from page_scope_user_memory",
+    ),
+    (
+        "DELETE FROM user_memory WHERE id = '00000000-0000-0000-0000-000000000000'",
+        "MEMORY: DELETE from user_memory",
+    ),
     # Group 4: Sensitive Tables - Expect DENIED
     ("SELECT * FROM users", "SENSITIVE: users table"),
     ("SELECT * FROM facebook_page_admins", "SENSITIVE: access tokens"),
@@ -150,7 +165,7 @@ async def create_test_memory_data(user_id: str, fan_page_id: str) -> dict:
         """,
             user_id,
         )
-        
+
         if existing_user_memory_id:
             # Deactivate existing one
             await conn.execute(
@@ -161,7 +176,7 @@ async def create_test_memory_data(user_id: str, fan_page_id: str) -> dict:
             """,
                 existing_user_memory_id,
             )
-        
+
         # Create new user_memory
         user_memory_id = await conn.fetchval(
             """
@@ -181,7 +196,7 @@ async def create_test_memory_data(user_id: str, fan_page_id: str) -> dict:
         """,
             fan_page_id,
         )
-        
+
         if existing_page_memory_id:
             # Deactivate existing one
             await conn.execute(
@@ -192,7 +207,7 @@ async def create_test_memory_data(user_id: str, fan_page_id: str) -> dict:
             """,
                 existing_page_memory_id,
             )
-        
+
         # Create new page_memory
         page_memory_id = await conn.fetchval(
             """
@@ -271,7 +286,7 @@ async def cleanup_test_memory_data(user_id: str, test_data: dict):
     async with get_async_connection() as conn:
         # Delete in reverse order of dependencies
         # Use admin connection (not agent connection) to bypass RLS
-        
+
         # Clean up any memory_block_media links for test blocks
         if test_data.get("user_memory_id"):
             try:
@@ -288,7 +303,7 @@ async def cleanup_test_memory_data(user_id: str, test_data: dict):
                 )
             except Exception:
                 pass
-        
+
         # Clean up memory blocks
         if test_data.get("user_memory_id"):
             try:
@@ -302,7 +317,7 @@ async def cleanup_test_memory_data(user_id: str, test_data: dict):
                 )
             except Exception:
                 pass
-        
+
         if test_data.get("page_memory_id"):
             try:
                 await conn.execute(
@@ -311,7 +326,7 @@ async def cleanup_test_memory_data(user_id: str, test_data: dict):
                 )
             except Exception:
                 pass
-        
+
         if test_data.get("memory_block_media_id"):
             try:
                 await conn.execute(
@@ -320,7 +335,7 @@ async def cleanup_test_memory_data(user_id: str, test_data: dict):
                 )
             except Exception:
                 pass
-        
+
         if test_data.get("user_memory_block_id"):
             try:
                 await conn.execute(
@@ -329,7 +344,7 @@ async def cleanup_test_memory_data(user_id: str, test_data: dict):
                 )
             except Exception:
                 pass
-        
+
         if test_data.get("page_memory_block_id"):
             try:
                 await conn.execute(
@@ -338,7 +353,7 @@ async def cleanup_test_memory_data(user_id: str, test_data: dict):
                 )
             except Exception:
                 pass
-        
+
         if test_data.get("user_memory_id"):
             try:
                 await conn.execute(
@@ -347,7 +362,7 @@ async def cleanup_test_memory_data(user_id: str, test_data: dict):
                 )
             except Exception:
                 pass
-        
+
         if test_data.get("page_memory_id"):
             try:
                 await conn.execute(
@@ -359,14 +374,22 @@ async def cleanup_test_memory_data(user_id: str, test_data: dict):
 
 
 async def test_query(
-    tool: SqlQueryTool, context: ToolCallContext, sql: str, description: str, mode: str = "read"
+    tool: SqlQueryTool,
+    context: ToolCallContext,
+    sql: str,
+    description: str,
+    mode: str = "read",
 ) -> dict:
     """Test a single query and return result summary."""
     return await test_query_multiple(tool, context, [sql], description, mode)
 
 
 async def test_query_multiple(
-    tool: SqlQueryTool, context: ToolCallContext, sqls: list, description: str, mode: str = "read"
+    tool: SqlQueryTool,
+    context: ToolCallContext,
+    sqls: list,
+    description: str,
+    mode: str = "read",
 ) -> dict:
     """Test multiple queries in a transaction (for write mode) or single query (for read mode)."""
     print(f"\n[{description}]")
@@ -381,7 +404,7 @@ async def test_query_multiple(
     arguments = {
         "mode": mode,
         "sqls": sqls,
-        "description": f"Test query: {description}"
+        "description": f"Test query: {description}",
     }
 
     # Execute through tool (conn is ignored, tool uses agent connection)
@@ -405,7 +428,9 @@ async def test_query_multiple(
             elif "results" in function_output:
                 results = function_output.get("results", [])
                 total_affected = sum(r.get("affected", 0) for r in results)
-                print(f"  Result: ✅ SUCCESS - {total_affected} rows affected across {len(results)} statements")
+                print(
+                    f"  Result: ✅ SUCCESS - {total_affected} rows affected across {len(results)} statements"
+                )
                 return {
                     "status": "success",
                     "affected_rows": total_affected,
@@ -483,7 +508,21 @@ async def main():
             display_desc = f"[{i}/{len(DANGEROUS_QUERIES)}] {description}"
             # Determine mode based on SQL statement
             sql_upper = sql.strip().upper()
-            mode = "write" if sql_upper.startswith(("INSERT", "UPDATE", "DELETE", "DROP", "TRUNCATE", "ALTER", "CREATE")) else "read"
+            mode = (
+                "write"
+                if sql_upper.startswith(
+                    (
+                        "INSERT",
+                        "UPDATE",
+                        "DELETE",
+                        "DROP",
+                        "TRUNCATE",
+                        "ALTER",
+                        "CREATE",
+                    )
+                )
+                else "read"
+            )
             result = await test_query(tool, context, sql, display_desc, mode=mode)
             # Store original description for grouping
             result["category"] = description
@@ -573,7 +612,11 @@ async def main():
             display_desc = f"[{i}/{len(valid_queries_with_ids)}] {description}"
             # Determine mode based on SQL statement
             sql_upper = sql.strip().upper()
-            mode = "write" if sql_upper.startswith(("INSERT", "UPDATE", "DELETE")) else "read"
+            mode = (
+                "write"
+                if sql_upper.startswith(("INSERT", "UPDATE", "DELETE"))
+                else "read"
+            )
             result = await test_query(tool, context, sql, display_desc, mode=mode)
             result["category"] = description
             results.append(result)
@@ -593,7 +636,11 @@ async def main():
                 f"UPDATE memory_blocks SET title = 'Updated by Multi Stmt' WHERE block_key = 'test_multi_stmt' AND prompt_id = '{test_data['user_memory_id']}'",
             ]
             result = await test_query_multiple(
-                tool, context, edge_case_1_sqls, "EDGE: Multiple statements in transaction (all succeed)", mode="write"
+                tool,
+                context,
+                edge_case_1_sqls,
+                "EDGE: Multiple statements in transaction (all succeed)",
+                mode="write",
             )
             result["category"] = "EDGE: Multiple statements success"
             results.append(result)
@@ -602,15 +649,22 @@ async def main():
         if test_data.get("user_memory_id"):
             # First, check initial count (may have leftover from previous test)
             initial_count_result = await test_query(
-                tool, context,
+                tool,
+                context,
                 f"SELECT COUNT(*) as count FROM memory_blocks WHERE block_key = 'test_rollback' AND prompt_id = '{test_data['user_memory_id']}'",
                 "EDGE: Initial count before rollback test",
-                mode="read"
+                mode="read",
             )
             initial_count = initial_count_result.get("row_count", 0)
-            if initial_count > 0 and "rows" in initial_count_result.get("function_output", {}):
-                initial_count = initial_count_result["function_output"]["rows"][0].get("count", 0) if initial_count_result["function_output"]["rows"] else 0
-            
+            if initial_count > 0 and "rows" in initial_count_result.get(
+                "function_output", {}
+            ):
+                initial_count = (
+                    initial_count_result["function_output"]["rows"][0].get("count", 0)
+                    if initial_count_result["function_output"]["rows"]
+                    else 0
+                )
+
             # First statement succeeds, second fails due to CHECK constraint violation
             # This should cause entire transaction to rollback
             edge_case_2_sqls = [
@@ -618,26 +672,39 @@ async def main():
                 f"INSERT INTO memory_blocks (prompt_type, prompt_id, block_key, title, content, display_order, created_by_type) VALUES ('user_memory', '{test_data['user_memory_id']}', 'test_rollback_fail', 'Should Fail', 'Test content', 1, 'invalid_type')",  # CHECK constraint violation: created_by_type must be 'user' or 'agent'
             ]
             result = await test_query_multiple(
-                tool, context, edge_case_2_sqls, "EDGE: Transaction rollback (CHECK constraint violation)", mode="write"
+                tool,
+                context,
+                edge_case_2_sqls,
+                "EDGE: Transaction rollback (CHECK constraint violation)",
+                mode="write",
             )
             result["category"] = "EDGE: Transaction rollback"
             results.append(result)
             # Verify first statement was rolled back by checking count is same as initial
             verify_result = await test_query(
-                tool, context,
+                tool,
+                context,
                 f"SELECT COUNT(*) as count FROM memory_blocks WHERE block_key = 'test_rollback' AND prompt_id = '{test_data['user_memory_id']}'",
                 f"EDGE: Verify rollback (should be {initial_count}, same as initial)",
-                mode="read"
+                mode="read",
             )
             verify_result["category"] = "EDGE: Rollback verification"
             # Check if count matches initial (rollback successful)
-            if verify_result.get("status") == "success" and "rows" in verify_result.get("function_output", {}):
-                final_count = verify_result["function_output"]["rows"][0].get("count", -1) if verify_result["function_output"]["rows"] else -1
+            if verify_result.get("status") == "success" and "rows" in verify_result.get(
+                "function_output", {}
+            ):
+                final_count = (
+                    verify_result["function_output"]["rows"][0].get("count", -1)
+                    if verify_result["function_output"]["rows"]
+                    else -1
+                )
                 if final_count == initial_count:
                     verify_result["rollback_verified"] = True
                 else:
                     verify_result["rollback_verified"] = False
-                    verify_result["note"] = f"Count changed from {initial_count} to {final_count} - rollback may not have worked"
+                    verify_result[
+                        "note"
+                    ] = f"Count changed from {initial_count} to {final_count} - rollback may not have worked"
             results.append(verify_result)
 
         # Edge Case 3: Mixed RETURNING and non-RETURNING statements
@@ -648,17 +715,37 @@ async def main():
                 f"DELETE FROM memory_blocks WHERE block_key = 'test_mixed' AND prompt_id = '{test_data['user_memory_id']}'",  # No RETURNING
             ]
             result = await test_query_multiple(
-                tool, context, edge_case_3_sqls, "EDGE: Mixed RETURNING and non-RETURNING", mode="write"
+                tool,
+                context,
+                edge_case_3_sqls,
+                "EDGE: Mixed RETURNING and non-RETURNING",
+                mode="write",
             )
             result["category"] = "EDGE: Mixed RETURNING"
             results.append(result)
 
         # Edge Case 4: SQL syntax errors
         syntax_error_tests = [
-            ("SELECT * FROM WHERE id = 'test'", "EDGE: Syntax error - missing table name", "read"),
-            ("SELECT nonexistent_column FROM fan_pages", "EDGE: Syntax error - missing column", "read"),
-            ("INSERT INTO memory_blocks (invalid_column) VALUES ('test')", "EDGE: Syntax error - invalid column in INSERT", "write"),
-            ("UPDATE memory_blocks SET invalid_column = 'test'", "EDGE: Syntax error - invalid column in UPDATE", "write"),
+            (
+                "SELECT * FROM WHERE id = 'test'",
+                "EDGE: Syntax error - missing table name",
+                "read",
+            ),
+            (
+                "SELECT nonexistent_column FROM fan_pages",
+                "EDGE: Syntax error - missing column",
+                "read",
+            ),
+            (
+                "INSERT INTO memory_blocks (invalid_column) VALUES ('test')",
+                "EDGE: Syntax error - invalid column in INSERT",
+                "write",
+            ),
+            (
+                "UPDATE memory_blocks SET invalid_column = 'test'",
+                "EDGE: Syntax error - invalid column in UPDATE",
+                "write",
+            ),
         ]
         for sql, desc, mode in syntax_error_tests:
             result = await test_query(tool, context, sql, desc, mode=mode)
@@ -667,9 +754,21 @@ async def main():
 
         # Edge Case 5: Empty result sets
         empty_result_tests = [
-            ("SELECT * FROM fan_pages WHERE id = 'nonexistent_page_id'", "EDGE: Empty SELECT result", "read"),
-            ("UPDATE memory_blocks SET title = 'No Match' WHERE id = '00000000-0000-0000-0000-000000000000'", "EDGE: UPDATE with no matching rows", "write"),
-            ("DELETE FROM memory_blocks WHERE id = '00000000-0000-0000-0000-000000000000'", "EDGE: DELETE with no matching rows", "write"),
+            (
+                "SELECT * FROM fan_pages WHERE id = 'nonexistent_page_id'",
+                "EDGE: Empty SELECT result",
+                "read",
+            ),
+            (
+                "UPDATE memory_blocks SET title = 'No Match' WHERE id = '00000000-0000-0000-0000-000000000000'",
+                "EDGE: UPDATE with no matching rows",
+                "write",
+            ),
+            (
+                "DELETE FROM memory_blocks WHERE id = '00000000-0000-0000-0000-000000000000'",
+                "EDGE: DELETE with no matching rows",
+                "write",
+            ),
         ]
         for sql, desc, mode in empty_result_tests:
             result = await test_query(tool, context, sql, desc, mode=mode)
@@ -696,9 +795,7 @@ async def main():
         injection_results = [
             r for r in results if r.get("category", "").startswith("INJECTION:")
         ]
-        edge_results = [
-            r for r in results if r.get("category", "").startswith("EDGE:")
-        ]
+        edge_results = [r for r in results if r.get("category", "").startswith("EDGE:")]
 
         # Count successes and denials
         def count_blocked(results_list):
@@ -716,7 +813,9 @@ async def main():
         sensitive_blocked = count_blocked(sensitive_results)
         valid_success = count_success(valid_results)
         injection_blocked = count_blocked(injection_results)
-        edge_success = count_success([r for r in edge_results if "error" not in r.get("category", "").lower()])
+        edge_success = count_success(
+            [r for r in edge_results if "error" not in r.get("category", "").lower()]
+        )
         edge_total = len(edge_results)
 
         print(f"\nTotal queries: {total}")
@@ -767,13 +866,47 @@ async def main():
         # Count expected behaviors:
         # - Success cases: multiple statements, mixed RETURNING, empty results (should succeed)
         # - Error cases: syntax errors, rollback (should fail/deny)
-        edge_success_cases = [r for r in edge_results if r.get("category", "").startswith("EDGE:") and "error" not in r.get("category", "").lower() and "rollback" not in r.get("category", "").lower() and r.get("status") == "success"]
-        edge_error_cases = [r for r in edge_results if r.get("category", "").startswith("EDGE:") and ("error" in r.get("category", "").lower() or r.get("status") in ("denied", "exception"))]
-        edge_rollback_cases = [r for r in edge_results if r.get("category", "").startswith("EDGE:") and "rollback" in r.get("category", "").lower()]
+        edge_success_cases = [
+            r
+            for r in edge_results
+            if r.get("category", "").startswith("EDGE:")
+            and "error" not in r.get("category", "").lower()
+            and "rollback" not in r.get("category", "").lower()
+            and r.get("status") == "success"
+        ]
+        edge_error_cases = [
+            r
+            for r in edge_results
+            if r.get("category", "").startswith("EDGE:")
+            and (
+                "error" in r.get("category", "").lower()
+                or r.get("status") in ("denied", "exception")
+            )
+        ]
+        edge_rollback_cases = [
+            r
+            for r in edge_results
+            if r.get("category", "").startswith("EDGE:")
+            and "rollback" in r.get("category", "").lower()
+        ]
         # Rollback cases: transaction should fail (denied) and verification should show rollback worked
-        edge_rollback_verified = sum(1 for r in edge_rollback_cases if r.get("rollback_verified") is True or (r.get("status") in ("denied", "exception") and "Transaction rollback" in r.get("category", "")))
-        edge_expected = len(edge_success_cases) + len(edge_error_cases) + edge_rollback_verified
-        print(f"  Expected behavior verified: {edge_expected}/{edge_total} ✅" if edge_expected == edge_total else f"  Expected behavior verified: {edge_expected}/{edge_total} ⚠️")
+        edge_rollback_verified = sum(
+            1
+            for r in edge_rollback_cases
+            if r.get("rollback_verified") is True
+            or (
+                r.get("status") in ("denied", "exception")
+                and "Transaction rollback" in r.get("category", "")
+            )
+        )
+        edge_expected = (
+            len(edge_success_cases) + len(edge_error_cases) + edge_rollback_verified
+        )
+        print(
+            f"  Expected behavior verified: {edge_expected}/{edge_total} ✅"
+            if edge_expected == edge_total
+            else f"  Expected behavior verified: {edge_expected}/{edge_total} ⚠️"
+        )
 
         # Overall result
         all_blocked = (
@@ -794,11 +927,13 @@ async def main():
             if failed_valid:
                 print("\nFailed valid queries:")
                 for r in failed_valid:
-                    print(f"  - {r.get('category', 'Unknown')}: {r.get('error', 'Unknown error')[:100]}")
+                    print(
+                        f"  - {r.get('category', 'Unknown')}: {r.get('error', 'Unknown error')[:100]}"
+                    )
 
     finally:
         # Cleanup test data
-        if test_data and 'user_id' in locals():
+        if test_data and "user_id" in locals():
             print("\nCleaning up test memory data...")
             try:
                 await cleanup_test_memory_data(user_id, test_data)

@@ -6,18 +6,18 @@ Sends suggestion via Facebook Graph API with retry (messages or comments).
 import asyncio
 import json
 import re
-from typing import Any, Dict, Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Dict, Optional
 
 from src.common.clients.facebook_graph_page_client import (
     FacebookAPIError,
     FacebookGraphPageClient,
 )
 from src.database.postgres.connection import async_db_transaction
-from src.database.postgres.repositories.facebook_queries.messages.conversations import (
-    get_conversation_with_details,
-)
 from src.database.postgres.repositories.facebook_queries.comments.comment_conversations import (
     get_conversation_by_id,
+)
+from src.database.postgres.repositories.facebook_queries.messages.conversations import (
+    get_conversation_with_details,
 )
 from src.utils.logger import get_logger
 
@@ -181,18 +181,24 @@ async def _deliver_message(
     async def _do_send() -> None:
         if message_text:
             await client.send_message(
-                user_id=psid, message=message_text, metadata=metadata_str,
+                user_id=psid,
+                message=message_text,
+                metadata=metadata_str,
                 reply_to_message_id=reply_to_message_id,
             )
         for url in image_urls:
             if url:
                 await client.send_image_message(
-                    user_id=psid, image_url=url, metadata=metadata_str,
+                    user_id=psid,
+                    image_url=url,
+                    metadata=metadata_str,
                     reply_to_message_id=reply_to_message_id,
                 )
         if video_url:
             await client.send_video_message(
-                user_id=psid, video_url=video_url, metadata=metadata_str,
+                user_id=psid,
+                video_url=video_url,
+                metadata=metadata_str,
                 reply_to_message_id=reply_to_message_id,
             )
 

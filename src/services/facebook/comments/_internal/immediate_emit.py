@@ -4,15 +4,15 @@ Pre-inserts comment, syncs conversation, and emits socket event so FE shows the 
 instantly instead of waiting for the Facebook webhook.
 """
 
-from typing import Any, Dict, List, Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
+from src.database.postgres.repositories.facebook_queries.comments.comment_conversations import (
+    get_conversation_by_id,
+    get_conversation_id_for_comment,
+)
 from src.database.postgres.repositories.facebook_queries.comments.comment_records import (
     create_comment,
     get_comment,
-)
-from src.database.postgres.repositories.facebook_queries.comments.comment_conversations import (
-    get_conversation_id_for_comment,
-    get_conversation_by_id,
 )
 from src.database.postgres.utils import get_current_timestamp
 from src.utils.logger import get_logger
@@ -90,13 +90,15 @@ async def process_outgoing_comment_reply(
             )
             return
 
-        conversation_summary = await comment_conversation_service.sync_single_comment_to_conversation(
-            conn=conn,
-            fan_page_id=fan_page_id,
-            post_id=post_id,
-            root_comment_id=root_comment_id,
-            comment=created_row,
-            verb="add",
+        conversation_summary = (
+            await comment_conversation_service.sync_single_comment_to_conversation(
+                conn=conn,
+                fan_page_id=fan_page_id,
+                post_id=post_id,
+                root_comment_id=root_comment_id,
+                comment=created_row,
+                verb="add",
+            )
         )
 
         if not conversation_summary:

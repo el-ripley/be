@@ -11,21 +11,22 @@ Note:
 - ConversationSyncService (formerly ConversationManager) is in src.services.facebook.messages.sync.conversation_sync_service
 """
 
-# Public API exports
-from .message_read_service import MessageReadService
-from .webhook_handler import MessageWebhookHandler
-from .api_handler import MessageAPIHandler
+from ._internal.attachment_parser import (
+    AttachmentParser,
+    build_entry_point,
+    merge_entry_point,
+    parse_attachments,
+)
 
 # Internal services (exported for backward compatibility and dependency injection)
 from ._internal.message_processor import MessageProcessor
 from ._internal.read_receipt_processor import ReadReceiptProcessor
 from ._internal.socket_emitter import SocketEmitter
-from ._internal.attachment_parser import (
-    AttachmentParser,
-    parse_attachments,
-    build_entry_point,
-    merge_entry_point,
-)
+from .api_handler import MessageAPIHandler
+
+# Public API exports
+from .message_read_service import MessageReadService
+from .webhook_handler import MessageWebhookHandler
 
 __all__ = [
     # Public API

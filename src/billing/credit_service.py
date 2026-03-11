@@ -4,6 +4,7 @@ Credit Service - High-level operations for credit balance management.
 
 from decimal import Decimal
 from typing import Optional
+
 import asyncpg
 
 from src.billing.repositories import billing_queries

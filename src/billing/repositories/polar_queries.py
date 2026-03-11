@@ -2,11 +2,12 @@
 Polar queries - Database operations for Polar integration.
 """
 
+import json
 from datetime import date, datetime
 from decimal import Decimal
 from typing import Any, Dict, Optional
+
 import asyncpg
-import json
 
 from src.database.postgres.executor import execute_async_returning, execute_async_single
 from src.database.postgres.utils import generate_uuid, get_current_timestamp

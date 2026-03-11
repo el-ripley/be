@@ -84,4 +84,3 @@ async def find_fb_context_messages_to_hide(
     except Exception:
         # Return empty list on error
         return []
-

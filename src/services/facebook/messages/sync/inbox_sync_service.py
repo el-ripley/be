@@ -5,22 +5,22 @@ Syncs Facebook Messenger inbox conversations and messages into Postgres.
 """
 
 import asyncio
-from typing import Dict, Any, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
+from src.database.postgres.connection import get_async_connection
 from src.database.postgres.repositories.facebook_queries.inbox_sync_states import (
     get_sync_state,
-    upsert_sync_state,
     reset_sync_state,
+    upsert_sync_state,
 )
 from src.database.postgres.repositories.facebook_queries.messages.conversations import (
     create_conversation,
 )
+from src.services.facebook.auth import FacebookPageService
 from src.services.facebook.messages.sync.message_history_sync import (
     ConversationMessageHistorySync,
 )
 from src.services.facebook.users.page_scope_user_service import PageScopeUserService
-from src.services.facebook.auth import FacebookPageService
-from src.database.postgres.connection import get_async_connection
 from src.utils.logger import get_logger
 
 logger = get_logger()
@@ -135,9 +135,7 @@ class InboxSyncService:
                     continue
 
                 # Non-cursor error or second failure
-                logger.error(
-                    f"❌ Failed to fetch conversations for page {page_id}: {e}"
-                )
+                logger.error(f"❌ Failed to fetch conversations for page {page_id}: {e}")
                 return {
                     "fan_page_id": page_id,
                     "synced_conversations": 0,

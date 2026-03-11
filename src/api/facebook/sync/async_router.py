@@ -5,25 +5,26 @@ These endpoints enqueue sync jobs instead of running them synchronously,
 preventing server blocking for long-running operations.
 """
 
+from typing import Optional
+
 from fastapi import APIRouter, Depends, HTTPException, Request
 from pydantic import BaseModel, Field
-from typing import Optional
 
 from src.middleware.auth_middleware import get_current_user_id
 from src.redis_client.redis_job_queue import RedisJobQueue
 from src.services.facebook.facebook_sync_job_manager import (
     FacebookSyncJobManager,
-    SyncType,
     SyncMode,
+    SyncType,
 )
-from .schemas import (
-    FullSyncRequest,
-    PostsSyncRequest,
-    CommentsSyncRequest,
-    InboxSyncRequest,
-)
-from .utils import get_permission_service, check_page_permission
 
+from .schemas import (
+    CommentsSyncRequest,
+    FullSyncRequest,
+    InboxSyncRequest,
+    PostsSyncRequest,
+)
+from .utils import check_page_permission, get_permission_service
 
 router = APIRouter(
     prefix="/sync/async",

@@ -1,7 +1,7 @@
 """Edit memory tool - all write operations on memory blocks and prompt containers."""
 
-import uuid
 import time
+import uuid
 from typing import Any, Dict
 
 import asyncpg

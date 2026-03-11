@@ -100,12 +100,18 @@ def run_gemini() -> None:
                 content_path = "candidates[0].content.parts[0].text"
     usage = raw.get("usage_metadata") or raw.get("usageMetadata") or {}
     usage_dict = {
-        "input_tokens": usage.get("prompt_token_count", usage.get("promptTokenCount", 0)),
-        "output_tokens": usage.get("candidates_token_count", usage.get("candidatesTokenCount", 0)),
+        "input_tokens": usage.get(
+            "prompt_token_count", usage.get("promptTokenCount", 0)
+        ),
+        "output_tokens": usage.get(
+            "candidates_token_count", usage.get("candidatesTokenCount", 0)
+        ),
     }
     finish_reason = "N/A"
     if candidates:
-        finish_reason = candidates[0].get("finish_reason", candidates[0].get("finishReason", ""))
+        finish_reason = candidates[0].get(
+            "finish_reason", candidates[0].get("finishReason", "")
+        )
 
     save_evidence(
         test_name=TEST_NAME,
@@ -134,7 +140,8 @@ def run_gemini() -> None:
         },
         model_used=model,
         sdk_version=getattr(genai, "__version__", "google-genai"),
-        model_in_response=getattr(response, "model_version", None) or raw.get("model_version"),
+        model_in_response=getattr(response, "model_version", None)
+        or raw.get("model_version"),
     )
     print("Gemini: OK", "-", content_path, "-", finish_reason)
 

@@ -4,11 +4,11 @@ Facebook Inbox Sync State Repository.
 Tracks per-page progress for syncing Messenger inbox conversations and messages.
 """
 
-from typing import Optional, Dict, Any
+from typing import Any, Dict, Optional
 
 import asyncpg
 
-from src.database.postgres.executor import execute_async_single, execute_async_returning
+from src.database.postgres.executor import execute_async_returning, execute_async_single
 from src.database.postgres.utils import get_current_timestamp
 
 

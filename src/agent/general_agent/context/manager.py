@@ -2,6 +2,7 @@ from typing import Any, Dict, List, Optional, Tuple
 
 import asyncpg
 
+from src.agent.common.agent_types import AGENT_TYPE_GENERAL_AGENT
 from src.api.openai_conversations.schemas import MessageResponse
 from src.database.postgres.entities.agent_entities import OpenAIMessage
 from src.database.postgres.repositories.agent_queries import (
@@ -10,7 +11,6 @@ from src.database.postgres.repositories.agent_queries import (
     save_message_and_update_branch,
     set_agent_response_in_progress,
 )
-from src.agent.common.agent_types import AGENT_TYPE_GENERAL_AGENT
 from src.redis_client.redis_agent_manager import RedisAgentManager
 from src.utils.logger import get_logger
 
@@ -178,15 +178,15 @@ class AgentContextManager:
                     agent_type=agent_type,
                 )
 
-            messages: List[Tuple[str, OpenAIMessageItem]] = (
-                await self.context_builder.build_context(
-                    conversation_id=conversation_id,
-                    conn=conn,
-                    with_ids=True,
-                    user_id=user_id,
-                    current_iteration=0,
-                    max_iteration=max_iteration,
-                )
+            messages: List[
+                Tuple[str, OpenAIMessageItem]
+            ] = await self.context_builder.build_context(
+                conversation_id=conversation_id,
+                conn=conn,
+                with_ids=True,
+                user_id=user_id,
+                current_iteration=0,
+                max_iteration=max_iteration,
             )
 
             temp_context_created = await self.redis_agent_manager.set_temp_context(
@@ -324,15 +324,15 @@ class AgentContextManager:
             await set_agent_response_in_progress(conn, agent_response_id)
 
             # Rebuild temp_context from database to include the new messages
-            messages: List[Tuple[str, OpenAIMessageItem]] = (
-                await self.context_builder.build_context(
-                    conversation_id=conversation_id,
-                    conn=conn,
-                    with_ids=True,
-                    user_id=user_id,
-                    current_iteration=0,
-                    max_iteration=max_iteration,
-                )
+            messages: List[
+                Tuple[str, OpenAIMessageItem]
+            ] = await self.context_builder.build_context(
+                conversation_id=conversation_id,
+                conn=conn,
+                with_ids=True,
+                user_id=user_id,
+                current_iteration=0,
+                max_iteration=max_iteration,
             )
 
             await self.redis_agent_manager.set_temp_context(

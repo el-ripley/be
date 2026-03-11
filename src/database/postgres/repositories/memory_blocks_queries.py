@@ -3,16 +3,17 @@ Memory Blocks SQL query functions.
 Handles CRUD operations for suggest_response memory blocks.
 """
 
-from typing import Optional, Dict, Any, List
+from typing import Any, Dict, List, Optional
+
 import asyncpg
+
 from ..executor import (
-    execute_async_single,
-    execute_async_returning,
-    execute_async_query,
     execute_async_command,
+    execute_async_query,
+    execute_async_returning,
+    execute_async_single,
 )
 from ..utils import generate_uuid, get_current_timestamp_ms
-
 
 # ================================================================
 # MEMORY BLOCKS OPERATIONS
@@ -76,9 +77,7 @@ async def get_block_by_key(
         ORDER BY created_at DESC
         LIMIT 1
     """
-    return await execute_async_single(
-        conn, query, prompt_type, prompt_id, block_key
-    )
+    return await execute_async_single(conn, query, prompt_type, prompt_id, block_key)
 
 
 async def insert_block(
@@ -192,7 +191,7 @@ async def link_media_to_block(
 ) -> None:
     """
     Link media assets to a block.
-    
+
     Args:
         block_id: Block ID to link media to
         media_items: List of dicts with {"media_id": str, "display_order": int}

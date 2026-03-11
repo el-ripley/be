@@ -1,7 +1,9 @@
 from typing import Any, Dict, Optional
+
 from fastapi import HTTPException
-from src.services.facebook.messages.api_handler import MessageAPIHandler
+
 from src.common.clients.facebook_graph_page_client import FacebookAPIError
+from src.services.facebook.messages.api_handler import MessageAPIHandler
 from src.utils.logger import get_logger
 
 logger = get_logger()

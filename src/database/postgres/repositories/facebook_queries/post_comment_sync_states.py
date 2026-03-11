@@ -4,14 +4,14 @@ Facebook Post Comment Sync State Repository.
 Tracks per-post progress for syncing comments.
 """
 
-from typing import Optional, Dict, Any, List
+from typing import Any, Dict, List, Optional
 
 import asyncpg
 
 from src.database.postgres.executor import (
-    execute_async_single,
-    execute_async_returning,
     execute_async_query,
+    execute_async_returning,
+    execute_async_single,
 )
 from src.database.postgres.utils import get_current_timestamp
 
@@ -195,4 +195,3 @@ async def reset_comment_sync_state(
             updated_at
     """
     return await execute_async_returning(conn, query, post_id, current_time)
-

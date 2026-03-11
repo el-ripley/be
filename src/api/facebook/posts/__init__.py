@@ -1,9 +1,5 @@
 from .router import router
-from .schemas import (
-    PostsListResponse,
-    PostListItem,
-    PostDetailResponse,
-)
+from .schemas import PostDetailResponse, PostListItem, PostsListResponse
 
 __all__ = [
     "router",

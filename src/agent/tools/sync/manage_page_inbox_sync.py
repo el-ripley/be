@@ -29,21 +29,21 @@ When action="status":
    }
 """
 
-import uuid
 import time
+import uuid
 from typing import Any, Dict
 
 import asyncpg
 
 from src.agent.tools.base import BaseTool, ToolCallContext, ToolResult
 from src.api.openai_conversations.schemas import MessageResponse
+from src.services.facebook.auth import FacebookPageService
 from src.services.facebook.facebook_sync_job_manager import (
     FacebookSyncJobManager,
-    SyncType,
     SyncMode,
+    SyncType,
 )
 from src.services.facebook.messages.sync.inbox_sync_service import InboxSyncService
-from src.services.facebook.auth import FacebookPageService
 from src.services.facebook.users.page_scope_user_service import PageScopeUserService
 from src.utils.logger import get_logger
 

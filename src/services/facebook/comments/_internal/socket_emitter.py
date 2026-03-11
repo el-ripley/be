@@ -3,12 +3,13 @@ Socket emitter for comment webhook events.
 Handles emitting enriched comment events to page admins via WebSocket.
 """
 
-from typing import Any, Dict, List, Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
 from src.database.postgres.repositories.facebook_queries.comments.comment_threads import (
     get_comments_by_ids,
 )
 from src.utils.logger import get_logger
+
 from .socket_event_builder import build_comment_socket_event
 
 if TYPE_CHECKING:
@@ -50,7 +51,9 @@ async def emit_comment_event_to_page_admins(
             return
 
         if not conversation or not mutated_comment:
-            logger.warning("⚠️ Missing conversation or mutated_comment for socket event")
+            logger.warning(
+                "⚠️ Missing conversation or mutated_comment for socket event"
+            )
             return
 
         # Fetch root_comment and latest_comment for enrichment

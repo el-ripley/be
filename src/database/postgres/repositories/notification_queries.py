@@ -9,10 +9,10 @@ from typing import Any, Dict, List, Optional
 import asyncpg
 
 from ..executor import (
+    execute_async_command,
     execute_async_query,
     execute_async_returning,
     execute_async_scalar,
-    execute_async_command,
 )
 from ..utils import get_current_timestamp_ms
 

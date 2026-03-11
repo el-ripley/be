@@ -6,7 +6,7 @@ Tracks uploads in media_assets table for lifecycle management.
 
 import asyncio
 import uuid
-from typing import List, Dict, Any, Optional
+from typing import Any, Dict, List, Optional
 
 from src.common.s3_client import get_s3_uploader
 from src.database.postgres.connection import async_db_transaction
@@ -274,8 +274,8 @@ class UserFilesService:
             )
 
             # Generate public S3 URL
-            from src.settings import settings
             from src.database.postgres.utils import get_current_timestamp_ms
+            from src.settings import settings
 
             s3_url = f"https://{self.s3_uploader.bucket_name}.s3.{settings.aws_region}.amazonaws.com/{s3_key}"
 

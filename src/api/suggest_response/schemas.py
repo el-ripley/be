@@ -2,9 +2,9 @@
 Pydantic schemas for Suggest Response API.
 """
 
-from pydantic import BaseModel, Field, field_validator
-from typing import Optional, Dict, Any, Literal, List, Union
+from typing import Any, Dict, List, Literal, Optional, Union
 
+from pydantic import BaseModel, Field, field_validator
 
 # ================================================================
 # AGENT SETTINGS SCHEMAS
@@ -98,7 +98,8 @@ class PageAdminSuggestConfigResponse(BaseModel):
         ..., description="Auto-trigger and send via Graph API when webhook arrives"
     )
     webhook_delay_seconds: int = Field(
-        ..., description="Debounce delay in seconds for webhook triggers (0 = immediate)"
+        ...,
+        description="Debounce delay in seconds for webhook triggers (0 = immediate)",
     )
     created_at: Optional[int] = Field(None, description="Creation timestamp")
     updated_at: Optional[int] = Field(None, description="Last update timestamp")
@@ -117,8 +118,12 @@ class AssignedPlaybookItem(BaseModel):
 
     id: str = Field(..., description="Playbook UUID")
     title: str = Field(..., description="Playbook title")
-    situation: str = Field(..., description="When this playbook applies (trigger condition)")
-    content: str = Field(..., description="Guidance content (how to handle the situation)")
+    situation: str = Field(
+        ..., description="When this playbook applies (trigger condition)"
+    )
+    content: str = Field(
+        ..., description="Guidance content (how to handle the situation)"
+    )
 
 
 class AssignedPlaybooksResponse(BaseModel):

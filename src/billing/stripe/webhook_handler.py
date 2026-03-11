@@ -2,12 +2,13 @@
 Stripe Webhook Handler - Process Stripe webhook events.
 """
 
-from typing import Dict, Any, Optional
 from decimal import Decimal
+from typing import Any, Dict, Optional
+
 import asyncpg
 
-from src.billing.repositories import stripe_queries
 from src.billing.credit_service import add_credits
+from src.billing.repositories import stripe_queries
 from src.database.postgres.utils import get_current_timestamp
 from src.utils.logger import get_logger
 

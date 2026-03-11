@@ -10,11 +10,10 @@ import asyncpg
 from ..executor import (
     execute_async_query,
     execute_async_returning,
-    execute_async_single,
     execute_async_scalar,
+    execute_async_single,
 )
 from ..utils import generate_uuid, get_current_timestamp_ms
-
 
 # ============== conversation_agent_blocks ==============
 
@@ -501,12 +500,14 @@ async def get_escalations_for_context(
         for mr in msg_rows:
             eid = str(mr["escalation_id"])
             if eid in esc_by_id:
-                esc_by_id[eid]["messages"].append({
-                    "id": str(mr["msg_id"]),
-                    "sender_type": mr["sender_type"],
-                    "content": mr["content"],
-                    "created_at": mr["msg_created_at"],
-                })
+                esc_by_id[eid]["messages"].append(
+                    {
+                        "id": str(mr["msg_id"]),
+                        "sender_type": mr["sender_type"],
+                        "content": mr["content"],
+                        "created_at": mr["msg_created_at"],
+                    }
+                )
 
     return escalations, total_count
 
@@ -546,7 +547,13 @@ async def get_escalation_list_minimal(
         LIMIT $5
     """
     rows = await execute_async_query(
-        conn, query, fan_page_id, owner_user_id, conversation_type, conversation_id, limit
+        conn,
+        query,
+        fan_page_id,
+        owner_user_id,
+        conversation_type,
+        conversation_id,
+        limit,
     )
     if not rows:
         return [], 0

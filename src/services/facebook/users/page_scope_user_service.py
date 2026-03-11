@@ -1,13 +1,14 @@
-from typing import Dict, Any, List, Optional
 import json
-from src.database.postgres.utils import get_current_timestamp
+from typing import Any, Dict, List, Optional
+
+from src.common.clients.facebook_graph_page_client import FacebookGraphPageClient
+from src.database.postgres.connection import async_db_transaction
 from src.database.postgres.repositories.facebook_queries import (
     get_facebook_page_scope_user_by_id,
-    upsert_facebook_page_scope_user,
     get_facebook_page_scope_users_by_page_ids,
+    upsert_facebook_page_scope_user,
 )
-from src.database.postgres.connection import async_db_transaction
-from src.common.clients.facebook_graph_page_client import FacebookGraphPageClient
+from src.database.postgres.utils import get_current_timestamp
 from src.services.facebook._core.helpers import execute_graph_client_with_random_tokens
 from src.utils.logger import get_logger
 

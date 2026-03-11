@@ -4,7 +4,8 @@ Suggest Response Prompts Service.
 Handles business logic for page-level and page-scope user-level prompts.
 """
 
-from typing import Dict, Any, Optional
+from typing import Any, Dict, Optional
+
 from src.database.postgres.connection import async_db_transaction
 from src.utils.logger import get_logger
 

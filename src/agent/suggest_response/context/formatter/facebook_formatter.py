@@ -5,14 +5,9 @@ Outputs plain text for LLM consumption (messages and comment threads).
 
 from typing import Any, Dict, List, Optional
 
-from src.utils.logger import get_logger
+from src.agent.utils import ensure_dict, ensure_list, extract_url, format_timestamp
 from src.services.facebook.media import MediaAssetService
-from src.agent.utils import (
-    ensure_dict,
-    ensure_list,
-    extract_url,
-    format_timestamp,
-)
+from src.utils.logger import get_logger
 
 logger = get_logger()
 
@@ -160,7 +155,9 @@ class FacebookContentFormatter:
             if ad_context:
                 ad_title = (ad_context.get("ad_title") or "").strip()
                 if ad_title:
-                    ad_context_lines.append(f'Ad context: User replied to ad "{ad_title}"')
+                    ad_context_lines.append(
+                        f'Ad context: User replied to ad "{ad_title}"'
+                    )
                 else:
                     ad_context_lines.append("Ad context: User replied to an ad")
                 ad_photo_media = ensure_dict(ad_context.get("photo_media"))
@@ -180,7 +177,12 @@ class FacebookContentFormatter:
 
             # Build turns from sorted messages
             if not valid_items:
-                return {"conversation_info": conversation_info, "ad_context": ad_context_str, "turns": [], "message_ref_map": {}}
+                return {
+                    "conversation_info": conversation_info,
+                    "ad_context": ad_context_str,
+                    "turns": [],
+                    "message_ref_map": {},
+                }
 
             sorted_items = sorted(
                 valid_items, key=lambda x: self._message_timestamp_seconds(x)
@@ -211,7 +213,9 @@ class FacebookContentFormatter:
                 else:
                     sender = "Page"
 
-                reply_tag = self._build_reply_tag(item.get("reply_to_message_id"), mid_to_index)
+                reply_tag = self._build_reply_tag(
+                    item.get("reply_to_message_id"), mid_to_index
+                )
 
                 msg_lines: List[str] = []
                 text_value = item.get("text")
@@ -221,7 +225,9 @@ class FacebookContentFormatter:
                     else (text_value or "")
                 )
                 if text:
-                    msg_lines.append(f"[{ts_compact}] #{seq} {sender}:{reply_tag} {text}")
+                    msg_lines.append(
+                        f"[{ts_compact}] #{seq} {sender}:{reply_tag} {text}"
+                    )
                 else:
                     msg_lines.append(f"[{ts_compact}] #{seq} {sender}:{reply_tag}")
 
@@ -248,10 +254,15 @@ class FacebookContentFormatter:
 
                 content_text = "\n".join(msg_lines)
                 if user_live_image_url:
-                    raw_turns.append({
-                        "role": role,
-                        "part": {"text": content_text, "image_url": user_live_image_url},
-                    })
+                    raw_turns.append(
+                        {
+                            "role": role,
+                            "part": {
+                                "text": content_text,
+                                "image_url": user_live_image_url,
+                            },
+                        }
+                    )
                 else:
                     raw_turns.append({"role": role, "part": content_text})
 
@@ -262,9 +273,7 @@ class FacebookContentFormatter:
                 if merged_turns and merged_turns[-1]["role"] == turn["role"]:
                     merged_turns[-1]["content_parts"].append(part)
                 else:
-                    merged_turns.append(
-                        {"role": turn["role"], "content_parts": [part]}
-                    )
+                    merged_turns.append({"role": turn["role"], "content_parts": [part]})
 
             return {
                 "conversation_info": conversation_info,
@@ -498,7 +507,9 @@ class FacebookContentFormatter:
                 sender = "Page (AI)"
             else:
                 sender = "Page"
-            reply_tag = self._build_reply_tag(item.get("reply_to_message_id"), mid_to_index)
+            reply_tag = self._build_reply_tag(
+                item.get("reply_to_message_id"), mid_to_index
+            )
 
             text_value = item.get("text")
             text = (

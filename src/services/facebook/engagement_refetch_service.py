@@ -4,18 +4,18 @@ Service for Agent-triggered engagement data refresh.
 This service is NOT called by User APIs - only by Agent when it decides data is stale.
 """
 
-from typing import Dict, Any, List
+from typing import Any, Dict, List
 
 from src.common.clients.facebook_graph_page_client import FacebookGraphPageClient
-from src.utils.logger import get_logger
-from src.services.facebook._core.helpers import execute_graph_client_with_random_tokens
 from src.database.postgres.repositories.facebook_queries import (
-    update_post_engagement,
-    update_comment_engagement,
-    upsert_post_reactions,
-    upsert_comment_reactions,
     get_post_by_id,
+    update_comment_engagement,
+    update_post_engagement,
+    upsert_comment_reactions,
+    upsert_post_reactions,
 )
+from src.services.facebook._core.helpers import execute_graph_client_with_random_tokens
+from src.utils.logger import get_logger
 
 logger = get_logger()
 
@@ -193,9 +193,7 @@ class EngagementRefetchService:
             Dictionary with fresh reactions data and update status
         """
         if not page_admins:
-            logger.error(
-                f"❌ No page admins found when refetching comment {comment_id}"
-            )
+            logger.error(f"❌ No page admins found when refetching comment {comment_id}")
             return {
                 "success": False,
                 "message": "No page admins available",

@@ -5,42 +5,40 @@ Business logic for OpenAI conversation management endpoints.
 """
 
 import json as json_lib
-from typing import List, Optional, Dict, Any
+from typing import Any, Dict, List, Optional
 
 from fastapi import HTTPException, Request, status
 
-from src.database.postgres.connection import async_db_transaction, get_async_connection
-
-from src.database.postgres.repositories.agent_queries import (
-    create_conversation_with_master_branch,
-    get_conversation,
-    get_conversation_with_relations,
-    get_user_conversations,
-    update_conversation,
-    update_conversation_settings,
-    get_conversation_branches,
-    get_branch_info,
-    update_branch_name,
-    get_branch_messages,
+from src.agent.common.conversation_settings import (
+    normalize_settings,
+    parse_settings_string,
+    validate_settings,
 )
 from src.api.openai_conversations.schemas import (
-    CreateConversationRequest,
-    ConversationResponse,
+    BranchResponse,
     ConversationDetailResponse,
+    ConversationResponse,
     ConversationsCursorResponse,
+    CreateConversationRequest,
     MessageResponse,
     MessagesCursorResponse,
-    BranchResponse,
     UpdateBranchNameRequest,
     UpdateConversationRequest,
     UpdateConversationSettingsRequest,
 )
-from src.agent.common.conversation_settings import (
-    parse_settings_string,
-    normalize_settings,
-    validate_settings,
+from src.database.postgres.connection import async_db_transaction, get_async_connection
+from src.database.postgres.repositories.agent_queries import (
+    create_conversation_with_master_branch,
+    get_branch_info,
+    get_branch_messages,
+    get_conversation,
+    get_conversation_branches,
+    get_conversation_with_relations,
+    get_user_conversations,
+    update_branch_name,
+    update_conversation,
+    update_conversation_settings,
 )
-
 
 # ================================================================
 # CONVERSATION HANDLERS AND BRANCHES

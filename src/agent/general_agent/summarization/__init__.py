@@ -1,3 +1,3 @@
-from .summarizer_service import SummarizerService, SummarizationResult
+from .summarizer_service import SummarizationResult, SummarizerService
 
 __all__ = ["SummarizerService", "SummarizationResult"]

@@ -1,6 +1,7 @@
 """API router for Facebook posts operations."""
 
 from typing import Optional
+
 from fastapi import APIRouter, Depends, HTTPException, Request
 
 from src.database.postgres.connection import async_db_transaction
@@ -8,15 +9,10 @@ from src.database.postgres.repositories.facebook_queries.comments.comment_posts 
     get_post_by_id,
 )
 from src.middleware.auth_middleware import get_current_user_id
-from src.services.facebook.posts.post_read_service import PostReadService
 from src.services.facebook.auth import FacebookPermissionService
+from src.services.facebook.posts.post_read_service import PostReadService
 
-from .schemas import (
-    PostsListResponse,
-    PostListItem,
-    PostDetailResponse,
-)
-
+from .schemas import PostDetailResponse, PostListItem, PostsListResponse
 
 router = APIRouter(
     prefix="/posts",

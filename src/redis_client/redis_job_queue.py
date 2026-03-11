@@ -8,7 +8,8 @@ import json
 import uuid
 from datetime import datetime
 from enum import Enum
-from typing import Any, Dict, Optional, List
+from typing import Any, Dict, List, Optional
+
 from src.redis_client.redis_client import RedisClient
 from src.utils.logger import get_logger
 

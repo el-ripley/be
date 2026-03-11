@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from typing import Dict, Optional, Any, List
+from typing import Any, Dict, List, Optional
+
 from pydantic import BaseModel, Field
 
 
@@ -30,7 +31,8 @@ class CommentInteractionResponse(BaseModel):
         None, description="Facebook API response data"
     )
     new_comment_id: Optional[str] = Field(
-        None, description="New comment ID from Graph API (for reply action, for FE optimistic display)"
+        None,
+        description="New comment ID from Graph API (for reply action, for FE optimistic display)",
     )
 
 

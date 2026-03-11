@@ -172,21 +172,33 @@ class Settings:
 
         # Anthropic via proxy
         self.anthropic_api_key_proxy = self._get_env("ANTHROPIC_API_KEY_PROXY", "")
-        self.supper_api_base_url = self._get_env("SUPPER_API_BASE_URL", "http://supperapi.store")
+        self.supper_api_base_url = self._get_env(
+            "SUPPER_API_BASE_URL", "http://supperapi.store"
+        )
 
         # Google (Vertex: path to .gcp/sa.json or AI Studio: GOOGLE_API_KEY)
-        self.google_application_credentials = self._get_env("GOOGLE_APPLICATION_CREDENTIALS", "")
-        self.google_service_account_json = self._get_env("GOOGLE_SERVICE_ACCOUNT_JSON", "")
+        self.google_application_credentials = self._get_env(
+            "GOOGLE_APPLICATION_CREDENTIALS", ""
+        )
+        self.google_service_account_json = self._get_env(
+            "GOOGLE_SERVICE_ACCOUNT_JSON", ""
+        )
         self.google_cloud_project = self._get_env("GOOGLE_CLOUD_PROJECT", "")
-        self.google_cloud_location = self._get_env("GOOGLE_CLOUD_LOCATION", "us-central1")
-        self.google_vertex_model = self._get_env("GOOGLE_VERTEX_MODEL", "gemini-2.5-pro")
+        self.google_cloud_location = self._get_env(
+            "GOOGLE_CLOUD_LOCATION", "us-central1"
+        )
+        self.google_vertex_model = self._get_env(
+            "GOOGLE_VERTEX_MODEL", "gemini-2.5-pro"
+        )
         self.google_api_key = self._get_env("GOOGLE_API_KEY", "")
 
         # Polar (payment gateway)
         self.polar_access_token = self._get_env("POLAR_ACCESS_TOKEN", "")
         self.polar_webhook_secret = self._get_env("POLAR_WEBHOOK_SECRET", "")
         self.polar_product_id = self._get_env("POLAR_PRODUCT_ID", "")
-        self.polar_server = self._get_env("POLAR_SERVER", "")  # "sandbox" to use Polar sandbox API
+        self.polar_server = self._get_env(
+            "POLAR_SERVER", ""
+        )  # "sandbox" to use Polar sandbox API
 
         # Access token settings (short-lived)
         self.access_token_expire_minutes = self._get_env_int(

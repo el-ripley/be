@@ -7,21 +7,21 @@ Consolidates comment creation logic from CommentSyncService and CommentTreeServi
 
 from collections import deque
 from datetime import datetime
-from typing import Dict, Any, Optional, List, Set, Deque, Tuple
+from typing import Any, Deque, Dict, List, Optional, Set, Tuple
 
 from src.common.clients.facebook_graph_page_client import FacebookGraphPageClient
-from src.utils.logger import get_logger
-from src.services.facebook.users.page_scope_user_service import PageScopeUserService
-from src.services.facebook._core.helpers import execute_graph_client_with_random_tokens
 from src.database.postgres.repositories.facebook_queries import (
-    get_comment,
-    create_comment,
     batch_create_comments,
+    create_comment,
+    get_comment,
 )
 from src.database.postgres.repositories.facebook_queries.reactions import (
     upsert_comment_reactions,
 )
+from src.services.facebook._core.helpers import execute_graph_client_with_random_tokens
 from src.services.facebook.comments._internal.helpers import get_comment_data
+from src.services.facebook.users.page_scope_user_service import PageScopeUserService
+from src.utils.logger import get_logger
 
 logger = get_logger()
 
@@ -292,7 +292,9 @@ class CommentWriteService:
                 f"✅ Saved {len(normalized_reactions)} reactions for comment {comment_id}"
             )
         except Exception as e:
-            logger.warning(f"⚠️ Failed to fetch comment reactions for {comment_id}: {e}")
+            logger.warning(
+                f"⚠️ Failed to fetch comment reactions for {comment_id}: {e}"
+            )
             raise
 
     async def find_root_comment_id(

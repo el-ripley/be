@@ -5,14 +5,15 @@ This module handles MongoDB connections using motor with async connection manage
 providing async transaction context managers for high-performance database operations.
 """
 
+import asyncio
+from contextlib import asynccontextmanager
+from typing import AsyncGenerator, Optional, Tuple
+
 from motor.motor_asyncio import (
     AsyncIOMotorClient,
-    AsyncIOMotorDatabase,
     AsyncIOMotorClientSession,
+    AsyncIOMotorDatabase,
 )
-from contextlib import asynccontextmanager
-from typing import Optional, AsyncGenerator, Tuple
-import asyncio
 
 from src.settings import settings
 from src.utils.logger import get_logger

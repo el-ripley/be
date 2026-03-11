@@ -6,33 +6,16 @@ by the repository layer for data access operations. They contain only the
 full database record representations, not validation or DTO variants.
 """
 
-from .user_entities import (
-    Role,
-    User,
-)
-
+from .agent_entities import OpenAIConversation, OpenAIMessage, OpenAIResponse
+from .comments_entities import Comment, Post
 from .facebook_entities import (
     FacebookAppScopeUser,
-    FanPage,
     FacebookPageAdmin,
     FacebookPageScopeUser,
+    FanPage,
 )
-
-from .comments_entities import (
-    Post,
-    Comment,
-)
-
-from .messages_entities import (
-    Message,
-)
-
-from .agent_entities import (
-    OpenAIResponse,
-    OpenAIConversation,
-    OpenAIMessage,
-)
-
+from .messages_entities import Message
+from .user_entities import Role, User
 
 __all__ = [
     # User entities

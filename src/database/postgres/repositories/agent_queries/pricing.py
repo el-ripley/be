@@ -50,8 +50,6 @@ def calculate_cost(
     }
 
 
-def calculate_embedding_cost(
-    model: str, input_tokens: int
-) -> Dict[str, Decimal]:
+def calculate_embedding_cost(model: str, input_tokens: int) -> Dict[str, Decimal]:
     """Calculate cost for embedding API calls (input tokens only, no output)."""
     return calculate_cost(model, input_tokens, 0)

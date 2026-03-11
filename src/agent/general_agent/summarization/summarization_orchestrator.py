@@ -8,22 +8,21 @@ Handles the orchestration of summarization process including:
 - Emitting socket events for FE updates
 """
 
-from typing import Optional, Dict, Any, List
+from typing import Any, Dict, List, Optional
 
+from src.agent.general_agent.core.run_config import RunConfig
+from src.agent.general_agent.summarization.summarizer_service import SummarizerService
 from src.database.postgres.connection import async_db_transaction, get_async_connection
 from src.database.postgres.repositories.agent_queries import (
     get_all_branch_messages,
-    upsert_message_mapping,
     save_message_and_update_branch,
+    upsert_message_mapping,
 )
 from src.database.postgres.repositories.agent_queries.agent_responses import (
     get_latest_openai_response_for_conversation,
 )
-from src.agent.general_agent.summarization.summarizer_service import SummarizerService
 from src.socket_service import SocketService
 from src.utils.logger import get_logger
-
-from src.agent.general_agent.core.run_config import RunConfig
 
 logger = get_logger()
 

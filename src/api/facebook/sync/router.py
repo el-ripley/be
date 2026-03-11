@@ -5,20 +5,19 @@ from fastapi import APIRouter, Depends, HTTPException, Request
 from src.database.postgres.connection import async_db_transaction
 from src.middleware.auth_middleware import get_current_user_id
 from src.services.facebook.comments.sync.comment_sync_service import CommentSyncService
-from src.services.facebook.messages.sync.inbox_sync_service import InboxSyncService
 from src.services.facebook.full_sync_service import FullSyncService
+from src.services.facebook.messages.sync.inbox_sync_service import InboxSyncService
 from src.services.facebook.posts.post_sync_service import PostSyncService
 
 from .schemas import (
-    SyncStatusResponse,
-    CommentSyncStatusResponse,
-    InboxSyncStatusResponse,
-    FullSyncStatusResponse,
-    PostsSyncStatus,
     CommentsSyncStatus,
+    CommentSyncStatusResponse,
+    FullSyncStatusResponse,
+    InboxSyncStatusResponse,
+    PostsSyncStatus,
+    SyncStatusResponse,
 )
-from .utils import get_permission_service, check_page_permission
-
+from .utils import check_page_permission, get_permission_service
 
 router = APIRouter(
     prefix="/sync",

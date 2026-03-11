@@ -1,13 +1,14 @@
-from typing import Optional, Dict, Any, List
 from decimal import Decimal
+from typing import Any, Dict, List, Optional
+
 import asyncpg
+
 from src.database.postgres.executor import (
-    execute_async_single,
-    execute_async_returning,
     execute_async_query,
+    execute_async_returning,
+    execute_async_single,
 )
 from src.database.postgres.utils import generate_uuid, get_current_timestamp
-
 
 # ================================================================
 # FAN PAGE OPERATIONS
@@ -454,7 +455,7 @@ async def get_facebook_page_scope_users_by_page_ids(
 ) -> tuple[List[Dict[str, Any]], int]:
     """
     Get page scope users for given page IDs with pagination.
-    
+
     Returns:
         Tuple of (users list, total count)
     """
@@ -473,7 +474,7 @@ async def get_facebook_page_scope_users_by_page_ids(
     # Get paginated results
     params: List[Any] = [page_ids]
     param_idx = 2
-    
+
     query = """
         SELECT 
             fpsu.id,
@@ -485,15 +486,15 @@ async def get_facebook_page_scope_users_by_page_ids(
         WHERE fpsu.fan_page_id = ANY($1::text[])
         ORDER BY fpsu.fan_page_id, fpsu.updated_at DESC
     """
-    
+
     if limit is not None:
         query += f" LIMIT ${param_idx}"
         params.append(limit)
         param_idx += 1
-    
+
     if offset is not None:
         query += f" OFFSET ${param_idx}"
         params.append(offset)
-    
+
     users = await execute_async_query(conn, query, *params)
     return users, total
